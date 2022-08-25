@@ -41,6 +41,8 @@ control "KEYC-01-000012" do
     Then check keycloak configuration file, keycloak.conf. If the file does not contain the following key-value pair, it is a finding. 
     
     log-console-format=\"'%d{[APPROPRIATE DATE/TIME FORMATTING]} [OTHER FORMATTING SYMBOLS]'\"
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   desc  "fix", "
     Configure Keycloak audit records to identify when the events occurred by specifying the date and time.
@@ -52,6 +54,8 @@ control "KEYC-01-000012" do
     Then create or update Keycloak logging format with the following line in your keycloak configuration file, keycloak.conf:
     
     log-console-format=\"'%d{yyyy-MM-dd HH:mm:ss,SSS} [OTHER FORMATTING SYMBOLS]'\"
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   impact 0.5
   tag severity: "medium"

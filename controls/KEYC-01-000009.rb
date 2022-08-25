@@ -4,13 +4,13 @@ control "KEYC-01-000009" do
   desc  "By limiting the number of failed logon attempts, the risk of unauthorized system access via user password guessing, otherwise known as brute forcing, is reduced. Limits are imposed by locking the account."
   desc  "rationale", ""
   desc  "check", "
-    If Keycloak rely on directory services for user account management, this is not applicable and the connected directory services must perform this function.
+    If Keycloak relies on directory services for user account management, this control is not applicable, as the connected directory services must perform this function.
     
-    Verify Keycloak are configured to automatically lock user accounts after three consecutive invalid logon attempts within a 15-minute time period.
+    Verify Keycloak is configured to automatically lock user accounts after three consecutive invalid logon attempts within a 15-minute time period.
     
-    If Keycloak are not configured to automatically lock user accounts after three consecutive invalid logon attempts within a 15-minute time period, this is a finding.
+    If Keycloak is not configured to automatically lock user accounts after three consecutive invalid logon attempts within a 15-minute time period, this is a finding.
     
-    To confirm this setting is configured using the Keycloak admin CLI, after logging in with a privileged account, which can be done by running:
+    To confirm this setting is configured, log into the Keycloak admin CLI with a privileged account:
     
     kcadm.sh config credentials --server [server location] --realm master --user [username] --password [password]
     
@@ -20,7 +20,7 @@ control "KEYC-01-000009" do
     kcadm.sh get realms/[YOUR REALM] | grep 'failureFactor'
     kcadm.sh get realms/[YOUR REALM] | grep 'maxDeltaTimeSeconds'
     
-    If the results are not as follows, then it is a finding.
+    If the results are not as follows, then this is a finding.
     
     \"bruteForceProtected\" : true
     \"failureFactor\" : 3
@@ -37,7 +37,7 @@ control "KEYC-01-000009" do
     kcadm.sh get realms/[YOUR REALM] | grep 'failureFactor'
     kcadm.sh get realms/[YOUR REALM] | grep 'maxDeltaTimeSeconds'
     
-    Next, configure the settings 'bruteForceProtected', 'failureFactor', 'maxDeltaTimeSeconds' or update the setting if it is already set. You can set it for the first time using the same process.
+    Next, configure the settings 'bruteForceProtected', 'failureFactor' and 'maxDeltaTimeSeconds' or update the setting if it is already set. You can set it for the first time using the same process.
     
     kcadm.sh update realms/[YOUR REALM] -s 'bruteForceProtected=true'
     kcadm.sh update realms/[YOUR REALM] -s 'failureFactor=3'

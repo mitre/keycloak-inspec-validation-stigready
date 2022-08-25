@@ -12,11 +12,43 @@ control "KEYC-01-000040" do
   "
   desc  "rationale", ""
   desc  "check", "
-    Verify AAA Services are configured to only accept certificates issued by a DoD-approved Certificate Authority for PKI-based authentication.
+    Verify Keycloak are configured to only accept certificates issued by a DoD-approved Certificate Authority for PKI-based authentication.
     
-    If AAA Services are not configured to only accept certificates issued by a DoD-approved Certificate Authority, this is a finding.
+    If Keycloak are not configured to only accept certificates issued by a DoD-approved Certificate Authority, this is a finding.
+    
+    Check keycloak configuration file, conf/keycloak.conf. If the file does not contain the following key-value pairs, it is a finding. 
+    
+    hostname-strict-https=true
+    https-client-auth=required
+    
+    spi-truststore-file-file=[PATH TO TRUST STORE FILE]
+    spi-truststore-file-password=[APPROPRIATE PASSWORD]
+    spi-truststore-file-hostname-verification-policy=[APPROPRIATE POLICY]
+    
+    Then verify that the certificate used in truststore is issued by a valid DoD certificate authority with following command: 
+    
+    openssl x509 -in [PATH TO TRUST STORE FILE] -text | grep -i \"issuer\" 
+    
+    If there is any issuer present in the certificate that is not a DoD approved certificate authority, this is a finding.
   "
-  desc  "fix", "Configure AAA Services to only accept certificates issued by a DoD-approved Certificate Authority for PKI-based authentication."
+  desc  "fix", "
+    Configure Keycloak to only accept certificates issued by a DoD-approved Certificate Authority for PKI-based authentication.
+    
+    Create or update Keycloak configuration with the following lines in your keycloak configuration file, conf/keycloak.conf:
+    
+    hostname-strict-https=true
+    https-client-auth=required
+    
+    spi-truststore-file-file=[PATH TO TRUST STORE FILE]
+    spi-truststore-file-password=[APPROPRIATE PASSWORD]
+    spi-truststore-file-hostname-verification-policy=[APPROPRIATE POLICY]
+    
+    Then inspect the certificates used in truststore with following command: 
+    
+    openssl x509 -in [PATH TO TRUST STORE FILE] -text | grep -i \"issuer\" 
+    
+    If there is any issuer present in the certificate that is not a DoD approved certificate authority, remove the certificates that have a CA that is non-DoD approved, and import DoD CA-approved certificates.
+  "
   impact 0.7
   tag severity: "high"
   tag gtitle: "SRG-APP-000175-AAA-000570"

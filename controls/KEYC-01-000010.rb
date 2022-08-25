@@ -18,23 +18,38 @@ control "KEYC-01-000010" do
     
     If Keycloak is not configured to audit each authentication and authorization transaction, this is a finding.
     
-    To check if Keycloak is configured to audit this setting, run the following commands from a privileged account on the Keycloak admin CLI:
+    To check if Keycloak is configured to audit this setting, log into the Keycloak admin CLI with a privileged account:
     
-    kcadm.sh get events/config -r [your realm] | grep 'eventsEnabled'
+    kcadm.sh config credentials --server [server location] --realm master --user [username] --password [password]
     
-    kcadm.sh get events/config -r [your realm] | grep 'eventsListeners'
+    Then run the following command: 
+    
+    kcadm.sh get events/config -r [YOUR REALM] 
     
     If the results are not as follows, then it is a finding.
     
-    \"eventsEnabled\" : true,
-    \"eventsListeners\" : [ \"jboss-logging\" ]
+    \"eventsEnabled\" : true, 
+    \"eventsListeners\" : [ \"jboss-logging\" ],
+    \"enabledEventTypes\" : [ APPROPRIATE EVENT TYPES ]
+    \"adminEventsEnabled\" : true,
+    \"adminEventsDetailsEnabled\" : true
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   desc  "fix", "
     Configure Keycloak to audit each authentication and authorization transaction.
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"]'
+    First, find the current enabled event types: 
+    
+    kcadm.sh get events/config -r [your realm] | grep enabledEventTypes 
+    
+    Then update the configuration: 
+    
+    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s enabledEventTypes=\"[ APPROPRIATE EVENT TYPES ]\"
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   impact 0.5
   tag severity: "medium"

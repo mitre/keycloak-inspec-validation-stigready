@@ -27,6 +27,8 @@ control "KEYC-01-000011" do
     \"eventsEnabled\" : true, 
     \"eventsListeners\" : [ \"jboss-logging\" ],
     \"enabledEventTypes\" : [ APPROPRIATE EVENT TYPES ]
+    \"adminEventsEnabled\" : true,
+    \"adminEventsDetailsEnabled\" : true
     
     Then run the command: 
     
@@ -35,13 +37,17 @@ control "KEYC-01-000011" do
     If the individual event from the resulting event lists does not contain the following key-value pair, then it is a finding. 
     
     \"type\" : [ APPROPRIATE EVENT TYPES ]
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   desc  "fix", "
     Configure Keycloak audit records to identify what type of events occurred.
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
+    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   impact 0.5
   tag severity: "medium"
