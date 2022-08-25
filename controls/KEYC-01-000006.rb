@@ -52,4 +52,22 @@ control "KEYC-01-000006" do
   tag stig_id: "KEYC-01-000006"
   tag cci: ["CCI-001403"]
   tag nist: ["AC-2 (4)"]
+
+  eventsEnabled = '"eventsEnabled" : true'
+  eventsListeners = '"eventsListeners" : [ "jboss-logging" ]'
+  enabledEventType1 = 'UPDATE_EMAIL'
+  enabledEventType2 = 'UPDATE_PROFILE'
+  enabledEventType3 = 'UPDATE_PASSWORD'
+  adminEventsEnabled = '"adminEventsEnabled" : true'
+  adminEventsDetailsEnabled = '"adminEventsDetailsEnabled" : true'
+
+  describe command('/opt/keycloak/bin/kcadm.sh get events/config -r demo') do
+    its('stdout') { should include eventsEnabled }
+    its('stdout') { should include eventsListeners }
+    its('stdout') { should include enabledEventType1 }
+    its('stdout') { should include enabledEventType2 }
+    its('stdout') { should include enabledEventType3 }
+    its('stdout') { should include adminEventsEnabled }
+    its('stdout') { should include adminEventsDetailsEnabled }
+  end
 end
