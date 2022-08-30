@@ -1,0 +1,9 @@
+# threshold.yml file
+compliance:
+  min: 50
+passed:
+  total:
+    min: 1
+failed:
+  total:
+    max: 2
