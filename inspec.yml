@@ -1,0 +1,6 @@
+---
+:name: Keycloak
+:title: Keycloak
+:maintainer: Emily Rodriguez
+:summary: 'Keycloak profile based off of the AAA STIG and Red Hat''s security guidance:
+  https://www.keycloak.org/docs/latest/server_admin/index.html#mitigating-security-threats'

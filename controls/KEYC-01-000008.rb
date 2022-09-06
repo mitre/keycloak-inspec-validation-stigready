@@ -53,5 +53,9 @@ control "KEYC-01-000008" do
   tag cci: ["CCI-001405"]
   tag nist: ["AC-2 (4)"]
 
-
+  # program = '/opt/keycloak/bin/kcadm.sh get events/config -r demo'
+	#
+  # describe audit(program) do
+  #   its('stdout') { should include outputs['eE', 'eL', 'eET', 'aEE', 'aEDE'] }
+  # end
 end
