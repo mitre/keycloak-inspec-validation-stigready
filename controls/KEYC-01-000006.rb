@@ -53,21 +53,15 @@ control "KEYC-01-000006" do
   tag cci: ["CCI-001403"]
   tag nist: ["AC-2 (4)"]
 
-  eventsEnabled = '"eventsEnabled" : true'
-  eventsListeners = '"eventsListeners" : [ "jboss-logging" ]'
-  enabledEventType1 = 'UPDATE_EMAIL'
-  enabledEventType2 = 'UPDATE_PROFILE'
-  enabledEventType3 = 'UPDATE_PASSWORD'
-  adminEventsEnabled = '"adminEventsEnabled" : true'
-  adminEventsDetailsEnabled = '"adminEventsDetailsEnabled" : true'
+  program = '/opt/keycloak/bin/kcadm.sh get events/config -r demo'
 
-  describe command('/opt/keycloak/bin/kcadm.sh get events/config -r demo') do
-    its('stdout') { should include eventsEnabled }
-    its('stdout') { should include eventsListeners }
-    its('stdout') { should include enabledEventType1 }
-    its('stdout') { should include enabledEventType2 }
-    its('stdout') { should include enabledEventType3 }
-    its('stdout') { should include adminEventsEnabled }
-    its('stdout') { should include adminEventsDetailsEnabled }
+  describe json(content: command(program).stdout) do
+	  its('eventsEnabled') { should eq input('events_enabled') }
+	  its('eventsListeners') { should cmp input('events_listeners') }
+	  its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "UPDATE_PROFILE") }
+	  its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "UPDATE_EMAIL") }
+	  its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "UPDATE_PASSWORD") }
+	  its('adminEventsEnabled') { should eq input('admin_events_enabled') }
+	  its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
   end
 end

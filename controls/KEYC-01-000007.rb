@@ -44,13 +44,11 @@ control "KEYC-01-000007" do
   tag cci: ["CCI-001404"]
   tag nist: ["AC-2 (4)"]
 
-  eventsListeners = '"eventsListeners" : [ "jboss-logging" ]'
-  adminEventsEnabled = '"adminEventsEnabled" : true'
-  adminEventsDetailsEnabled = '"adminEventsDetailsEnabled" : true'
+  program = '/opt/keycloak/bin/kcadm.sh get events/config -r demo'
 
-  describe command('/opt/keycloak/bin/kcadm.sh get events/config -r demo') do
-    its('stdout') { should include eventsListeners }
-    its('stdout') { should include adminEventsEnabled }
-    its('stdout') { should include adminEventsDetailsEnabled }
+  describe json(content: command(program).stdout) do
+	  its('eventsListeners') { should cmp input('events_listeners') }
+	  its('adminEventsEnabled') { should eq input('admin_events_enabled') }
+	  its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
   end
 end

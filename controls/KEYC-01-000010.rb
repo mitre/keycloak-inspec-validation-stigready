@@ -59,4 +59,15 @@ control "KEYC-01-000010" do
   tag stig_id: "KEYC-01-000010"
   tag cci: ["CCI-000169"]
   tag nist: ["AU-12 a"]
+
+  program = '/opt/keycloak/bin/kcadm.sh get events/config -r demo'
+
+  describe json(content: command(program).stdout) do
+	  its('eventsEnabled') { should eq input('events_enabled') }
+	  its('eventsListeners') { should cmp input('events_listeners') }
+	  # need to determine appropriate event types here (access, modify, delete)
+	  # its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "REGISTER") }
+	  its('adminEventsEnabled') { should eq input('admin_events_enabled') }
+	  its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
+  end
 end

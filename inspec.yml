@@ -105,3 +105,16 @@ inputs:
   - name: admin_events_details_enabled
     type: boolean
     value: true
+
+  - name: brute_force_protected
+    type: boolean
+    value: true
+
+  - name: failure_factor
+    type: numeric
+    value: 3
+
+  - name: max_delta_time_seconds
+    type: numeric
+    value: 900
+

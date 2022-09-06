@@ -51,4 +51,18 @@ control "KEYC-01-000009" do
   tag stig_id: "KEYC-01-000009"
   tag cci: ["CCI-000044"]
   tag nist: ["AC-7 a"]
+
+  # originally written as...
+  program1 = '/opt/keycloak/bin/kcadm.sh get realms/demo | grep "bruteForceProtected"'
+  program2 = '/opt/keycloak/bin/kcadm.sh get realms/demo | grep "failureFactor"'
+  program3 = '/opt/keycloak/bin/kcadm.sh get realms/demo | grep "maxDeltaTimeSeconds"'
+  
+  # but works this way
+  program = '/opt/keycloak/bin/kcadm.sh get realms/demo'
+
+  describe json(content: command(program).stdout) do
+	  its('bruteForceProtected') { should eq input('brute_force_protected') }
+	  its('failureFactor') { should eq input('failure_factor') }
+	  its('maxDeltaTimeSeconds') { should eq input('max_delta_time_seconds') }
+  end
 end

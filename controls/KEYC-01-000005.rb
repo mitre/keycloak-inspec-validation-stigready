@@ -59,6 +59,7 @@ control "KEYC-01-000005" do
   describe json(content: command(program).stdout) do
 	  its('eventsEnabled') { should eq input('events_enabled') }
 	  its('eventsListeners') { should cmp input('events_listeners') }
+	  # Should this also include CLIENT_REGISTER?
 	  its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "REGISTER") }
 	  its('adminEventsEnabled') { should eq input('admin_events_enabled') }
 	  its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
