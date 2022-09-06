@@ -9,7 +9,8 @@ class Audit < Inspec.resource(1)
 
   def initialize(program)
 	  @program = program
-	  @json = inspec.json(program)
+	  @output = inspec.command("#{@program}").stdout
+	  @json = inspec.json("content: #{@output}")
   end
   
   def enabledEventTypes

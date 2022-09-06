@@ -58,7 +58,7 @@ control "KEYC-01-000005" do
 
   # Haven't been able to get custom resource to work for this case
   # describe audit(program) do
-	#   its('enabledEventTypes') { should include Output.enabledEventTypes }
+	#   its('enabledEventTypes') { should cmp Output.enabledEventTypes }
   # end
   
   # This works
@@ -68,6 +68,10 @@ control "KEYC-01-000005" do
 
   # This works also
   describe json(content: command(program).stdout) do
+	  its('eventsEnabled') { should cmp Output.eventsEnabled }
+	  its('eventsListeners') { should cmp Output.eventsListeners }
     its('enabledEventTypes') { should cmp Output.enabledEventTypes }
+	  its('adminEventsEnabled') { should cmp Output.adminEventsEnabled }
+	  its('adminEventsDetailsEnabled') { should cmp Output.adminEventsDetailsEnabled }
   end
 end
