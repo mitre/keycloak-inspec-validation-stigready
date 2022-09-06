@@ -56,7 +56,18 @@ control "KEYC-01-000005" do
 
   program = '/opt/keycloak/bin/kcadm.sh get events/config -r demo'
 
-  describe command(program) do
-	  its('stdout') { should include Output.eET }
+  # Haven't been able to get custom resource to work for this case
+  # describe audit(program) do
+	#   its('enabledEventTypes') { should include Output.enabledEventTypes }
+  # end
+  
+  # This works
+  # describe json(content: command(program).stdout) do
+	#   its('enabledEventTypes') { should include "REGISTER" }
+  # end
+
+  # This works also
+  describe json(content: command(program).stdout) do
+    its('enabledEventTypes') { should cmp Output.enabledEventTypes }
   end
 end
