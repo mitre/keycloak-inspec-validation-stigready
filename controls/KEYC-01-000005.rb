@@ -1,5 +1,4 @@
 # -*- encoding : utf-8 -*-
-require_relative 'output'
 
 control "KEYC-01-000005" do
   title "Keycloak must be configured to automatically audit account creation."
@@ -55,23 +54,22 @@ control "KEYC-01-000005" do
   tag nist: ["AC-2 (4)"]
 
   program = '/opt/keycloak/bin/kcadm.sh get events/config -r demo'
-
-  # Haven't been able to get custom resource to work for this case
-  # describe audit(program) do
-	#   its('enabledEventTypes') { should cmp Output.enabledEventTypes }
-  # end
   
-  # This works
-  # describe json(content: command(program).stdout) do
-	#   its('enabledEventTypes') { should include "REGISTER" }
-  # end
-
-  # This works also
+  # Using inputs, testing inclusion of single element in array
   describe json(content: command(program).stdout) do
-	  its('eventsEnabled') { should cmp Output.eventsEnabled }
-	  its('eventsListeners') { should cmp Output.eventsListeners }
-    its('enabledEventTypes') { should cmp Output.enabledEventTypes }
-	  its('adminEventsEnabled') { should cmp Output.adminEventsEnabled }
-	  its('adminEventsDetailsEnabled') { should cmp Output.adminEventsDetailsEnabled }
+	  its('eventsEnabled') { should eq input('events_enabled') }
+	  its('eventsListeners') { should cmp input('events_listeners') }
+	  its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "REGISTER") }
+	  its('adminEventsEnabled') { should eq input('admin_events_enabled') }
+	  its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
   end
+
+  # Using inputs, testing inclusion of entire array
+  # describe json(content: command(program).stdout) do
+	#   its('eventsEnabled') { should eq input('events_enabled') }
+	#   its('eventsListeners') { should cmp input('events_listeners') }
+	#   its('enabledEventTypes') { should cmp input('enabled_event_types') }
+	#   its('adminEventsEnabled') { should eq input('admin_events_enabled') }
+	#   its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
+  # end
 end

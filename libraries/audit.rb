@@ -2,7 +2,6 @@
 # copyright: 2019, The Authors
 
 require 'hashie/mash'
-require_relative '../controls/output'
 
 class Audit < Inspec.resource(1)
   name 'audit'
