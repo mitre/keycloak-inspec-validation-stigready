@@ -56,12 +56,12 @@ control "KEYC-01-000006" do
   program = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
 
   describe json(content: command(program).stdout) do
-	  its('eventsEnabled') { should eq input('events_enabled') }
-	  its('eventsListeners') { should cmp input('events_listeners') }
-	  its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "UPDATE_PROFILE") }
-	  its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "UPDATE_EMAIL") }
-	  its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "UPDATE_PASSWORD") }
-	  its('adminEventsEnabled') { should eq input('admin_events_enabled') }
-	  its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
+	  its('eventsEnabled') { should eq true }
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+	  its('enabledEventTypes') { should include "UPDATE_PROFILE" }
+	  its('enabledEventTypes') { should include "UPDATE_EMAIL" }
+	  its('enabledEventTypes') { should include "UPDATE_PASSWORD" }
+	  its('adminEventsEnabled') { should eq true }
+	  its('adminEventsDetailsEnabled') { should eq true }
   end
 end

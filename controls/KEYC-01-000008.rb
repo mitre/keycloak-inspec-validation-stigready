@@ -56,11 +56,10 @@ control "KEYC-01-000008" do
   program = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
 
   describe json(content: command(program).stdout) do
-	  its('eventsEnabled') { should eq input('events_enabled') }
-	  its('eventsListeners') { should cmp input('events_listeners') }
-	  # The description mentions DELETE, should that be DELETE_ACCOUNT? CLIENT_DELETE?
-	  its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "DELETE_ACCOUNT") }
-	  its('adminEventsEnabled') { should eq input('admin_events_enabled') }
-	  its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
+	  its('eventsEnabled') { should eq true }
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+	  its('enabledEventTypes') { should include "DELETE_ACCOUNT" }
+	  its('adminEventsEnabled') { should eq true }
+	  its('adminEventsDetailsEnabled') { should eq true }
   end
 end

@@ -47,8 +47,8 @@ control "KEYC-01-000007" do
   program = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
 
   describe json(content: command(program).stdout) do
-	  its('eventsListeners') { should cmp input('events_listeners') }
-	  its('adminEventsEnabled') { should eq input('admin_events_enabled') }
-	  its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+	  its('adminEventsEnabled') { should eq true }
+	  its('adminEventsDetailsEnabled') { should eq true }
   end
 end

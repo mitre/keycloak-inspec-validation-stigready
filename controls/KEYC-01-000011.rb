@@ -62,16 +62,17 @@ control "KEYC-01-000011" do
   program2 = "/opt/keycloak/bin/kcadm.sh get events"
 
   describe json(content: command(program1).stdout) do
-	  its('eventsEnabled') { should eq input('events_enabled') }
-	  its('eventsListeners') { should cmp input('events_listeners') }
-	  its('enabledEventTypes') { should cmp input('enabled_event_types') }
-	  its('adminEventsEnabled') { should eq input('admin_events_enabled') }
-	  its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
+	  its('eventsEnabled') { should eq true }
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+	  # need to determine appropriate event types here (access, modify, delete)
+	  # its('enabledEventTypes') { should include "" }
+	  its('adminEventsEnabled') { should eq true }
+	  its('adminEventsDetailsEnabled') { should eq true }
   end
 	
-  describe json(content: command(program2).stdout) do
-	  # should anything other than LOGIN be here?
-	  its('type') { should include input(['event_types', 'value'], value: "LOGIN") }
-	  # its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "DELETE_ACCOUNT") }
-  end
+  # TODO: not correctly parsing json output here. multiple "type" : "somthing" outputs
+  # describe json(content: command(program2).stdout) do
+	#   # should anything other than LOGIN be here?
+	#   its('type') { should include "LOGIN" }
+  # end
 end
