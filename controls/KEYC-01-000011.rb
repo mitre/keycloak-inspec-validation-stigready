@@ -57,4 +57,21 @@ control "KEYC-01-000011" do
   tag stig_id: "KEYC-01-000011"
   tag cci: ["CCI-000130"]
   tag nist: ["AU-3"]
+
+  program1 = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
+  program2 = "/opt/keycloak/bin/kcadm.sh get events"
+
+  describe json(content: command(program1).stdout) do
+	  its('eventsEnabled') { should eq input('events_enabled') }
+	  its('eventsListeners') { should cmp input('events_listeners') }
+	  its('enabledEventTypes') { should cmp input('enabled_event_types') }
+	  its('adminEventsEnabled') { should eq input('admin_events_enabled') }
+	  its('adminEventsDetailsEnabled') { should eq input('admin_events_details_enabled') }
+  end
+	
+  describe json(content: command(program2).stdout) do
+	  # should anything other than LOGIN be here?
+	  its('type') { should include input(['event_types', 'value'], value: "LOGIN") }
+	  # its('enabledEventTypes') { should include input(['enabled_event_types', 'value'], value: "DELETE_ACCOUNT") }
+  end
 end

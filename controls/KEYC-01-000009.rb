@@ -58,7 +58,7 @@ control "KEYC-01-000009" do
   program3 = '/opt/keycloak/bin/kcadm.sh get realms/demo | grep "maxDeltaTimeSeconds"'
   
   # but works this way
-  program = '/opt/keycloak/bin/kcadm.sh get realms/demo'
+  program = "/opt/keycloak/bin/kcadm.sh get realms/#{input('keycloak_realm')}"
 
   describe json(content: command(program).stdout) do
 	  its('bruteForceProtected') { should eq input('brute_force_protected') }

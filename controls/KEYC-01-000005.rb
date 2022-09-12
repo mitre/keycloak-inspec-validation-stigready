@@ -53,7 +53,7 @@ control "KEYC-01-000005" do
   tag cci: ["CCI-000018"]
   tag nist: ["AC-2 (4)"]
 
-  program = '/opt/keycloak/bin/kcadm.sh get events/config -r demo'
+  program = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
   
   # Using inputs, testing inclusion of single element in array
   describe json(content: command(program).stdout) do

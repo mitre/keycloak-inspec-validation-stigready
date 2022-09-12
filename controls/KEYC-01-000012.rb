@@ -65,4 +65,6 @@ control "KEYC-01-000012" do
   tag stig_id: "KEYC-01-000012"
   tag cci: ["CCI-000131"]
   tag nist: ["AU-3"]
+	
+	
 end

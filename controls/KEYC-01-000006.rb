@@ -53,7 +53,7 @@ control "KEYC-01-000006" do
   tag cci: ["CCI-001403"]
   tag nist: ["AC-2 (4)"]
 
-  program = '/opt/keycloak/bin/kcadm.sh get events/config -r demo'
+  program = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
 
   describe json(content: command(program).stdout) do
 	  its('eventsEnabled') { should eq input('events_enabled') }

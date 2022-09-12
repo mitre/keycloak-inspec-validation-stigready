@@ -6,6 +6,10 @@
   https://www.keycloak.org/docs/latest/server_admin/index.html#mitigating-security-threats'
 
 inputs:
+  - name: keycloak_realm
+    type: string
+    value: master
+
   - name: events_enabled
     type: boolean
     value: true
@@ -118,3 +122,7 @@ inputs:
     type: numeric
     value: 900
 
+  - name: event_types
+    type: array
+    value:
+      - "LOGIN"
