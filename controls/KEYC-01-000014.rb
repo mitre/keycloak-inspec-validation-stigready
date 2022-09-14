@@ -56,4 +56,13 @@ control "KEYC-01-000014" do
   tag stig_id: "KEYC-01-000014"
   tag cci: ["CCI-000133"]
   tag nist: ["AU-3"]
+
+  test_command = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
+
+  describe json(content: command(test_command).stdout) do
+	  its('eventsEnabled') { should eq true }
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+	  its('adminEventsEnabled') { should eq true }
+	  its('adminEventsDetailsEnabled') { should eq true }
+  end
 end

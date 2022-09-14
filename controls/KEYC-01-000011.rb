@@ -58,21 +58,22 @@ control "KEYC-01-000011" do
   tag cci: ["CCI-000130"]
   tag nist: ["AU-3"]
 
-  program1 = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
-  program2 = "/opt/keycloak/bin/kcadm.sh get events"
+  test_command = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
 
-  describe json(content: command(program1).stdout) do
+  describe json(content: command(test_command).stdout) do
 	  its('eventsEnabled') { should eq true }
 	  its('eventsListeners') { should eq ["jboss-logging"] }
-	  # need to determine appropriate event types here (access, modify, delete)
-	  # its('enabledEventTypes') { should include "" }
 	  its('adminEventsEnabled') { should eq true }
 	  its('adminEventsDetailsEnabled') { should eq true }
   end
-	
-  # TODO: not correctly parsing json output here. multiple "type" : "somthing" outputs
-  # describe json(content: command(program2).stdout) do
-	#   # should anything other than LOGIN be here?
-	#   its('type') { should include "LOGIN" }
-  # end
+
+  # comment that more enabledEventTypes can be added, this is a minimum
+  describe 'JSON content' do
+	  it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
+		  actual_events_enabled = json(content: command(test_command).stdout)['enabledEventTypes']
+		  missing = actual_events_enabled - input('enabled_event_types')
+		  failure_message = "The generated JSON output does not include: #{missing}"
+		  expect(missing).to be_empty, failure_message
+	  end
+  end
 end

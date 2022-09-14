@@ -40,22 +40,22 @@ control "KEYC-01-000005" do
     
     Then update the configuration:
     
-    kcadm.sh update events/config -r [your realm] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"] -s enabledEventTypes=\"[full list with REGISTER concatenated]\"
+    kcadm.sh update events/config -r [your realm] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s eventsEnabled=true -s eventsListeners=[\"jboss-logging\"] -s enabledEventTypes=\"[full list with REGISTER concatenated]\"
     
     Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   impact 0.5
   tag severity: "medium"
-  tag gtitle: "SRG-APP-000026-AAA-000090"
+  tag title: "SRG-APP-000026-AAA-000090"
   tag gid: nil
   tag rid: nil
   tag stig_id: "KEYC-01-000005"
   tag cci: ["CCI-000018"]
   tag nist: ["AC-2 (4)"]
 
-  program = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
+  test_command = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
   
-  describe json(content: command(program).stdout) do
+  describe json(content: command(test_command).stdout) do
 	  its('eventsEnabled') { should eq true }
 	  its('eventsListeners') { should eq ["jboss-logging"] }
 	  # Should this also include CLIENT_REGISTER?

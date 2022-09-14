@@ -83,4 +83,21 @@ control "KEYC-01-000017" do
   tag stig_id: "KEYC-01-000017"
   tag cci: ["CCI-000139"]
   tag nist: ["AU-5 a"]
+
+  test_command = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
+
+  describe json(content: command(test_command).stdout) do
+	  its('eventsEnabled') { should eq true }
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+  end
+
+  # comment that more enabledEventTypes can be added, this is a minimum
+  describe 'JSON content' do
+	  it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
+		  actual_events_enabled = json(content: command(test_command).stdout)['enabledEventTypes']
+		  missing = actual_events_enabled - input('enabled_event_types')
+		  failure_message = "The generated JSON output does not include: #{missing}"
+		  expect(missing).to be_empty, failure_message
+	  end
+  end
 end
