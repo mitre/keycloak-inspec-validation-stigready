@@ -85,4 +85,9 @@ control "KEYC-01-000012" do
 		  expect(missing).to be_empty, failure_message
 	  end
   end
+
+  describe file('/opt/keycloak/conf/keycloak.conf') do
+	  it { should exist }
+	  its('content') { should match(%r{^log-console-format='%d\{yyyy-MM-dd HH:mm:ss,SSS\} %-5p \[%c\{3\.\}\] \(%t\) %s%e%n'}) }
+  end
 end

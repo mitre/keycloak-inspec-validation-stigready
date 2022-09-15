@@ -42,7 +42,7 @@ control "KEYC-01-000018" do
     
     Then check that the log service is enabled on the system with the following command: 
      
-    systemctl is-enabled rsyslog  
+    systemctl is-enabled rsyslog
      
     If the command above returns \"disabled\", this is a finding. 
      
@@ -90,4 +90,37 @@ control "KEYC-01-000018" do
   tag stig_id: "KEYC-01-000018"
   tag cci: ["CCI-000140"]
   tag nist: ["AU-5 b"]
+
+  test_command = "/opt/keycloak/bin/kcadm.sh get events/config -r #{input('keycloak_realm')}"
+
+  describe json(content: command(test_command).stdout) do
+	  its('eventsEnabled') { should eq true }
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+  end
+
+  # comment that more enabledEventTypes can be added, this is a minimum
+  describe 'JSON content' do
+	  it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
+		  actual_events_enabled = json(content: command(test_command).stdout)['enabledEventTypes']
+		  missing = actual_events_enabled - input('enabled_event_types')
+		  failure_message = "The generated JSON output does not include: #{missing}"
+		  expect(missing).to be_empty, failure_message
+	  end
+  end
+
+  describe file('/opt/keycloak/conf/keycloak.conf') do
+	  it { should exist }
+	  its('content') { should match(%r{^spi-events-listener-jboss-logging-success-level=info}) }
+	  its('content') { should match(%r{^spi-events-listener-jboss-logging-error-level=error}) }
+  end
+
+  describe file('/opt/keycloak/conf/quarkus.properties') do
+	  it { should exist }
+	  its('content') { should match(%r{^quarkus.log.syslog.enable=true}) }
+	  # its('content') { should match(%r{quarkus.log.syslog.endpoint=[APPROPRIATE ENDPOINT]}) }
+	  # its('content') { should match(%r{quarkus.log.syslog.protocol=[APPROPRIATE PROTOCOL]}) }
+  end
+
+  # check if running inside a container, example @ https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/blob/main/controls/SV-230254.rb
+  # systemctl command not available for: systemctl is-active rsyslog
 end

@@ -48,4 +48,18 @@ control "KEYC-01-000023" do
   tag stig_id: "KEYC-01-000023"
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b"]
+
+  test_command = "/opt/keycloak/bin/kcadm.sh get realms/#{input('keycloak_realm')} | grep 'hashAlgorithm'"
+
+  describe command(test_command) do
+	  # change these to check that they are not nil, or check that key exists
+	  its('stdout') { should include '"passwordPolicy" : "hashAlgorithm(pbkdf2-sha256)"' }
+  end
+
+  describe file('/opt/keycloak/conf/keycloak.conf') do
+	  it { should exist }
+	  its('content') { should match(%r{^cache=ispn}) }
+	  its('content') { should match(%r{^cache-stack=tcp}) }
+  end
+
 end

@@ -69,7 +69,7 @@ control "KEYC-01-000013" do
 	  # change these to check that they are not nil, or check that key exists
 	  its('stdout') { should include '"realmId" : "0137bc9e-7a66-44bb-8a20-dd1f01070ad2"' }
 	  its('stdout') { should include '"userId" : "d654175b-62b8-449e-9e8d-2b635db5d9e5"' }
-	  its('stdout') { should include '"sessionId" : "a856ae19-777e-4ba6-a413-1e387153e57c"' }
+	  its('stdout') { should include '"sessionId" : "4d140156-d601-4a21-a4b2-9c707aae421f"' }
 	  its('stdout') { should include '"ipAddress" : "127.0.0.1"' }
   end
 end

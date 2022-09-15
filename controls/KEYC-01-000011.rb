@@ -66,7 +66,7 @@ control "KEYC-01-000011" do
 	  its('adminEventsEnabled') { should eq true }
 	  its('adminEventsDetailsEnabled') { should eq true }
   end
-
+  
   # comment that more enabledEventTypes can be added, this is a minimum
   describe 'JSON content' do
 	  it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
