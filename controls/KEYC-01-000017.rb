@@ -100,4 +100,20 @@ control "KEYC-01-000017" do
 		  expect(missing).to be_empty, failure_message
 	  end
   end
+	
+  describe file('/opt/keycloak/conf/keycloak.conf') do
+    it { should exist }
+    its('content') { should match(%r{^spi-events-listener-jboss-logging-success-level=info}) }
+    its('content') { should match(%r{^spi-events-listener-jboss-logging-error-level=error}) }
+  end
+
+  describe file('/opt/keycloak/conf/quarkus.properties') do
+	  it { should exist }
+	  its('content') { should match(%r{^quarkus.log.syslog.enable=true}) }
+	  # its('content') { should match(%r{quarkus.log.syslog.endpoint=[APPROPRIATE ENDPOINT]}) }
+	  # its('content') { should match(%r{quarkus.log.syslog.protocol=[APPROPRIATE PROTOCOL]}) }
+  end
+	
+  # check if running inside a container, example @ https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/blob/main/controls/SV-230254.rb
+  # /etc/audit/ directory does not exist.
 end

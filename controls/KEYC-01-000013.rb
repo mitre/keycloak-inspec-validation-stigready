@@ -66,6 +66,7 @@ control "KEYC-01-000013" do
   test_command = "/opt/keycloak/bin/kcadm.sh get events -r #{input('keycloak_realm')} | grep -E 'realmId|userId|sessionId|ipAddress'"
 
   describe command(test_command) do
+	  # change these to check that they are not nil, or check that key exists
 	  its('stdout') { should include '"realmId" : "0137bc9e-7a66-44bb-8a20-dd1f01070ad2"' }
 	  its('stdout') { should include '"userId" : "d654175b-62b8-449e-9e8d-2b635db5d9e5"' }
 	  its('stdout') { should include '"sessionId" : "a856ae19-777e-4ba6-a413-1e387153e57c"' }

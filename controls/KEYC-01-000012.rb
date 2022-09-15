@@ -73,6 +73,7 @@ control "KEYC-01-000012" do
 	  its('eventsListeners') { should eq ["jboss-logging"] }
 	  its('adminEventsEnabled') { should eq true }
 	  its('adminEventsDetailsEnabled') { should eq true }
+	  # test that enabledEventTypes in not empty
   end
 
   # comment that more enabledEventTypes can be added, this is a minimum
