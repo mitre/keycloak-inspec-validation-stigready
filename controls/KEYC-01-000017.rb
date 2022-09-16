@@ -114,6 +114,11 @@ control "KEYC-01-000017" do
 	  # its('content') { should match(%r{quarkus.log.syslog.protocol=[APPROPRIATE PROTOCOL]}) }
   end
 	
-  # check if running inside a container, example @ https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/blob/main/controls/SV-230254.rb
   # /etc/audit/ directory does not exist.
+  if virtualization.system.eql?('docker')
+	  describe "Manual review is required within a container" do
+		  skip "Verifying the host's configuration to alert the SA and ISSO when any audit processing failure occurs cannot be done within the container and should be reviewed manually."
+	  end
+	  # TODO: else here?
+  end
 end

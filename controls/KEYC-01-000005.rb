@@ -58,7 +58,7 @@ control "KEYC-01-000005" do
   describe json(content: command(test_command).stdout) do
 	  its('eventsEnabled') { should eq true }
 	  its('eventsListeners') { should eq ["jboss-logging"] }
-	  # Should this also include CLIENT_REGISTER?
+	  # TODO: should this also include CLIENT_REGISTER?
 	  its('enabledEventTypes') { should include "REGISTER" }
 	  its('adminEventsEnabled') { should eq true }
 	  its('adminEventsDetailsEnabled') { should eq true }

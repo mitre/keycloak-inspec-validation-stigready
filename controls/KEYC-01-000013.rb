@@ -61,15 +61,16 @@ control "KEYC-01-000013" do
   tag cci: ["CCI-000132"]
   tag nist: ["AU-3"]
 	
-  # Get Will/Emily opinion on this. Treat like 11 and 12, or differently?
-  # If using this approach, clean up
   test_command = "#{input('path')}kcadm.sh get events -r #{input('keycloak_realm')} | grep -E 'realmId|userId|sessionId|ipAddress'"
 
   describe command(test_command) do
 	  # change these to check that they are not nil, or check that key exists
-	  its('stdout') { should include '"realmId" : "0137bc9e-7a66-44bb-8a20-dd1f01070ad2"' }
-	  its('stdout') { should include '"userId" : "d654175b-62b8-449e-9e8d-2b635db5d9e5"' }
-	  its('stdout') { should include '"sessionId" : "4d140156-d601-4a21-a4b2-9c707aae421f"' }
+	  its('stdout') { should match(%r{"realmId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
+	  its('stdout') { should match(%r{"userId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
+	  its('stdout') { should match(%r{"sessionId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
+	  # its('stdout') { should include '"realmId" : "0137bc9e-7a66-44bb-8a20-dd1f01070ad2"' }
+	  # its('stdout') { should include '"userId" : "d654175b-62b8-449e-9e8d-2b635db5d9e5"' }
+	  # its('stdout') { should include '"sessionId" : "4d140156-d601-4a21-a4b2-9c707aae421f"' }
 	  its('stdout') { should include '"ipAddress" : "127.0.0.1"' }
   end
 end
