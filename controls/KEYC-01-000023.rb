@@ -49,7 +49,7 @@ control "KEYC-01-000023" do
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b"]
 
-  test_command = "/opt/keycloak/bin/kcadm.sh get realms/#{input('keycloak_realm')} | grep 'hashAlgorithm'"
+  test_command = "#{input('path')}kcadm.sh get realms/#{input('keycloak_realm')} | grep 'hashAlgorithm'"
 
   describe command(test_command) do
 	  # change these to check that they are not nil, or check that key exists

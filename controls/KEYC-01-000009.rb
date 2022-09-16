@@ -52,7 +52,7 @@ control "KEYC-01-000009" do
   tag cci: ["CCI-000044"]
   tag nist: ["AC-7 a"]
 
-  test_command = "/opt/keycloak/bin/kcadm.sh get realms/#{input('keycloak_realm')}"
+  test_command = "#{input('path')}kcadm.sh get realms/#{input('keycloak_realm')}"
 
   describe json(content: command(test_command).stdout) do
 	  its('bruteForceProtected') { should eq true }

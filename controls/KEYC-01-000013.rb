@@ -63,7 +63,7 @@ control "KEYC-01-000013" do
 	
   # Get Will/Emily opinion on this. Treat like 11 and 12, or differently?
   # If using this approach, clean up
-  test_command = "/opt/keycloak/bin/kcadm.sh get events -r #{input('keycloak_realm')} | grep -E 'realmId|userId|sessionId|ipAddress'"
+  test_command = "#{input('path')}kcadm.sh get events -r #{input('keycloak_realm')} | grep -E 'realmId|userId|sessionId|ipAddress'"
 
   describe command(test_command) do
 	  # change these to check that they are not nil, or check that key exists

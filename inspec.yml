@@ -6,6 +6,10 @@
   https://www.keycloak.org/docs/latest/server_admin/index.html#mitigating-security-threats'
 
 inputs:
+  - name: path
+    type: string
+    value: /opt/keycloak/bin/
+
   - name: keycloak_realm
     type: string
     value: master
