@@ -53,7 +53,7 @@ control "KEYC-01-000014" do
   tag cci: ["CCI-000133"]
   tag nist: ["AU-3"]
 
-  test_command = "#{input('path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
 
   describe json(content: command(test_command).stdout) do
 	  its('eventsEnabled') { should eq true }

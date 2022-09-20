@@ -63,4 +63,22 @@ control "KEYC-01-000022" do
   tag stig_id: "KEYC-01-000022"
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b"]
+
+  describe file("#{input('keycloak_conf_path')}") do
+	  it { should exist }
+	  its('content') { should match(%r{^hostname-strict-https=true}) }
+	  its('content') { should match(%r{^https-client-auth=required}) }
+	  # TODO: the following syntax has not been tested
+	  # its('content') { should match(%r{^https-trust-store-file=#{input('trust_store_file_path')}}) }
+	  # its('content') { should match(%r{^https-trust-store-password=#{input('trust_store_password')}}) }
+	  # if its('content') { should match(%r{^https-key-store-file=#{input('trust_store_file_path')}}) }
+		#   its('content') { should match(%r{^https-key-store-password=#{input('trust_store_password')}}) }
+	  # else
+		#   its('content') { should match(%r{^https-certificate-file=#{input('certificate_path')}}) }
+		#   its('content') { should match(%r{^https-certificate-key-file=#{input('certificate_key_path')}}) }
+	  # end
+  end
+
+  # TODO: I need to create a trustStoreFile, in what dir? Path var is in inspec.yml waiting for input
+	
 end

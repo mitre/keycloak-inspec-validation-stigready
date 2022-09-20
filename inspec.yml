@@ -6,7 +6,7 @@
   https://www.keycloak.org/docs/latest/server_admin/index.html#mitigating-security-threats'
 
 inputs:
-  - name: path
+  - name: executable_path
     type: string
     value: /opt/keycloak/bin/
 
@@ -14,7 +14,27 @@ inputs:
     type: string
     value: master
 
-#  - name: events_enabled
+  - name: keycloak_conf_path
+    type: string
+    value: /opt/keycloak/conf/keycloak.conf
+    
+#  - name: trust_store_file_path
+#    type: string
+#    value:
+#
+#  - name: trust_store_password
+#    type: string
+#    value:
+#
+#  - name: certificate_path
+#    type: string
+#    value:
+#
+#  - name: certificate_key_path
+#    type: string
+#    value:
+
+  #  - name: events_enabled
 #    type: boolean
 #    value: true
 #

@@ -65,7 +65,7 @@ control "KEYC-01-000012" do
   tag cci: ["CCI-000131"]
   tag nist: ["AU-3"]
 
-  test_command = "#{input('path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
 
   describe json(content: command(test_command).stdout) do
 	  its('eventsEnabled') { should eq true }
@@ -85,7 +85,7 @@ control "KEYC-01-000012" do
 	  end
   end
 
-  describe file('/opt/keycloak/conf/keycloak.conf') do
+  describe file("#{input('keycloak_conf_path')}") do
 	  it { should exist }
 	  its('content') { should match(%r{^log-console-format='%d\{yyyy-MM-dd HH:mm:ss,SSS\} %-5p \[%c\{3\.\}\] \(%t\) %s%e%n'}) }
   end
