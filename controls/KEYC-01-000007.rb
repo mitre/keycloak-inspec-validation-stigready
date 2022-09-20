@@ -16,7 +16,7 @@ control "KEYC-01-000007" do
     
     Then run the following commands:
     
-    kcadm.sh get events/config -r [your realm]
+    kcadm.sh get events/config -r [realm]
     
     If the results are not as follows, then it is a finding.
     
@@ -31,7 +31,7 @@ control "KEYC-01-000007" do
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    kcadm.sh update events/config -r [your realm] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s eventsListeners=[\"jboss-logging\"]
+    kcadm.sh update events/config -r [realm] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s eventsListeners=[\"jboss-logging\"]
     
     Note: Enabling 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners', configures Keycloak to audit account creations, account updates, account deletions, and admin actions.
   "

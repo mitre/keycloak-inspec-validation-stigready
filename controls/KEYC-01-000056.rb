@@ -18,7 +18,7 @@ control "KEYC-01-000056" do
     
     then run the following command:
     
-    kcadm.sh get events/config -r [YOUR REALM] 
+    kcadm.sh get events/config -r [realm]
     
     If the results are not as follows, then it is a finding.
     
@@ -28,27 +28,56 @@ control "KEYC-01-000056" do
     \"adminEventsEnabled\" : true,
     \"adminEventsDetailsEnabled\" : true
     
-    Then inspect recorded time from log messages. If the recorded messages do not use Coordinated Universal Time (UTC) or an offset to UTC time for entry, this is a finding. 
-    
-    Then check keycloak configuration file, keycloak.conf. If the file does not contain the following key-value pairs, it is a finding. 
+    Then check keycloak configuration file, conf/keycloak.conf. If the file does not contain the following key-value pairs, it is a finding.
     
     spi-events-listener-jboss-logging-success-level=info
     spi-events-listener-jboss-logging-error-level=error
-    log-console-format=\"'%z{[UTC OR AN OFFSET TO UTC]} [OTHER FORMATTING SYMBOLS]'\"
+    
+    Then check quarkus configuration file, conf/quarkus.properties. If the file does not contain the following key-value pairs, it is a finding.
+    
+    quarkus.log.syslog.enable=true
+    quarkus.log.syslog.endpoint=[APPROPRIATE ENDPOINT]
+    quarkus.log.syslog.protocol=[APPROPRIATE PROTOCOL]
+    quarkus.log.syslog.format=\"%z{UTC OR AN OFFSET TO UTC} [OTHER FORMATTING SYMBOLS]\"
+    
+    Then check that the log service is enabled on the system with the following command:
+    
+    systemctl is-enabled rsyslog
+    
+    If the command above returns \"disabled\", this is a finding.
+    
+    Check that the log service is properly running and active on the system with the following command:
+    
+    systemctl is-active rsyslog
+    
+    If the command above returns \"inactive\", this is a finding.
   "
   desc  "fix", "
     Configure Keycloak to use or map to UTC to record time stamps for audit records.
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
+    kcadm.sh update events/config -r [realm] -s eventsEnabled=true -s eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
     
-    Then create or update Keycloak logging format with the following line in your keycloak configuration file, keycloak.conf:
+    Then create or update Keycloak logging format with the following line in your keycloak configuration file, conf/keycloak.conf:
     
     spi-events-listener-jboss-logging-success-level=info
     spi-events-listener-jboss-logging-error-level=error
-    log-console-format=\"'%z{UTC} [OTHER FORMATTING SYMBOLS]'\"
     
+    Then create or update quarkus configuration file, conf/quarkus.properties:
+    
+    quarkus.log.syslog.enable=true
+    quarkus.log.syslog.endpoint=[APPROPRIATE ENDPOINT]
+    quarkus.log.syslog.protocol=[APPROPRIATE PROTOCOL]
+    quarkus.log.syslog.format=\"%z{UTC} [OTHER FORMATTING SYMBOLS]\"
+    
+    Then install the log service (if the log service is not already installed) on system with the following command:
+    
+    sudo apt-get install rsyslog
+    
+    Enable the log service with the following command:
+    
+    sudo systemctl enable --now rsyslog
   "
   impact 0.5
   tag severity: "medium"

@@ -14,9 +14,9 @@ control "KEYC-01-000016" do
     
     To check if Keycloak is configured to audit this setting, run the following commands from a privileged account on the Keycloak admin CLI:
     
-    kcadm.sh get events/config -r [your realm] | grep 'eventsEnabled'
+    kcadm.sh get events/config -r [realm] | grep 'eventsEnabled'
     
-    kcadm.sh get events/config -r [your realm] | grep 'eventsListeners'
+    kcadm.sh get events/config -r [realm] | grep 'eventsListeners'
     
     If the results are not as follows, then it is a finding.
     
@@ -33,7 +33,7 @@ control "KEYC-01-000016" do
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"]'
+    kcadm.sh update events/config -r [realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"]'
   "
   impact 0.5
   tag severity: "medium"

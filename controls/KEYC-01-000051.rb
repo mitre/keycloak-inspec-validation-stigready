@@ -12,7 +12,7 @@ control "KEYC-01-000051" do
     
     To check if Keycloak is configured to audit account creation, you can run the following commands from a privileged account on the Keycloak admin CLI:
     
-    kcadm.sh get events/config -r [your realm] | grep adminEvents
+    kcadm.sh get events/config -r [realm] | grep adminEvents
     
     If the results are not as follows, then it is a finding.
     
@@ -26,11 +26,11 @@ control "KEYC-01-000051" do
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     First, find the current configuration: 
     
-    kcadm.sh get events/config -r [your realm] | grep adminEvents
+    kcadm.sh get events/config -r [realm] | grep adminEvents
     
     Next, update the configuration:
     
-    kcadm.sh update events/config -r [your realm] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
+    kcadm.sh update events/config -r [realm] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
   "
   impact 0.5
   tag severity: "medium"

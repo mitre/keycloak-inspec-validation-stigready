@@ -24,7 +24,7 @@ control "KEYC-01-000010" do
     
     Then run the following command: 
     
-    kcadm.sh get events/config -r [YOUR REALM] 
+    kcadm.sh get events/config -r [realm]
     
     If the results are not as follows, then it is a finding.
     
@@ -43,11 +43,11 @@ control "KEYC-01-000010" do
     
     First, find the current enabled event types: 
     
-    kcadm.sh get events/config -r [your realm] | grep enabledEventTypes 
+    kcadm.sh get events/config -r [realm] | grep enabledEventTypes
     
     Then update the configuration: 
     
-    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s enabledEventTypes=\"[ APPROPRIATE EVENT TYPES ]\"
+    kcadm.sh update events/config -r [realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s enabledEventTypes=\"[ APPROPRIATE EVENT TYPES ]\"
     
     Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
