@@ -70,6 +70,7 @@ control "KEYC-01-000013" do
 	  # its('stdout') { should include '"realmId" : "0137bc9e-7a66-44bb-8a20-dd1f01070ad2"' }
 	  # its('stdout') { should include '"userId" : "d654175b-62b8-449e-9e8d-2b635db5d9e5"' }
 	  # its('stdout') { should include '"sessionId" : "4d140156-d601-4a21-a4b2-9c707aae421f"' }
+	  # TODO: What should this be?
 	  its('stdout') { should include '"ipAddress" : "127.0.0.1"' }
   end
 end

@@ -78,6 +78,21 @@ control "KEYC-01-000022" do
 		#   its('content') { should match(%r{^https-certificate-key-file=#{input('certificate_key_path')}}) }
 	  # end
   end
+  
+  # Maybe a better way
+  # only_if('Using https key store') do
+	#   describe file("#{input('keycloak_conf_path')}") do
+	# 	  its('content') { should match(%r{^https-key-store-file=#{input('trust_store_file_path')}}) }
+	# 	  its('content') { should match(%r{^https-key-store-password=#{input('trust_store_password')}}) }
+	#   end
+  # end
+  #
+  # only_if('Using https certificate') do
+	#   describe file("#{input('keycloak_conf_path')}") do
+	# 	  its('content') { should match(%r{^https-certificate-file=#{input('certificate_path')}}) }
+	# 	  its('content') { should match(%r{^https-certificate-key-file=#{input('certificate_key_path')}}) }
+	#   end
+  # end
 
   # TODO: I need to create a trustStoreFile, in what dir? Path var is in inspec.yml waiting for input
 	

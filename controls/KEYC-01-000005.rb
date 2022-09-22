@@ -45,7 +45,7 @@ control "KEYC-01-000005" do
   "
   impact 0.5
   tag severity: "medium"
-  tag title: "SRG-APP-000026-AAA-000090"
+  tag gtitle: "SRG-APP-000026-AAA-000090"
   tag gid: nil
   tag rid: nil
   tag stig_id: "KEYC-01-000005"

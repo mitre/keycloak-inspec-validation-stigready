@@ -34,7 +34,7 @@ inputs:
 #    type: string
 #    value:
 
-  #  - name: events_enabled
+#  - name: events_enabled
 #    type: boolean
 #    value: true
 #
