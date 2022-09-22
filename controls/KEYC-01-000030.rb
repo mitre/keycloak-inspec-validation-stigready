@@ -48,4 +48,11 @@ control "KEYC-01-000030" do
   tag stig_id: "KEYC-01-000030"
   tag cci: ["CCI-000200"]
   tag nist: ["IA-5 (1) (e)"]
+
+  #Todo: check passwordHistory is greater than or equal to 5
+  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')} | grep 'passwordHistory'"
+
+  describe command(test_command) do
+	  its('stdout') { should_not be_empty }
+  end
 end
