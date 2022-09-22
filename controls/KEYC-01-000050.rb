@@ -40,4 +40,6 @@ control "KEYC-01-000050" do
   tag stig_id: "KEYC-01-000050"
   tag cci: ["CCI-001686"]
   tag nist: ["AC-2 (4)"]
+
+  # TODO: not sure. 47-50 all similar.
 end

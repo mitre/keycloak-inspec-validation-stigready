@@ -83,4 +83,48 @@ control "KEYC-01-000055" do
   tag stig_id: "KEYC-01-000055"
   tag cci: ["CCI-001851"]
   tag nist: ["AU-4 (1)"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+
+  describe json(content: command(test_command).stdout) do
+	  its('eventsEnabled') { should eq true }
+	  # TODO: Should this be tested as below in case of other possible eventsListeners?
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+  end
+
+  # comment that more enabledEventTypes can be added, this is a minimum
+  describe 'JSON content' do
+	  it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
+		  actual_events_enabled = json(content: command(test_command).stdout)['enabledEventTypes']
+		  missing = actual_events_enabled - input('enabled_event_types')
+		  failure_message = "The generated JSON output does not include: #{missing}"
+		  expect(missing).to be_empty, failure_message
+	  end
+  end
+
+  # describe 'JSON content' do
+  #   it 'eventsListeners is expected to include events_listeners listed in inspec.yml' do
+  # 	  actual_events_listeners = json(content: command(test_command).stdout)['eventsListeners']
+  # 	  missing = actual_events_listeners - input('events_listeners')
+  # 	  failure_message = "The generated JSON output does not include: #{missing}"
+  # 	  expect(missing).to be_empty, failure_message
+  #   end
+  # end
+
+  describe file('/opt/keycloak/conf/keycloak.conf') do
+	  it { should exist }
+	  its('content') { should match(%r{^spi-events-listener-jboss-logging-success-level=info}) }
+	  its('content') { should match(%r{^spi-events-listener-jboss-logging-error-level=error}) }
+  end
+
+  describe file('/opt/keycloak/conf/quarkus.properties') do
+	  it { should exist }
+	  its('content') { should match(%r{^quarkus.log.syslog.enable=true}) }
+	  # TODO: for whatever the appropriate endpoint and protocol are, inspec.yml has vars waiting to be filled
+	  # TODO: this syntax has not been tested
+	  # its('content') { should match(%r{quarkus.log.syslog.endpoint=#{input('quarkus_endpoint')}}) }
+	  # its('content') { should match(%r{quarkus.log.syslog.protocol=#{input('quarkus_protocol')}}) }
+  end
+	
+  # TODO: "systemctl is-enabled rsyslog" and "systemctl is-active rsyslog" are a no-go. Solutions?
 end

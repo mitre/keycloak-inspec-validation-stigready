@@ -48,6 +48,16 @@ control "KEYC-01-000016" do
 
   describe json(content: command(test_command).stdout) do
 	  its('eventsEnabled') { should eq true }
+	  # TODO: Should this be tested as below in case of other possible eventsListeners?
 	  its('eventsListeners') { should eq ["jboss-logging"] }
   end
+
+  # describe 'JSON content' do
+  #   it 'eventsListeners is expected to include events_listeners listed in inspec.yml' do
+  # 	  actual_events_listeners = json(content: command(test_command).stdout)['eventsListeners']
+  # 	  missing = actual_events_listeners - input('events_listeners')
+  # 	  failure_message = "The generated JSON output does not include: #{missing}"
+  # 	  expect(missing).to be_empty, failure_message
+  #   end
+  # end
 end

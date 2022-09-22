@@ -56,6 +56,7 @@ control "KEYC-01-000009" do
 
   describe json(content: command(test_command).stdout) do
 	  its('bruteForceProtected') { should eq true }
+	  # TODO: in 54 failureFactor is instructed to be set to 30. typo?
 	  its('failureFactor') { should eq 3 }
 	  its('maxDeltaTimeSeconds') { should eq 900 }
   end

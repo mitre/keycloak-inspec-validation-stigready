@@ -57,4 +57,22 @@ control "KEYC-01-000040" do
   tag stig_id: "KEYC-01-000040"
   tag cci: ["CCI-000185"]
   tag nist: ["IA-5 (2) (a)"]
+
+  describe file("#{input('keycloak_conf_path')}") do
+	  it { should exist }
+	  its('content') { should match(%r{^hostname-strict-https=true}) }
+	  its('content') { should match(%r{^https-client-auth=required}) }
+	  # TODO: create a trustStoreFile, in what dir? Path var is in inspec.yml waiting for input
+	  # TODO: the following syntax has not been tested
+	  # its('content') { should match(%r{^spi-truststore-file-file=#{input('spi_trust_store_file_path')}}) }
+	  # its('content') { should match(%r{^spi-truststore-file-password=#{input('spi_trust_store_password')}}) }
+	  # its('content') { should match(%r{^spi-truststore-file-hostname-verification-policy=#{input('spi_trust_store_policy')}}) }
+  end
+
+  # TODO: DOD_approved_CA list not yet filled. inspec.yml waiting for input
+  # test_command = "openssl x509 -in #{input('spi_trust_store_file_path')} -text | grep -i 'issuer'"
+	#
+  # describe command(test_command) do
+	#   its('stdout') { should be_in "#{input('DOD_approved_CA')}" }
+	# end
 end

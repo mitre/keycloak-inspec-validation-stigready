@@ -113,6 +113,7 @@ control "KEYC-01-000019" do
 
   describe json(content: command(test_command).stdout) do
 	  its('eventsEnabled') { should eq true }
+	  # TODO: Should this be tested as below in case of other possible eventsListeners?
 	  its('eventsListeners') { should eq ["jboss-logging"] }
   end
 
@@ -126,6 +127,15 @@ control "KEYC-01-000019" do
 	  end
   end
 
+  # describe 'JSON content' do
+  #   it 'eventsListeners is expected to include events_listeners listed in inspec.yml' do
+  # 	  actual_events_listeners = json(content: command(test_command).stdout)['eventsListeners']
+  # 	  missing = actual_events_listeners - input('events_listeners')
+  # 	  failure_message = "The generated JSON output does not include: #{missing}"
+  # 	  expect(missing).to be_empty, failure_message
+  #   end
+  # end
+
   describe file('/opt/keycloak/conf/keycloak.conf') do
 	  it { should exist }
 	  its('content') { should match(%r{^spi-events-listener-jboss-logging-success-level=info}) }
@@ -135,6 +145,8 @@ control "KEYC-01-000019" do
   describe file('/opt/keycloak/conf/quarkus.properties') do
 	  it { should exist }
 	  its('content') { should match(%r{^quarkus.log.syslog.enable=true}) }
+	  # TODO: for whatever the appropriate endpoint and protocols are, inspec.yml has vars waiting to be filled
+	  # TODO: this syntax has not been tested
 	  # its('content') { should match(%r{quarkus.log.syslog.endpoint=[APPROPRIATE ENDPOINT]}) }
 	  # its('content') { should match(%r{quarkus.log.syslog.protocol=[APPROPRIATE PROTOCOL]}) }
   end

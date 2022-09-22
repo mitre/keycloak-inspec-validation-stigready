@@ -52,7 +52,6 @@ control "KEYC-01-000023" do
   test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')} | grep 'hashAlgorithm'"
 
   describe command(test_command) do
-	  # change these to check that they are not nil, or check that key exists
 	  its('stdout') { should include '"passwordPolicy" : "hashAlgorithm(pbkdf2-sha256)"' }
   end
 

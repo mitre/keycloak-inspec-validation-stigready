@@ -74,4 +74,6 @@ control "KEYC-01-000027" do
   tag stig_id: "KEYC-01-000027"
   tag cci: ["CCI-000766"]
   tag nist: ["IA-2 (2)"]
+
+  # TODO: Not sure, [26, 27, 41, 43] are all similar. I think start with 41.
 end

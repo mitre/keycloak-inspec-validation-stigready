@@ -71,7 +71,7 @@ control "KEYC-01-000021" do
   tag stig_id: "KEYC-01-000021"
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a"]
-	
+
   # TODO: Is this applicable in a container?
   #
 end

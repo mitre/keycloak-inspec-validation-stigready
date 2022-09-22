@@ -17,31 +17,61 @@ inputs:
   - name: keycloak_conf_path
     type: string
     value: /opt/keycloak/conf/keycloak.conf
-    
-#  - name: trust_store_file_path
+
+#  - name: quarkus_endpoint
 #    type: string
 #    value:
 #
-#  - name: trust_store_password
+#  - name: quarkus_protocol
 #    type: string
 #    value:
 #
-#  - name: certificate_path
-#    type: string
-#    value:
-#
-#  - name: certificate_key_path
+#  - name: quarkus_format
 #    type: string
 #    value:
 
-#  - name: events_enabled
-#    type: boolean
-#    value: true
+#  - name: https_trust_store_file_path
+#    type: string
+#    value:
 #
-#  - name: events_listeners
+#  - name: https_trust_store_password
+#    type: string
+#    value:
+#
+#  - name: spi_trust_store_file_path
+#    type: string
+#    value:
+#
+#  - name: spi_trust_store_password
+#    type: string
+#    value:
+#
+#  - name: spi_trust_store_policy
+#    type: string
+#    value:
+#
+#  - name: https_certificate_path
+#    type: string
+#    value:
+#
+#  - name: https_certificate_key_path
+#    type: string
+#    value:
+#
+#  - name: DOD_approved_CA
 #    type: array
 #    value:
-#      - "jboss-logging"
+#      - "first_entry"
+#      - "second_entry"
+#
+#  - name: log_console_format
+#    type: string
+#    value:
+
+  - name: events_listeners
+    type: array
+    value:
+      - "jboss-logging"
 
   - name: enabled_event_types
     type: array
@@ -125,28 +155,3 @@ inputs:
       - "VERIFY_PROFILE"
       - "GRANT_CONSENT_ERROR"
       - "IDENTITY_PROVIDER_FIRST_LOGIN_ERROR"
-
-#  - name: admin_events_enabled
-#    type: boolean
-#    value: true
-#
-#  - name: admin_events_details_enabled
-#    type: boolean
-#    value: true
-#
-#  - name: brute_force_protected
-#    type: boolean
-#    value: true
-#
-#  - name: failure_factor
-#    type: numeric
-#    value: 3
-#
-#  - name: max_delta_time_seconds
-#    type: numeric
-#    value: 900
-#
-#  - name: event_types
-#    type: array
-#    value:
-#      - "LOGIN"

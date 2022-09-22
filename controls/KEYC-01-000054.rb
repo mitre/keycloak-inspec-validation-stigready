@@ -47,4 +47,13 @@ control "KEYC-01-000054" do
   tag stig_id: "KEYC-01-000054"
   tag cci: ["CCI-002238"]
   tag nist: ["AC-7 b"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')}"
+
+  describe json(content: command(test_command).stdout) do
+	  its('bruteForceProtected') { should eq true }
+	  its('permanentLockout') { should eq true }
+	  # TODO: fix-text says failureFactor=30. typo?
+	  its('failureFactor') { should eq 3 }
+  end
 end
