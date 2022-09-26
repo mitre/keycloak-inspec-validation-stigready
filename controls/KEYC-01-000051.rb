@@ -41,10 +41,19 @@ control "KEYC-01-000051" do
   tag cci: ["CCI-002130"]
   tag nist: ["AC-2 (4)"]
 
-  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+  unless input('directory_services_for_acct_mgmt')
+	
+	  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
 
-  describe json(content: command(test_command).stdout) do
-	  its('adminEventsEnabled') { should eq true }
-	  its('adminEventsDetailsEnabled') { should eq true }
+	  describe json(content: command(test_command).stdout) do
+		  its('adminEventsEnabled') { should eq true }
+		  its('adminEventsDetailsEnabled') { should eq true }
+	  end
+		
+  else
+	  impact 0.0
+	  describe 'Manual Check' do
+		  skip "Keycloak relies on directory services for user account management. This control is not applicable."
+	  end
   end
 end

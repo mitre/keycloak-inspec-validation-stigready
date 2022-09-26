@@ -41,5 +41,14 @@ control "KEYC-01-000050" do
   tag cci: ["CCI-001686"]
   tag nist: ["AC-2 (4)"]
 
-  # TODO: not sure. 47-50 all similar.
+  unless input('directory_services_for_acct_mgmt')
+	
+	  # TODO: Not sure, [47-50] are all similar.
+
+  else
+	  impact 0.0
+	  describe 'Manual Check' do
+		  skip "Keycloak relies on directory services for user account management. This control is not applicable."
+	  end
+  end
 end

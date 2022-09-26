@@ -6,6 +6,10 @@
   https://www.keycloak.org/docs/latest/server_admin/index.html#mitigating-security-threats'
 
 inputs:
+  - name: directory_services_for_acct_mgmt
+    type: boolean
+    value: false
+
   - name: executable_path
     type: string
     value: /opt/keycloak/bin/
@@ -20,11 +24,11 @@ inputs:
 
 #  - name: quarkus_endpoint
 #    type: string
-#    value:
+#    value: example.syslog.endpoint:514
 #
 #  - name: quarkus_protocol
 #    type: string
-#    value:
+#    value: UDP
 #
 #  - name: quarkus_format
 #    type: string

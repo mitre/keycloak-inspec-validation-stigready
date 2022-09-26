@@ -72,6 +72,18 @@ control "KEYC-01-000021" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a"]
 
-  # TODO: Is this applicable in a container?
+  # TODO: Where does profile.properties go?
+  # TODO: define list of inputs the user wants
+  # loop through all keys in profile.properties
+  # if key is enabled && key not included in exceptions list input: add key to FAIL LIST
+  # else continue
+  # FAIL LIST should be empty
   #
+  # x = parse_config_file(profile.properties)
+  # y = x.map(|key| x[key] == 'enabled')
+  # z = y - input('exceptions list')
+	#
+  # Z SHOULD BE EMPTY
+	#
+  # IF Z NOT EMPTY, SHOW Z AS FAIL MSG
 end

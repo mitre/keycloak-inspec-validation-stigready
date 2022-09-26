@@ -52,12 +52,21 @@ control "KEYC-01-000009" do
   tag cci: ["CCI-000044"]
   tag nist: ["AC-7 a"]
 
-  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')}"
+  unless input('directory_services_for_acct_mgmt')
+	
+	  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')}"
 
-  describe json(content: command(test_command).stdout) do
-	  its('bruteForceProtected') { should eq true }
-	  # TODO: in 54 failureFactor is instructed to be set to 30. typo?
-	  its('failureFactor') { should eq 3 }
-	  its('maxDeltaTimeSeconds') { should eq 900 }
+	  describe json(content: command(test_command).stdout) do
+		  its('bruteForceProtected') { should eq true }
+		  # TODO: make numerics inputs
+		  its('failureFactor') { should eq 3 }
+		  its('maxDeltaTimeSeconds') { should eq 900 }
+	  end
+		
+	else
+		impact 0.0
+		describe 'Manual Check' do
+			skip "Keycloak relies on directory services for user account management. This control is not applicable."
+		end
   end
 end

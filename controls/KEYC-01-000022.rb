@@ -64,11 +64,13 @@ control "KEYC-01-000022" do
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b"]
 
-  describe file("#{input('keycloak_conf_path')}") do
+  if input('directory_services_for_acct_mgmt')
+	
+	  describe file("#{input('keycloak_conf_path')}") do
 	  it { should exist }
 	  its('content') { should match(%r{^hostname-strict-https=true}) }
 	  its('content') { should match(%r{^https-client-auth=required}) }
-	  # TODO: the following syntax has not been tested
+	  # TODO: read up on describe.one, describe parse_config_file
 	  # its('content') { should match(%r{^https-trust-store-file=#{input('https_trust_store_file_path')}}) }
 	  # its('content') { should match(%r{^https-trust-store-password=#{input('https_trust_store_password')}}) }
 	  # if its('content') { should match(%r{^https-key-store-file=#{input('https_trust_store_file_path')}}) }
@@ -77,23 +79,30 @@ control "KEYC-01-000022" do
 		#   its('content') { should match(%r{^https-certificate-file=#{input('https_certificate_path')}}) }
 		#   its('content') { should match(%r{^https-certificate-key-file=#{input('https_certificate_key_path')}}) }
 	  # end
-  end
-  
-  # Maybe a better way
-  # only_if('Using https key store') do
-	#   describe file("#{input('keycloak_conf_path')}") do
-	# 	  its('content') { should match(%r{^https-key-store-file=#{input('https_trust_store_file_path')}}) }
-	# 	  its('content') { should match(%r{^https-key-store-password=#{input('https_trust_store_password')}}) }
-	#   end
-  # end
-  #
-  # only_if('Using https certificate') do
-	#   describe file("#{input('keycloak_conf_path')}") do
-	# 	  its('content') { should match(%r{^https-certificate-file=#{input('https_certificate_path')}}) }
-	# 	  its('content') { should match(%r{^https-certificate-key-file=#{input('https_certificate_key_path')}}) }
-	#   end
-  # end
-
-  # TODO: I need to create a trustStoreFile, in what dir? Path var is in inspec.yml waiting for input
+	  #
+	  # Maybe a better way
+	  # only_if('Using https key store') do
+	  #   describe file("#{input('keycloak_conf_path')}") do
+	  # 	  its('content') { should match(%r{^https-key-store-file=#{input('https_trust_store_file_path')}}) }
+	  # 	  its('content') { should match(%r{^https-key-store-password=#{input('https_trust_store_password')}}) }
+	  #   end
+	  # end
+	  #
+	  # only_if('Using https certificate') do
+	  #   describe file("#{input('keycloak_conf_path')}") do
+	  # 	  its('content') { should match(%r{^https-certificate-file=#{input('https_certificate_path')}}) }
+	  # 	  its('content') { should match(%r{^https-certificate-key-file=#{input('https_certificate_key_path')}}) }
+	  #   end
+	  # end
 	
+	  # TODO: I need to create a trustStoreFile, in what dir? Path var is in inspec.yml waiting for input
+	
+	  end
+
+  else
+	  impact 0.0
+	  describe 'Manual Check' do
+		  skip "Keycloak does not on directory services for user account management. This control is not applicable."
+	  end
+  end
 end

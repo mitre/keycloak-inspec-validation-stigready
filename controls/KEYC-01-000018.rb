@@ -138,6 +138,7 @@ control "KEYC-01-000018" do
   	  describe "Manual review is required within a container" do
   		  skip "Verifying the host's configuration to alert the SA and ISSO when any audit processing failure occurs cannot be done within the container and should be reviewed manually."
   	  end
-  	  # TODO: else here?
+    else
+	    # TODO: inspec resource. service
     end
 end

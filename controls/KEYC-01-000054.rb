@@ -18,7 +18,6 @@ control "KEYC-01-000054" do
     
     kcadm.sh get realms/[YOUR REALM] | grep 'bruteForceProtected'
     kcadm.sh get realms/[YOUR REALM] | grep 'permanentLockout'
-    kcadm.sh get realms/[YOUR REALM] | grep 'failureFactor'
     
     If configured correctly, this command should return password policy information, with bruteForceProtected and permanentLockout set to \"true\", and failureFactor set to a number.
     If the command returns with any empty string or null, or if bruteForceProtected and permanentLockout are not set to \"true\", this is a finding.
@@ -31,13 +30,11 @@ control "KEYC-01-000054" do
     
     kcadm.sh get realms/[YOUR REALM] | grep 'bruteForceProtected'
     kcadm.sh get realms/[YOUR REALM] | grep 'permanentLockout'
-    kcadm.sh get realms/[YOUR REALM] | grep 'failureFactor'
     
     Next, configure the settings 'bruteForceProtected', 'permanentLockout', 'failureFactor' or update the setting if it is already set. You can set it for the first time using the same process.
     
     kcadm.sh update realms/[YOUR REALM] -s 'bruteForceProtected=\"true\"'
     kcadm.sh update realms/[YOUR REALM] -s 'permanentLockout=\"true\"'
-    kcadm.sh update realms/[YOUR REALM] -s 'failureFactor=\"30\"'
   "
   impact 0.5
   tag severity: "medium"
@@ -48,12 +45,19 @@ control "KEYC-01-000054" do
   tag cci: ["CCI-002238"]
   tag nist: ["AC-7 b"]
 
-  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')}"
+  unless input('directory_services_for_acct_mgmt')
+	
+	  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')}"
 
-  describe json(content: command(test_command).stdout) do
-	  its('bruteForceProtected') { should eq true }
-	  its('permanentLockout') { should eq true }
-	  # TODO: fix-text says failureFactor=30. typo?
-	  its('failureFactor') { should eq 3 }
+	  describe json(content: command(test_command).stdout) do
+		  its('bruteForceProtected') { should eq true }
+		  its('permanentLockout') { should eq true }
+	  end
+
+  else
+	  impact 0.0
+	  describe 'Manual Check' do
+		  skip "Keycloak relies on directory services for user account management. This control is not applicable."
+	  end
   end
 end

@@ -64,6 +64,6 @@ control "KEYC-01-000053" do
   tag cci: ["CCI-002169"]
   tag nist: ["AC-3 (7)"]
   
-  # TODO: Is this applicable in a container?
+  # TODO: find which names should be in get-roles, create var for them, ensure == with no extra names
   #
 end
