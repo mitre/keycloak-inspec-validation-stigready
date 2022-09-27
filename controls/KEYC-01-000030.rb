@@ -57,7 +57,8 @@ control "KEYC-01-000030" do
 
     it 'passwordHistory is expected to be greater than or equal to 5' do 
       passwordHistoryGreaterThan5 =command(test_command).stdout.match('passwordHistory(.*)')[1].delete("^0-9")>='5'
-      expect(passwordHistoryGreaterThan5).to be_truthy
+      failure_message = "passwordHistory is not greater than or equal to 5"
+      expect(passwordHistoryGreaterThan5).to be_truthy, failure_message
     end
   end
 

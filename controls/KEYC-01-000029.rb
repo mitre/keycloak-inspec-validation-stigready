@@ -50,7 +50,8 @@ control "KEYC-01-000029" do
 
     it 'length is expected to be greater than or equal to 15' do 
       lengthGreaterThan15 =command(test_command).stdout.match('length(.*)')[1].delete("^0-9")>='15'
-      expect(lengthGreaterThan15).to be_truthy
+      failure_message = "password length is not greater than or equal to 15"
+      expect(lengthGreaterThan15).to be_truthy,failure_message
     end
   end
 end
