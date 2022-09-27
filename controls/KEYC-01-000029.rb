@@ -43,10 +43,14 @@ control "KEYC-01-000029" do
   tag cci: ["CCI-000205"]
   tag nist: ["IA-5 (1) (a)"]
 
-  #Todo: check length is greater than or euqal to 15
   test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')} | grep 'length'"
 
   describe command(test_command) do
 	  its('stdout') { should_not be_empty }
+
+    it 'length is expected to be greater than or equal to 15' do 
+      lengthGreaterThan15 =command(test_command).stdout.match('length(.*)')[1].delete("^0-9")>='15'
+      expect(lengthGreaterThan15).to be_truthy
+    end
   end
 end
