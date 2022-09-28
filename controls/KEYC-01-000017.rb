@@ -110,27 +110,30 @@ control "KEYC-01-000017" do
   # 	  expect(missing).to be_empty, failure_message
   #   end
   # end
-
-  describe file('/opt/keycloak/conf/keycloak.conf') do
-    it { should exist }
-    its('content') { should match(%r{^spi-events-listener-jboss-logging-success-level=info}) }
-    its('content') { should match(%r{^spi-events-listener-jboss-logging-error-level=error}) }
+  
+  describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
+	  its('spi-events-listener-jboss-logging-success-level') { should eq 'info' }
+	  its('spi-events-listener-jboss-logging-error-level') { should eq 'error' }
   end
 
-  describe file('/opt/keycloak/conf/quarkus.properties') do
-	  it { should exist }
-	  its('content') { should match(%r{^quarkus.log.syslog.enable=true}) }
-	  # TODO: for whatever the appropriate endpoint and protocol are, inspec.yml has vars waiting to be filled
-	  # TODO: this syntax has not been tested
-	  # its('content') { should match(%r{quarkus.log.syslog.endpoint=#{input('quarkus_endpoint')}}) }
-	  # its('content') { should match(%r{quarkus.log.syslog.protocol=#{input('quarkus_protocol')}}) }
+  describe parse_config_file('/opt/keycloak/conf/quarkus.properties') do
+	  its(['quarkus.log.syslog.enable']) { should eq 'true' }
+	  its(['quarkus.log.syslog.endpoint']) { should eq input('quarkus_endpoint') }
+	  its(['quarkus.log.syslog.protocol']) { should eq input('quarkus_protocol') }
   end
 	
-  # /etc/audit/ directory does not exist.
   if virtualization.system.eql?('docker')
 	  describe "Manual review is required within a container" do
 		  skip "Verifying the host's configuration to alert the SA and ISSO when any audit processing failure occurs cannot be done within the container and should be reviewed manually."
 	  end
-	  # TODO: else here?
+  else
+	  describe service('auditd') do
+	    it { should be_installed }
+	    it { should be_enabled }
+	    it { should be_running }
+	  end
+	  describe parse_config_file('/etc/audit/audid.conf') do
+		  its(['action_mail_acct']) { should eq input('action_mail_account') }
+	  end
   end
 end

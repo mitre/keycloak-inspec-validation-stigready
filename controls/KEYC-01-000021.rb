@@ -72,18 +72,13 @@ control "KEYC-01-000021" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a"]
 
-  # TODO: Where does profile.properties go?
-  # TODO: define list of inputs the user wants
-  # loop through all keys in profile.properties
-  # if key is enabled && key not included in exceptions list input: add key to FAIL LIST
-  # else continue
-  # FAIL LIST should be empty
-  #
-  # x = parse_config_file(profile.properties)
-  # y = x.map(|key| x[key] == 'enabled')
-  # z = y - input('exceptions list')
-	#
-  # Z SHOULD BE EMPTY
-	#
-  # IF Z NOT EMPTY, SHOW Z AS FAIL MSG
+  describe 'Contents of profile.properties' do
+    it 'enabled features are expected to include only those listed in inspec.yml' do
+	    features = parse_config_file('/opt/keycloak/conf/profile.properties')
+	    enabled_features = features.params.select { |key, value| value == 'enabled' }
+	    unexpected_features_enabled = enabled_features.keys - input('profile_properties_features')
+	    failure_message = "The following features in profile.properties are enabled, but not listed in inspec.yml: #{unexpected_features_enabled}"
+	    expect(unexpected_features_enabled).to be_empty, failure_message
+    end
+  end
 end

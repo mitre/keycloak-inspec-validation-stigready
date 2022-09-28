@@ -61,6 +61,18 @@ control "KEYC-01-000024" do
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b"]
 
-  # TODO: Is this applicable in a container?
-  #
+  if virtualization.system.eql?('docker')
+	  describe "Manual review is required within a container" do
+		  skip "Verifying the host's configuration to prohibit or restrict the use of organization-defined functions, ports, protocols, and/or services, as defined in the PPSM CAL and vulnerability assessments cannot be done within the container and should be reviewed manually."
+	  end
+  else
+	  describe firewalld.where { zone == 'public' } do
+		  its('services') { should cmp ['dhcpv6-client', 'dns', 'https', 'ldaps', 'rpc-bind', 'ssh'] }
+	  end
+  end
+
+  describe 'Manual Check' do
+	  skip "Verify that there are no additional active ports, protocols, or services that are not in the PPSM CLSA, or ports, protocols, or services that are prohibited by the PPSM Category Assurance List (CAL)."
+  end
+
 end

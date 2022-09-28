@@ -58,9 +58,8 @@ control "KEYC-01-000009" do
 
 	  describe json(content: command(test_command).stdout) do
 		  its('bruteForceProtected') { should eq true }
-		  # TODO: make numerics inputs
-		  its('failureFactor') { should eq 3 }
-		  its('maxDeltaTimeSeconds') { should eq 900 }
+		  its('failureFactor') { should eq input('failure_factor') }
+		  its('maxDeltaTimeSeconds') { should eq input('max_delta_time_seconds') }
 	  end
 		
 	else

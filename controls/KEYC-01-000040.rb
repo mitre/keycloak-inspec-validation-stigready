@@ -58,24 +58,18 @@ control "KEYC-01-000040" do
   tag cci: ["CCI-000185"]
   tag nist: ["IA-5 (2) (a)"]
 
-  describe file("#{input('keycloak_conf_path')}") do
-	  it { should exist }
-	  its('content') { should match(%r{^hostname-strict-https=true}) }
-	  its('content') { should match(%r{^https-client-auth=required}) }
-	  # TODO: create a trustStoreFile, in what dir? Path var is in inspec.yml waiting for input
-	  # TODO: the following syntax has not been tested
-	  # its('content') { should match(%r{^spi-truststore-file-file=#{input('spi_trust_store_file_path')}}) }
-	  # its('content') { should match(%r{^spi-truststore-file-password=#{input('spi_trust_store_password')}}) } # Don't
-	  # care
-	  # its('content') { should match(%r{^spi-truststore-file-hostname-verification-policy=#{input
-	  # ('spi_trust_store_policy')}}) } # Don't care
+  describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
+	  its('hostname-strict-https') { should eq 'true' }
+	  its('https-client-auth') { should eq 'required' }
   end
 
-  # TODO: DOD_approved_CA list not yet filled. inspec.yml waiting for input, inspec resource for x509, RHEL stig
-  # profile?
-  # test_command = "openssl x509 -in #{input('spi_trust_store_file_path')} -text | grep -i 'issuer'"
-	#
-  # describe command(test_command) do
-	#   its('stdout') { should be_in "#{input('DOD_approved_CA')}" }
-	# end
+  describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
+	  its('spi-truststore-file-file') { should eq 'spi_trust_store_file_path' }
+	  its('spi-truststore-file-password') { should_not be nil }
+	  its('spi-truststore-file-hostname-verification-policy') { should eq input('spi_trust_store_policy') }
+  end
+
+  describe x509_certificate(input('https_truststore_file_path')) do
+	  its('issuer.CN') { should be_in input('DOD_approved_CA_list') }
+  end
 end

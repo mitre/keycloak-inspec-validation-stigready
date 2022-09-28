@@ -1,7 +1,7 @@
 ---
 :name: Keycloak
 :title: Keycloak Profile
-:maintainer: Emily Rodriguez, Will Dower, Brett Warren
+:maintainer: MITRE SAF Team
 :summary: 'Keycloak profile based off of the AAA STIG and Red Hat''s security guidance:
   https://www.keycloak.org/docs/latest/server_admin/index.html#mitigating-security-threats'
 
@@ -22,55 +22,63 @@ inputs:
     type: string
     value: /opt/keycloak/conf/keycloak.conf
 
-#  - name: quarkus_endpoint
-#    type: string
-#    value: example.syslog.endpoint:514
-#
-#  - name: quarkus_protocol
-#    type: string
-#    value: UDP
-#
+  - name: action_mail_account
+    type: string
+    value: administrator@mail.com
+
+  - name: quarkus_endpoint
+    type: string
+    value: example.syslog.endpoint:514
+
+  - name: quarkus_protocol
+    type: string
+    value: UDP
+
 #  - name: quarkus_format
 #    type: string
 #    value:
 
-#  - name: https_trust_store_file_path
-#    type: string
-#    value:
-#
-#  - name: https_trust_store_password
-#    type: string
-#    value:
-#
-#  - name: spi_trust_store_file_path
-#    type: string
-#    value:
-#
-#  - name: spi_trust_store_password
-#    type: string
-#    value:
-#
-#  - name: spi_trust_store_policy
-#    type: string
-#    value:
-#
-#  - name: https_certificate_path
-#    type: string
-#    value:
-#
-#  - name: https_certificate_key_path
-#    type: string
-#    value:
-#
-#  - name: DOD_approved_CA
-#    type: array
-#    value:
-#      - "first_entry"
-#      - "second_entry"
-#
+  - name: https_truststore_file_path
+    type: string
+    value: /opt/keycloak/conf/truststore.jks
+
+  - name: https_keystore_file_path
+    type: string
+    value: /opt/keycloak/conf/keystore.jks
+
+  - name: https_certificate_file_path
+    type: string
+    value: /opt/keycloak/conf/cert.pem
+
+  - name: https_certificate_key_path
+    type: string
+    value: /opt/keycloak/conf/cert.crt
+
+  - name: spi_trust_store_file_path
+    type: string
+    value: /opt/keycloak/conf/truststore.jks
+
+  - name: spi_trust_store_policy
+    type: string
+    value: policy
+
+  - name: DOD_approved_CA_list
+    type: array
+    value:
+      - "Acme Trust CA"
+      - "Sample Trust CA"
+
 #  - name: log_console_format
 #    type: string
 #    value:
+
+  - name: max_delta_time_seconds
+    type: numeric
+    value: 900
+
+  - name: failure_factor
+    type: numeric
+    value: 3
 
   - name: events_listeners
     type: array
@@ -159,3 +167,34 @@ inputs:
       - "VERIFY_PROFILE"
       - "GRANT_CONSENT_ERROR"
       - "IDENTITY_PROVIDER_FIRST_LOGIN_ERROR"
+
+  - name: profile_properties_features
+    type: array
+    value:
+      - feature.account2
+      - feature.account_api
+      - feature.admin_fine_grained_authz
+      - feature.ciba
+      - feature.client_policies
+      - feature.client_secret_rotation
+      - feature.par
+      - feature.declarative_user_profile
+      - feature.docker
+      - feature.impersonation
+      - feature.openshift_integration
+      - feature.recovery_codes
+      - feature.scripts
+      - feature.step_up_authentication
+      - feature.token_exchange
+      - feature.upload_scripts
+      - feature.web_authn
+      - feature.update_email
+
+  - name: keycloak_services_ports
+    type: hash
+    value:
+      db_url_port: 5432
+      hostname_port: 101
+      http_port: 8080
+      https_port: 8443
+      log_gelf_port: 12201

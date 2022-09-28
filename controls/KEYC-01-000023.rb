@@ -55,10 +55,8 @@ control "KEYC-01-000023" do
 	  its('stdout') { should include '"passwordPolicy" : "hashAlgorithm(pbkdf2-sha256)"' }
   end
 
-  describe file('/opt/keycloak/conf/keycloak.conf') do
-	  it { should exist }
-	  its('content') { should match(%r{^cache=ispn}) }
-	  its('content') { should match(%r{^cache-stack=tcp}) }
+  describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
+	  its('cache') { should eq 'ispn' }
+	  its('cache-stack') { should eq 'tcp' }
   end
-
 end
