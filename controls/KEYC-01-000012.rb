@@ -96,6 +96,6 @@ control "KEYC-01-000012" do
   # end
   
   describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
-	  its(['log-console-format']) { should match %r{'%d\{yyyy-MM-dd HH:mm:ss,SSS\} %-5p \[%c\{3\.\}\] \(%t\) %s%e%n'} }
+	  its(['log-console-format']) { should eq input('log_console_format') }
   end
 end

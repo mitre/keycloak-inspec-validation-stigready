@@ -64,7 +64,7 @@ control "KEYC-01-000040" do
   end
 
   describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
-	  its('spi-truststore-file-file') { should eq 'spi_trust_store_file_path' }
+	  its('spi-truststore-file-file') { should eq input('spi_trust_store_file_path') }
 	  its('spi-truststore-file-password') { should_not be nil }
 	  its('spi-truststore-file-hostname-verification-policy') { should eq input('spi_trust_store_policy') }
   end

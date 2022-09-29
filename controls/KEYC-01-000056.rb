@@ -117,21 +117,16 @@ control "KEYC-01-000056" do
   #   end
   # end
 
-  describe file('/opt/keycloak/conf/keycloak.conf') do
-	  it { should exist }
-	  its('content') { should match(%r{^spi-events-listener-jboss-logging-success-level=info}) }
-	  its('content') { should match(%r{^spi-events-listener-jboss-logging-error-level=error}) }
+  describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
+	  its('spi-events-listener-jboss-logging-success-level') { should eq 'info' }
+	  its('spi-events-listener-jboss-logging-error-level') { should eq 'error' }
   end
 
-  describe file('/opt/keycloak/conf/quarkus.properties') do
-	  it { should exist }
-	  its('content') { should match(%r{^quarkus.log.syslog.enable=true}) }
-	  # TODO: for whatever the appropriate endpoint, protocol, and format are, inspec.yml has vars waiting to be filled
-	  # TODO: this syntax has not been tested
-	  # its('content') { should match(%r{quarkus.log.syslog.endpoint=#{input('quarkus_endpoint')}}) }
-	  # its('content') { should match(%r{quarkus.log.syslog.protocol=#{input('quarkus_protocol')}}) }
-	  # its('content') { should match(%r{quarkus.log.syslog.format=#{input('quarkus_format')}}) }
-	  #     quarkus.log.syslog.format=\"%z{UTC OR AN OFFSET TO UTC} [OTHER FORMATTING SYMBOLS]\"
+  describe parse_config_file('/opt/keycloak/conf/quarkus.properties') do
+	  its(['quarkus.log.syslog.enable']) { should eq 'true' }
+	  its(['quarkus.log.syslog.endpoint']) { should eq input('quarkus_endpoint') }
+	  its(['quarkus.log.syslog.protocol']) { should eq input('quarkus_protocol') }
+	  its(['quarkus.log.syslog.format']) { should eq input('quarkus_format') }
   end
 
   # TODO: "systemctl is-enabled rsyslog" and "systemctl is-active rsyslog" are a no-go. Solutions?

@@ -87,12 +87,9 @@ control "KEYC-01-000057" do
   #   end
   # end
 
-  describe file('/opt/keycloak/conf/keycloak.conf') do
-	  it { should exist }
-	  its('content') { should match(%r{^spi-events-listener-jboss-logging-success-level=info}) }
-	  its('content') { should match(%r{^spi-events-listener-jboss-logging-error-level=error}) }
-	  # TODO:  inspec.yml has var waiting to be filled for log_console_format
-	  # TODO: this syntax has not been tested
-	  # its('content') { should match(%r{^log-console-format=#{input('log_console_format')}}) }
+  describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
+	  its('spi-events-listener-jboss-logging-success-level') { should eq 'info' }
+	  its('spi-events-listener-jboss-logging-error-level') { should eq 'error' }
+	  its('log-console-format') { should eq input('log_console_format') }
   end
 end

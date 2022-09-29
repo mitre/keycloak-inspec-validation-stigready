@@ -34,9 +34,9 @@ inputs:
     type: string
     value: UDP
 
-#  - name: quarkus_format
-#    type: string
-#    value:
+  - name: quarkus_format
+    type: string
+    value: UTC
 
   - name: https_truststore_file_path
     type: string
@@ -68,9 +68,9 @@ inputs:
       - "Acme Trust CA"
       - "Sample Trust CA"
 
-#  - name: log_console_format
-#    type: string
-#    value:
+  - name: log_console_format
+    type: string
+    value: '%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n'
 
   - name: max_delta_time_seconds
     type: numeric
