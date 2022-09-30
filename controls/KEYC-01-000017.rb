@@ -121,7 +121,11 @@ control "KEYC-01-000017" do
 	  its(['quarkus.log.syslog.endpoint']) { should eq input('quarkus_endpoint') }
 	  its(['quarkus.log.syslog.protocol']) { should eq input('quarkus_protocol') }
   end
-	
+
+  describe parse_config_file('/etc/audit/auditd.conf') do
+	  its(['action_mail_acct']) { should eq input('action_mail_account') }
+  end
+
   if virtualization.system.eql?('docker')
 	  describe "Manual review is required within a container" do
 		  skip "Verifying the host's configuration to alert the SA and ISSO when any audit processing failure occurs cannot be done within the container and should be reviewed manually."

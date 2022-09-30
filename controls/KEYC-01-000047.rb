@@ -54,7 +54,6 @@ control "KEYC-01-000047" do
 		  its('eventsListeners') { should eq ["jboss-logging"] }
 	  end
 
-
   else
 	  impact 0.0
 	  describe 'Manual Check' do

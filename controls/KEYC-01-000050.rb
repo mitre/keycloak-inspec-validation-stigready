@@ -43,7 +43,12 @@ control "KEYC-01-000050" do
 
   unless input('directory_services_for_acct_mgmt')
 	
-	  # TODO: Not sure, [47-50] are all similar.
+	  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+	
+	  describe json(content: command(test_command).stdout) do
+		  its('eventsEnabled') { should eq true }
+		  its('eventsListeners') { should eq ["jboss-logging"] }
+	  end
 
   else
 	  impact 0.0

@@ -61,13 +61,23 @@ control "KEYC-01-000013" do
   tag nist: ["AU-3"]
 	
   test_command = "#{input('executable_path')}kcadm.sh get events -r #{input('keycloak_realm')} | grep -E 'realmId|userId|sessionId|ipAddress'"
+  # test_command = "#{input('executable_path')}kcadm.sh get events -r #{input('keycloak_realm')} | grep 'realmId'"
 
-  describe command(test_command) do
-	  # TODO: on a new container there have been no events, kcadm.sh get events produces an empty list
-	  its('stdout') { should match(%r{"realmId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
-	  its('stdout') { should match(%r{"userId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
-	  its('stdout') { should match(%r{"sessionId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
-	  # TODO: What should this be?
-	  its('stdout') { should include '"ipAddress" : "127.0.0.1"' }
+  describe.one do
+	  # case: new Keycloak instance that has no events
+	  describe command(test_command) do
+		  its('stdout') { should eq "" }
+	  end
+	  
+	  # case: Keycloak instance events have occurred
+	  describe command(test_command) do
+		  # its('realmId') { should_not be nil }
+		  # TODO: on a new container there have been no events, kcadm.sh get events produces an empty list
+		  its('stdout') { should match(%r{"realmId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
+		  its('stdout') { should match(%r{"userId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
+		  its('stdout') { should match(%r{"sessionId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
+		  # TODO: What should this be?
+		  its('stdout') { should include '"ipAddress" : "127.0.0.1"' }
+	  end
   end
 end
