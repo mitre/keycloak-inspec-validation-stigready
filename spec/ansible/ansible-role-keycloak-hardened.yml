@@ -1,0 +1,11 @@
+---
+- hosts:
+    - localhost
+  roles:
+    - roles/ansible-role-rhel-vanilla
+    - keycloak_quarkus
+    - keycloak-srg-baseline
+  serial: 50
+  become: yes
+  vars_files:
+    - roles/common/main.yml
