@@ -1,0 +1,200 @@
+---
+:name: Keycloak
+:title: Keycloak Profile
+:maintainer: MITRE SAF Team
+:summary: 'Keycloak profile based off of the AAA STIG and Red Hat''s security guidance:
+  https://www.keycloak.org/docs/latest/server_admin/index.html#mitigating-security-threats'
+
+inputs:
+  - name: directory_services_for_acct_mgmt
+    type: boolean
+    value: false
+
+  - name: executable_path
+    type: string
+    value: /opt/keycloak/bin/
+
+  - name: keycloak_realm
+    type: string
+    value: master
+
+  - name: keycloak_conf_path
+    type: string
+    value: /opt/keycloak/conf/keycloak.conf
+
+  - name: action_mail_account
+    type: string
+    value: administrator@mail.com
+
+  - name: quarkus_endpoint
+    type: string
+    value: example.syslog.endpoint:514
+
+  - name: quarkus_protocol
+    type: string
+    value: UDP
+
+  - name: quarkus_format
+    type: string
+    value: UTC
+
+  - name: https_truststore_file_path
+    type: string
+    value: /opt/keycloak/conf/truststore.jks
+
+  - name: https_keystore_file_path
+    type: string
+    value: /opt/keycloak/conf/keystore.jks
+
+  - name: https_certificate_file_path
+    type: string
+    value: /opt/keycloak/conf/cert.pem
+
+  - name: https_certificate_key_path
+    type: string
+    value: /opt/keycloak/conf/cert.crt
+
+  - name: spi_trust_store_file_path
+    type: string
+    value: /opt/keycloak/conf/truststore.jks
+
+  - name: spi_trust_store_policy
+    type: string
+    value: policy
+
+  - name: DOD_approved_CA_list
+    type: array
+    value:
+      - "Acme Trust CA"
+      - "Sample Trust CA"
+
+  - name: log_console_format
+    type: string
+    value: '%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n'
+
+  - name: max_delta_time_seconds
+    type: numeric
+    value: 900
+
+  - name: failure_factor
+    type: numeric
+    value: 3
+
+  - name: events_listeners
+    type: array
+    value:
+      - "jboss-logging"
+
+  - name: enabled_event_types
+    type: array
+    value:
+      - "SEND_RESET_PASSWORD"
+      - "UPDATE_CONSENT_ERROR"
+      - "GRANT_CONSENT"
+      - "VERIFY_PROFILE_ERROR"
+      - "REMOVE_TOTP"
+      - "REVOKE_GRANT"
+      - "UPDATE_TOTP"
+      - "LOGIN_ERROR"
+      - "CLIENT_LOGIN"
+      - "RESET_PASSWORD_ERROR"
+      - "IMPERSONATE_ERROR"
+      - "CODE_TO_TOKEN_ERROR"
+      - "CUSTOM_REQUIRED_ACTION"
+      - "OAUTH2_DEVICE_CODE_TO_TOKEN_ERROR"
+      - "RESTART_AUTHENTICATION"
+      - "IMPERSONATE"
+      - "UPDATE_PROFILE_ERROR"
+      - "LOGIN"
+      - "OAUTH2_DEVICE_VERIFY_USER_CODE"
+      - "UPDATE_PASSWORD_ERROR"
+      - "CLIENT_INITIATED_ACCOUNT_LINKING"
+      - "TOKEN_EXCHANGE"
+      - "AUTHREQID_TO_TOKEN"
+      - "LOGOUT"
+      - "REGISTER"
+      - "DELETE_ACCOUNT_ERROR"
+      - "CLIENT_REGISTER"
+      - "IDENTITY_PROVIDER_LINK_ACCOUNT"
+      - "DELETE_ACCOUNT"
+      - "UPDATE_PASSWORD"
+      - "CLIENT_DELETE"
+      - "FEDERATED_IDENTITY_LINK_ERROR"
+      - "IDENTITY_PROVIDER_FIRST_LOGIN"
+      - "CLIENT_DELETE_ERROR"
+      - "VERIFY_EMAIL"
+      - "CLIENT_LOGIN_ERROR"
+      - "RESTART_AUTHENTICATION_ERROR"
+      - "EXECUTE_ACTIONS"
+      - "REMOVE_FEDERATED_IDENTITY_ERROR"
+      - "TOKEN_EXCHANGE_ERROR"
+      - "PERMISSION_TOKEN"
+      - "SEND_IDENTITY_PROVIDER_LINK_ERROR"
+      - "EXECUTE_ACTION_TOKEN_ERROR"
+      - "SEND_VERIFY_EMAIL"
+      - "OAUTH2_DEVICE_AUTH"
+      - "EXECUTE_ACTIONS_ERROR"
+      - "REMOVE_FEDERATED_IDENTITY"
+      - "OAUTH2_DEVICE_CODE_TO_TOKEN"
+      - "IDENTITY_PROVIDER_POST_LOGIN"
+      - "IDENTITY_PROVIDER_LINK_ACCOUNT_ERROR"
+      - "OAUTH2_DEVICE_VERIFY_USER_CODE_ERROR"
+      - "UPDATE_EMAIL"
+      - "REGISTER_ERROR"
+      - "REVOKE_GRANT_ERROR"
+      - "EXECUTE_ACTION_TOKEN"
+      - "LOGOUT_ERROR"
+      - "UPDATE_EMAIL_ERROR"
+      - "CLIENT_UPDATE_ERROR"
+      - "AUTHREQID_TO_TOKEN_ERROR"
+      - "UPDATE_PROFILE"
+      - "CLIENT_REGISTER_ERROR"
+      - "FEDERATED_IDENTITY_LINK"
+      - "SEND_IDENTITY_PROVIDER_LINK"
+      - "SEND_VERIFY_EMAIL_ERROR"
+      - "RESET_PASSWORD"
+      - "CLIENT_INITIATED_ACCOUNT_LINKING_ERROR"
+      - "OAUTH2_DEVICE_AUTH_ERROR"
+      - "UPDATE_CONSENT"
+      - "REMOVE_TOTP_ERROR"
+      - "VERIFY_EMAIL_ERROR"
+      - "SEND_RESET_PASSWORD_ERROR"
+      - "CLIENT_UPDATE"
+      - "CUSTOM_REQUIRED_ACTION_ERROR"
+      - "IDENTITY_PROVIDER_POST_LOGIN_ERROR"
+      - "UPDATE_TOTP_ERROR"
+      - "CODE_TO_TOKEN"
+      - "VERIFY_PROFILE"
+      - "GRANT_CONSENT_ERROR"
+      - "IDENTITY_PROVIDER_FIRST_LOGIN_ERROR"
+
+  - name: profile_properties_features
+    type: array
+    value:
+      - feature.account2
+      - feature.account_api
+      - feature.admin_fine_grained_authz
+      - feature.ciba
+      - feature.client_policies
+      - feature.client_secret_rotation
+      - feature.par
+      - feature.declarative_user_profile
+      - feature.docker
+      - feature.impersonation
+      - feature.openshift_integration
+      - feature.recovery_codes
+      - feature.scripts
+      - feature.step_up_authentication
+      - feature.token_exchange
+      - feature.upload_scripts
+      - feature.web_authn
+      - feature.update_email
+
+  - name: keycloak_services_ports
+    type: hash
+    value:
+      db_url_port: 5432
+      hostname_port: 101
+      http_port: 8080
+      https_port: 8443
+      log_gelf_port: 12201
