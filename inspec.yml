@@ -17,6 +17,14 @@ inputs:
   - name: keycloak_conf_path
     type: string
     value: /opt/keycloak/conf/keycloak.conf
+
+  - name: custom_password_policy
+    type: string
+    value: minimumPasswordLife
+
+  - name: custom_password_policy_jar_path
+    type: string
+    value: /opt/keycloak/providers/password-min-time-policy-0.0.1-SNAPSHOT.jar
     
 #  - name: trust_store_file_path
 #    type: string
