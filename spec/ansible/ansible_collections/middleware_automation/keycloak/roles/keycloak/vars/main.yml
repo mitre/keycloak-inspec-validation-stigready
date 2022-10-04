@@ -1,0 +1,83 @@
+---
+# internal variables below
+rhsso_rhn_ids:
+  '7.5.0': # noqa vars_in_vars_files_have_valid_names
+    id: '101971'
+    latest_cp:
+      id: '103836'
+      v: '7.5.1'
+
+# locations
+keycloak_url: "http://{{ keycloak_host }}:{{ keycloak_http_port }}"
+keycloak_management_url: "http://{{ keycloak_host }}:{{ keycloak_management_http_port }}"
+
+
+keycloak:
+  home: "{{ keycloak_jboss_home }}"
+  config_dir: "{{ keycloak_config_dir }}"
+  bundle: "{{ keycloak_rhsso_archive if keycloak_rhsso_enable else keycloak_archive }}"
+  patch_bundle: "rh-sso-{{ rhsso_rhn_ids[keycloak_rhsso_version].latest_cp.v }}-patch.zip"
+  service_name: "{{ 'rhsso' if keycloak_rhsso_enable else 'keycloak' }}"
+  health_url: "{{ keycloak_management_url }}/health"
+  cli_path: "{{ keycloak_jboss_home }}/bin/jboss-cli.sh"
+  config_template_source: "{{ keycloak_config_override_template if keycloak_config_override_template | length > 0 else 'standalone.xml.j2' }}"
+
+# database
+keycloak_jdbc:
+  postgres:
+    enabled: "{{ (keycloak_ha_enabled or keycloak_db_enabled) and keycloak_jdbc_engine == 'postgres' }}"
+    driver_class: org.postgresql.Driver
+    xa_datasource_class: org.postgresql.xa.PGXADataSource
+    driver_module_name: "org.postgresql"
+    driver_module_dir: "{{ keycloak_jboss_home }}/modules/org/postgresql/main"
+    driver_version: "{{ keycloak_jdbc_driver_version }}"
+    driver_jar_filename: "postgresql-{{ keycloak_jdbc_driver_version }}.jar"
+    driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ keycloak_jdbc_driver_version }}/postgresql-{{ keycloak_jdbc_driver_version }}.jar"
+    connection_url: "{{ keycloak_jdbc_url }}"
+    db_user: "{{ keycloak_db_user }}"
+    db_password: "{{ keycloak_db_pass }}"
+    initialize_db: >
+      CREATE TABLE IF NOT EXISTS JGROUPSPING (
+        own_addr varchar(200) NOT NULL,
+        cluster_name varchar(200) NOT NULL,
+        updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        ping_data BYTEA,
+        constraint PK_JGROUPSPING PRIMARY KEY (own_addr, cluster_name))
+  mariadb:
+    enabled: "{{ (keycloak_ha_enabled or keycloak_db_enabled) and keycloak_jdbc_engine == 'mariadb' }}"
+    driver_class: org.mariadb.jdbc.Driver
+    xa_datasource_class: org.mariadb.jdbc.MySQLDataSource
+    driver_module_name: "org.mariadb"
+    driver_module_dir: "{{ keycloak_jboss_home }}/modules/org/mariadb/main"
+    driver_version: "{{ keycloak_jdbc_driver_version }}"
+    driver_jar_filename: "mariadb-java-client-{{ keycloak_jdbc_driver_version }}.jar"
+    driver_jar_url: "https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/{{ keycloak_jdbc_driver_version }}/mariadb-java-client-{{ keycloak_jdbc_driver_version }}.jar"
+    connection_url: "{{ keycloak_jdbc_url }}"
+    db_user: "{{ keycloak_db_user  }}"
+    db_password: "{{ keycloak_db_pass }}"
+    initialize_db: >
+      CREATE TABLE IF NOT EXISTS JGROUPSPING (
+        own_addr varchar(200) NOT NULL,
+        cluster_name varchar(200) NOT NULL,
+        updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        ping_data varbinary(5000) DEFAULT NULL,
+        PRIMARY KEY (own_addr, cluster_name))
+      ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+
+# reverse proxy mod_cluster
+keycloak_modcluster:
+  enabled: "{{ keycloak_ha_enabled }}"
+  reverse_proxy_url: "{{ keycloak_modcluster_url }}"
+  frontend_url: "{{ keycloak_frontend_url }}"
+
+# infinispan
+keycloak_remotecache:
+  enabled: "{{ keycloak_ha_enabled }}"
+  username: "{{ infinispan_user }}"
+  password: "{{ infinispan_pass }}"
+  realm: default
+  sasl_mechanism: "{{ infinispan_sasl_mechanism }}"
+  server_name: "{{ infinispan_url }}"
+  use_ssl: "{{ infinispan_use_ssl }}"
+  trust_store_path: "{{ infinispan_trust_store_path }}"
+  trust_store_password: "{{ infinispan_trust_store_password }}"

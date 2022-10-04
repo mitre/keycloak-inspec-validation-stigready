@@ -1,0 +1,209 @@
+---
+- name: Validate parameters
+  ansible.builtin.assert:
+    that:
+      - keycloak_jboss_home is defined
+      - keycloak_service_user is defined
+      - keycloak_dest is defined
+      - keycloak_archive is defined
+      - keycloak_download_url is defined
+      - keycloak_version is defined
+    quiet: true
+
+- name: Check for an existing deployment
+  become: yes
+  ansible.builtin.stat:
+    path: "{{ keycloak_jboss_home }}"
+  register: existing_deploy
+
+- name: Stop and restart if existing deployment exists and install forced
+  block:
+    - name: "Stop the old {{ keycloak.service_name }} service"
+      become: yes
+      ignore_errors: yes
+      ansible.builtin.systemd:
+        name: keycloak
+        state: stopped
+    - name: "Remove the old {{ keycloak.service_name }} deployment"
+      become: yes
+      ansible.builtin.file:
+        path: "{{ keycloak_jboss_home }}"
+        state: absent
+  when: existing_deploy.stat.exists and keycloak_force_install|bool
+
+- name: Check for an existing deployment after possible forced removal
+  become: yes
+  ansible.builtin.stat:
+    path: "{{ keycloak_jboss_home }}"
+
+- name: "Create {{ keycloak.service_name }} service user/group"
+  become: yes
+  ansible.builtin.user:
+    name: "{{ keycloak_service_user }}"
+    home: /opt/keycloak
+    system: yes
+    create_home: no
+
+- name: "Create {{ keycloak.service_name }} install location"
+  become: yes
+  ansible.builtin.file:
+    dest: "{{ keycloak_dest }}"
+    state: directory
+    owner: "{{ keycloak_service_user }}"
+    group: "{{ keycloak_service_group }}"
+    mode: 0750
+
+## check remote archive
+- name: Set download archive path
+  ansible.builtin.set_fact:
+    archive: "{{ keycloak_dest }}/{{ keycloak.bundle }}"
+
+- name: Check download archive path
+  become: yes
+  ansible.builtin.stat:
+    path: "{{ archive }}"
+  register: archive_path
+
+## download to controller
+- name: Check local download archive path
+  ansible.builtin.stat:
+    path: "{{ lookup('env', 'PWD') }}"
+  register: local_path
+  delegate_to: localhost
+
+- name: Download keycloak archive
+  ansible.builtin.get_url: # noqa risky-file-permissions delegated, uses controller host user
+    url: "{{ keycloak_download_url }}"
+    dest: "{{ local_path.stat.path }}/{{ keycloak.bundle }}"
+    mode: 0644
+  delegate_to: localhost
+  when:
+    - archive_path is defined
+    - archive_path.stat is defined
+    - not archive_path.stat.exists
+    - not keycloak_rhsso_enable
+    - not keycloak_offline_install
+
+- name: Perform download from RHN
+  middleware_automation.redhat_csp_download.redhat_csp_download:
+    url: "{{ keycloak_rhsso_download_url }}"
+    dest: "{{ local_path.stat.path }}/{{ keycloak.bundle }}"
+    username: "{{ rhn_username }}"
+    password: "{{ rhn_password }}"
+  no_log: "{{ omit_rhn_output | default(true) }}"
+  delegate_to: localhost
+  when:
+    - archive_path is defined
+    - archive_path.stat is defined
+    - not archive_path.stat.exists
+    - keycloak_rhsso_enable
+    - not keycloak_offline_install
+    - keycloak_rhn_url in keycloak_rhsso_download_url
+
+- name: Download rhsso archive from alternate location
+  ansible.builtin.get_url: # noqa risky-file-permissions delegated, uses controller host user
+    url: "{{ keycloak_rhsso_download_url }}"
+    dest: "{{ local_path.stat.path }}/{{ keycloak.bundle }}"
+    mode: 0644
+  delegate_to: localhost
+  when:
+    - archive_path is defined
+    - archive_path.stat is defined
+    - not archive_path.stat.exists
+    - keycloak_rhsso_enable
+    - not keycloak_offline_install
+    - not keycloak_rhn_url in keycloak_rhsso_download_url
+
+- name: Check downloaded archive
+  ansible.builtin.stat:
+    path: "{{ local_path.stat.path }}/{{ keycloak.bundle }}"
+  register: local_archive_path
+  delegate_to: localhost
+
+## copy and unpack
+- name: Copy archive to target nodes
+  ansible.builtin.copy:
+    src: "{{ local_path.stat.path }}/{{ keycloak.bundle }}"
+    dest: "{{ archive }}"
+    owner: "{{ keycloak_service_user }}"
+    group: "{{ keycloak_service_group }}"
+    mode: 0640
+  register: new_version_downloaded
+  when:
+    - not archive_path.stat.exists
+    - local_archive_path.stat is defined
+    - local_archive_path.stat.exists
+  become: yes
+
+- name: "Check target directory: {{ keycloak.home }}"
+  ansible.builtin.stat:
+    path: "{{ keycloak.home }}"
+  register: path_to_workdir
+  become: yes
+
+- name: "Extract {{ 'Red Hat Single Sign-On' if keycloak_rhsso_enable else 'Keycloak' }} archive on target"
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: "{{ archive }}"
+    dest: "{{ keycloak_dest }}"
+    creates: "{{ keycloak.home }}"
+    owner: "{{ keycloak_service_user }}"
+    group: "{{ keycloak_service_group }}"
+  become: yes
+  when:
+    - new_version_downloaded.changed or not path_to_workdir.stat.exists
+  notify:
+    - restart keycloak
+
+- name: Inform decompression was not executed
+  ansible.builtin.debug:
+    msg: "{{ keycloak.home }} already exists and version unchanged, skipping decompression"
+  when:
+    - not new_version_downloaded.changed and path_to_workdir.stat.exists
+
+- name: "Reown installation directory to {{ keycloak_service_user }}"
+  ansible.builtin.file:
+    path: "{{ keycloak.home }}"
+    owner: "{{ keycloak_service_user }}"
+    group: "{{ keycloak_service_group }}"
+    recurse: true
+  become: yes
+  changed_when: false
+
+# driver and configuration
+- name: "Install {{ keycloak_jdbc_engine }} driver"
+  ansible.builtin.include_role:
+    name: middleware_automation.wildfly.wildfly_driver
+  vars:
+      wildfly_user: "{{ keycloak_service_user }}"
+      jdbc_driver_module_dir: "{{ keycloak_jdbc[keycloak_jdbc_engine].driver_module_dir }}"
+      jdbc_driver_version: "{{ keycloak_jdbc[keycloak_jdbc_engine].driver_version }}"
+      jdbc_driver_jar_filename: "{{ keycloak_jdbc[keycloak_jdbc_engine].driver_jar_filename }}"
+      jdbc_driver_jar_url: "{{ keycloak_jdbc[keycloak_jdbc_engine].driver_jar_url }}"
+      jdbc_driver_jar_installation_path: "{{ keycloak_jdbc[keycloak_jdbc_engine].driver_module_dir }}/{{ keycloak_jdbc[keycloak_jdbc_engine].driver_jar_filename }}"
+      jdbc_driver_module_name: "{{ keycloak_jdbc[keycloak_jdbc_engine].driver_module_name }}"
+  when: keycloak_jdbc[keycloak_jdbc_engine].enabled
+
+- name: "Deploy {{ keycloak.service_name }} config to {{ keycloak_config_path_to_standalone_xml }} from {{ keycloak.config_template_source }}"
+  become: yes
+  ansible.builtin.template:
+    src: "templates/{{ keycloak.config_template_source }}"
+    dest: "{{ keycloak_config_path_to_standalone_xml }}"
+    owner: "{{ keycloak_service_user }}"
+    group: "{{ keycloak_service_group }}"
+    mode: 0640
+  notify:
+    - restart keycloak
+  when: not keycloak_remotecache.enabled or keycloak_config_override_template|length > 0
+
+- name: "Deploy {{ keycloak.service_name }} config with remote cache store to {{ keycloak_config_path_to_standalone_xml }}"
+  become: yes
+  ansible.builtin.template:
+    src: templates/standalone-infinispan.xml.j2
+    dest: "{{ keycloak_config_path_to_standalone_xml }}"
+    owner: "{{ keycloak_service_user }}"
+    group: "{{ keycloak_service_group }}"
+    mode: 0640
+  notify:
+    - restart keycloak
+  when: keycloak_remotecache.enabled

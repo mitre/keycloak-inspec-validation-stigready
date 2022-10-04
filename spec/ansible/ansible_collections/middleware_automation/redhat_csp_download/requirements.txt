@@ -1,0 +1,3 @@
+# requirements to install before using redhat-csp-download
+lxml
+requests

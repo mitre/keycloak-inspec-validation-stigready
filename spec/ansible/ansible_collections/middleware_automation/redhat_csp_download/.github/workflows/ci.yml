@@ -1,0 +1,48 @@
+---
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python_version: ["3.9"]
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: ansible_collections/middleware_automation/redhat_csp_download
+
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python_version }}
+
+      - name: Install yamllint and ansible
+        run: |
+          python -m pip install --upgrade pip
+          pip install yamllint ansible-core ansible-lint
+
+      - name: Install ansible-lint custom rules
+        uses: actions/checkout@v2
+        with:
+          repository: ansible-middleware/ansible-lint-custom-rules
+          path: ansible_collections/ansible-lint-custom-rules/
+
+      - name: Create default collection path symlink
+        run: |
+          mkdir -p /home/runner/.ansible
+          ln -s /home/runner/work/middleware_automation/redhat_csp_download /home/runner/.ansible/collections
+
+      - name: Run sanity tests
+        run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
+        working-directory: ./ansible_collections/middleware_automation/redhat_csp_download
+
+      - name: Run ansible-lint
+        run: ansible-lint
+        working-directory: ./ansible_collections/middleware_automation/redhat_csp_download

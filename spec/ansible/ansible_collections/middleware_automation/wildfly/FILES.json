@@ -1,0 +1,873 @@
+{
+ "files": [
+  {
+   "name": ".",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "docs",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "docs/index.rst",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "6f28e10f089bc387d07eb7d3c812e11096960d4c08c973c82241fc396ec69446",
+   "format": 1
+  },
+  {
+   "name": "docs/CHANGELOG.rst",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9fb861a6fd235069886bd2a0c92479f17277f0ecf66ec41304148788b29b553b",
+   "format": 1
+  },
+  {
+   "name": "docs/developing.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "750f78f35a37b6d6f21c7b1c4d4ca6906ae2e91c1089281101f46d25d507b98f",
+   "format": 1
+  },
+  {
+   "name": "docs/requirements.txt",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c2162d2e21e68b493d6080eea411b45e616745cb8bed9a531faa83f13ab89991",
+   "format": 1
+  },
+  {
+   "name": "docs/releasing.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "3e7253741227bc9b2be9e08fd77db000a125ce0d282ce5b2eb7be68c1106bae0",
+   "format": 1
+  },
+  {
+   "name": "docs/testing.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "549d380c6a7ebacbb2f1555143d872b50e48c4b4043ebae45ed0d39ca6fdeb91",
+   "format": 1
+  },
+  {
+   "name": "docs/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "bf96df8a1e51c57c6037e0482599b9aff684f3f54b53c89e7e5f16d797d792a0",
+   "format": 1
+  },
+  {
+   "name": "CHANGELOG.rst",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9fb861a6fd235069886bd2a0c92479f17277f0ecf66ec41304148788b29b553b",
+   "format": 1
+  },
+  {
+   "name": "requirements.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "04369c3799e3d38316d93fb4cea704ae67a85a0c776434b795c87fca78a0e29f",
+   "format": 1
+  },
+  {
+   "name": "CONTRIBUTING.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "750f78f35a37b6d6f21c7b1c4d4ca6906ae2e91c1089281101f46d25d507b98f",
+   "format": 1
+  },
+  {
+   "name": "playbooks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "playbooks/playbook.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "eb28775d46e898be6825d542d7299d34486f14971082ae837ad9f384d1060e4f",
+   "format": 1
+  },
+  {
+   "name": "playbooks/playbook_verify.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "18a6617adec034fde0c2bef89bc81fb703701d7db3c74fe918eb6e1cc8af62a5",
+   "format": 1
+  },
+  {
+   "name": "playbooks/roles",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "meta/runtime.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1a01c0242049d95af092b5e81c796ad244d72481fcdc2abb1bb0bc0e9f2807d1",
+   "format": 1
+  },
+  {
+   "name": "meta/execution-environment.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "45bb9fdb1c5930c9a02e06d1a09e35b22dbb43b1974694fc6461b4647f8acb7d",
+   "format": 1
+  },
+  {
+   "name": "LICENSE",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "93a2d261f749a350ebb9880e07cdd5afb0d581bd7622aa57ef24d5bcbafd2379",
+   "format": 1
+  },
+  {
+   "name": "README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "bf96df8a1e51c57c6037e0482599b9aff684f3f54b53c89e7e5f16d797d792a0",
+   "format": 1
+  },
+  {
+   "name": "roles",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9a7942cfbbd6fe578e0ddcd5ce70c8e2bec71432ec8cdf5447538cdfb4c014a7",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/templates",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/templates/jdbc_driver_module.xml.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "8cf3c8a707db7392495f91eb8cd122a5cf48f98b14f989019a1190bb11129361",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "983e05594d2de5f70d43990860d4e89c2ee40d45cb2642b7c6e12e63ee6d7e46",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "78824b7bcf0aa31d4e347a310de8755df009b9d7753fb8ced7c8b9f6ea5e0231",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "85c7ec2795a9e5d052bc28fa0617cfaf5e662333eed54323b06844e545fbe514",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "95daee309a5170a0e5f0c499961ef1d9ded3cc575e542186f954639b3e8643a7",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/vars",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_driver/vars/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "3f15bea847355ced6f9f8c3738aedff69ca6cc1f0ab5c7039a0a6acfb201f343",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_uninstall",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_uninstall/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_uninstall/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c614ccf612c4ec88931c5b665c0664d934e807d7823cc66ed9352926dc354b62",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_uninstall/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "74ad6cee8f579fc31f806926ef02703fd99852152ecaa0ddb9e2e0ebd84bb7a9",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_uninstall/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_uninstall/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "430fd8691795d6fd7ddbf1867273b2eb5eedd491809d04683d09456f7f990a38",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_uninstall/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "991d2ae4728f16fb8b2fb54eb5bca47181cad64e11ab5fc3056c0f11664878c6",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "35fd646b211e50b60f11724d28924530c996330dd454e359d7972530539a51ab",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "2d7dae140a036a780d80b10884aed17d5bed1974673bf8575680e7d68f1d63d4",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "ac58d25f4c881fb66cbca4c8a38773f542c1b29265162154c0d5a79d206553bb",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/tasks/enable_repo.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "610411e295a0726fc1ae8b1042a999fc70f08bc678e49d50f5abe1f58eb6333b",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/tasks/disable_repo.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "a6e18b97a72c0e752e49e3c533d8a0ad206849fdfedf0b67f3ad0637695e4a0e",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "8028a5ec36e171489cbfb3272ce21263d14b528a3ed68649f80ba6d4d05ca5e6",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "0ddd4af93287fe1ccc762cf27ee52346d4186dcd0046f46e1788a2a6a97f919f",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/vars",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_subs/vars/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1be60a3c24e2fc53b7b622d11a6a4909c27a2e7a8069f27d966eb54bcd35bd52",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "0d4770a571325574a20affb1ccca4f44bafb7c23686c2031bea3cf769a300419",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "a84f838aa6adb5cf06d79244e715ced99ebad7b1e86c20496f7cc156647ab175",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "890e29d430453275d4e7c2bfca3b5aaa58488ab7582714eab9567a9b038a99b5",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils/tasks/jboss_cli.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1b2b99503ac7422102aa932f8474dd2d2d4ca730bd6973cf32eab33165a4239b",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils/tasks/download_from_rhn.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "87547a5b1cc376f8620624ca5fdd30f49e4c7c267986a0d36bdcdf8dc6a36241",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils/tasks/apply_cp.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "01093c9befc636324b0b2d30bba4c1f9e77a503f2455058de356d24c47ca73cd",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_utils/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e2f8cd91f79c25ca9b7a7123441b678574fe825f47bfbe6a2d05fd112d659fbb",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9e1c32004211e0c1e63fcf68035a75cc9730b070f27cba63ef26607ca8152156",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "b8703be09effbc21fb8ec88815ca97827f6b1ff18c67eb2732718f6952abcec0",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "99439024ed3a25348bbe8fae0232b78e7240cb696e0a66c09ca4398d59fb2011",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "0372d5a6eda1c069bc18efd05b81def39dadbf2fbe466f86885a900d0bff6b58",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "34f480a4377acf6ef6d299cca60c1a7feb1b6554e38e7fe7158d39af9e3657da",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration/vars",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_migration/vars/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "154e59a36690b7d30030f3f549b3b017a0db4c6fd895e502d15778849085a61c",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "0476aee46d697491f03bc60ebad3a6dc9b6cb4f23a55b16f6eb36235b4344345",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/templates",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/templates/wfly.yml.config.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "070fb928a200442bee3b0c2cca6edf0e3e9b8ad4b851d0c3e7a18613f93b5417",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/templates/wfly.service.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9889981ddae0284e35db28f13b311b6ded20a3b3d336a668e36e7dc129f5fe13",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/templates/wfly.conf.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "b74704e7e743e8aa8dc2c3140a9369f23e2dd212efd1daf248e5884cfd6d9211",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "6701f81f5c24b6db6fff2a45ada830466bce681df3186167e9a7bfdefccaa9fd",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e07cc350a6b2401735a1a25b7c110acc483126b4a699c20cdbd24fb5505aa459",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/handlers",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/handlers/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "7dea1f3bbb1a447cf6016d10399bd87b30089391ce370ba843fc5bf44a5d81c0",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/tasks/service.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "373cc405c5bc2f9d217e3d3e880f6fbbb02fb27ac6e64212e99e1215faa85d2c",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/tasks/yml_config.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "faeaa879564b4fcb893abff155ce66063125d63184f92921f6596c730b1c92b1",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f200d19ae5884dd62a5354434707ab192af059bb45088f3c5d556559fea25b2a",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "8ba862970664b933ab61561dbc6cd3426451b3edfa678a2add42d283b3f921de",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/vars",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_systemd/vars/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "ab41ae4f36e4a3c73ac76effdc6b6757646cbe48ab658bd89386e570293b4d26",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c3938fc350c1a8f2599490a0912fb53d3b09ba6be30aa91ca9691542a0ce5014",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "856c6158697b9d108ebfe8f729f238844d387077df56f29678f6defdae260a2e",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "ee8774a65b25d2b7289cc0f97c3b920b7a57d7496e4b2b108ec7bbbe81233c9f",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/tasks/prereqs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f6486b7682ebe7d182a00d0f2d6e70392a8b8fc8c8d43838cf28666799b69ed7",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/tasks/user.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "10c6df3962f4e1aa905750944134e5cbca07e61200b6f9da7b4b93e306336362",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/tasks/install",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/tasks/install/web.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "d462654e172e211354d075432cf1ae69eb3f69a0d34cc667f3e633ed2d6d7b47",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/tasks/install/rpm.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "0c9438c7f757c4830813ffb679b19a216306c6913d38a293c2bd86b21ba3f315",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/tasks/install/rhn.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "5f23928e985d96438a01a13b8ec4ff6b5c0f2fbe844d2607d6b60730ad464dac",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9faf9b722ce776f2b7890786c8e2e6becf974fc09c015dc97ac51d993b92e443",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/tasks/install.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "a04876e36fd5ffc4707e5f228f10ea75e8fb4ec785275ab6b593de907e43e7aa",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "692d57509331167346a38b35a6f5474e6adde27079027db056bba948d9cb1d54",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/vars",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_install/vars/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "56814964e545f8a69a825fc6d00fa97199c38bef6de607cd916e2a98bf86dbae",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_validation",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_validation/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_validation/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "58e0b12179919adacb644ddf3da94529affeec420e70be98cc54f967450ae62c",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_validation/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_validation/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "111aafd971640034e00049be9702adc7807850be604b4119854076785363f39a",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_validation/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1e8e0830cda029cf3920b1a9f3ae8ed19fc277df011d1c40df210d2e0bc0911c",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_validation/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_validation/tasks/verify_with_cli_queries.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "a57c7e4f1c78076da0ff53e8e70c9e718f702a6197b2c60a8b3f97a13b8d1948",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_validation/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1c04379ba43376517e04544eef57c93c73e7dc55acf2223b26f597e23a31725b",
+   "format": 1
+  },
+  {
+   "name": "roles/wildfly_validation/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "d93d1ba3eb48ed22ab6d6ee12436ce3ad1cb2c01491fe466abf7f58dc2a6923e",
+   "format": 1
+  }
+ ],
+ "format": 1
+}

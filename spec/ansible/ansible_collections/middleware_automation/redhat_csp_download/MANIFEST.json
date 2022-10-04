@@ -1,0 +1,36 @@
+{
+ "collection_info": {
+  "namespace": "middleware_automation",
+  "name": "redhat_csp_download",
+  "version": "1.2.2",
+  "authors": [
+   "Andrew Block <ablock@redhat.com>",
+   "Harsha Cherukuri <hcheruku@redhat.com>"
+  ],
+  "readme": "README.md",
+  "tags": [
+   "redhat",
+   "rhel",
+   "rhn",
+   "subscription_manager",
+   "application",
+   "tools"
+  ],
+  "description": "Downloads resources from the Red Hat Customer Portal.",
+  "license": [],
+  "license_file": "LICENSE",
+  "dependencies": {},
+  "repository": "https://github.com/ansible-middleware/redhat-csp-download",
+  "documentation": "https://github.com/ansible-middleware/redhat-csp-download",
+  "homepage": "https://github.com/ansible-middleware/redhat-csp-download",
+  "issues": "https://github.com/ansible-middleware/redhat-csp-download/issues"
+ },
+ "file_manifest_file": {
+  "name": "FILES.json",
+  "ftype": "file",
+  "chksum_type": "sha256",
+  "chksum_sha256": "b98c93419df671aa1043ab8aff789475eb54953ae061999a34f123876be8b441",
+  "format": 1
+ },
+ "format": 1
+}

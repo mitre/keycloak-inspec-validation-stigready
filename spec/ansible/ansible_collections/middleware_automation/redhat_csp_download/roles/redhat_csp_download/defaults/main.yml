@@ -1,0 +1,13 @@
+---
+redhat_csp_download:
+  dependencies:
+    python3:
+      rhel8:
+        - python3-lxml
+      rhel7:
+        - python-lxml
+    python2:
+      rhel8:
+        - python2-lxml
+      rhel7:
+        - python-lxml

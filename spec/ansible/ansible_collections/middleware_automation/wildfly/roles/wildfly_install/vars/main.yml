@@ -1,0 +1,13 @@
+---
+# internal variables
+wildfly_install:
+  download_url: "{{ wildfly_install_download_url }}"
+  workdir: "{{ wildfly_install_workdir }}"
+  archive_dir: "{{ wildfly_archive_dir }}"
+  archive_name: "{{ wildfly_archive_filename }}"
+  home: "{{ wildfly_home }}"
+  config: "{{ wildfly_config_base }}"
+  user: "{{ wildfly_user }}"
+  group: "{{ wildfly_group }}"
+  java:
+    package_name: "{{ wildfly_java_package_name }}"
