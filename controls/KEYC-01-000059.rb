@@ -45,4 +45,13 @@ control "KEYC-01-000059" do
   tag stig_id: "KEYC-01-000059"
   tag cci: ["CCI-002041"]
   tag nist: ["IA-5 (1) (f)"]
+
+
+  test_command = "#{input('executable_path')}kcadm.sh get authentication/required-actions/UPDATE_PASSWORD -r #{input('keycloak_realm')}"
+
+  describe json(content: command(test_command).stdout) do
+	  its('defaultAction') { should eq true }
+    its('enabled') {should eq true}
+  end
+
 end

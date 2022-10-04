@@ -93,6 +93,38 @@ inputs:
       - "default-roles-master"
       - "create-realm"
       - "admin"
+  - name: custom_password_policy
+    type: string
+    value: minimumPasswordLife
+
+  - name: custom_password_policy_jar_path
+    type: string
+    value: /opt/keycloak/providers/password-min-time-policy-0.0.1-SNAPSHOT.jar
+    
+#  - name: trust_store_file_path
+#    type: string
+#    value:
+#
+#  - name: trust_store_password
+#    type: string
+#    value:
+#
+#  - name: certificate_path
+#    type: string
+#    value:
+#
+#  - name: certificate_key_path
+#    type: string
+#    value:
+
+#  - name: events_enabled
+#    type: boolean
+#    value: true
+#
+#  - name: events_listeners
+#    type: array
+#    value:
+#      - "jboss-logging"
 
   - name: enabled_event_types
     type: array
