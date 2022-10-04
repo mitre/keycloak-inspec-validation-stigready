@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Will Dower
+  description: Ansible Role for RHEL 7 Vanilla install
+  company: MITRE
+  license: license Apache-2.0
+
+  min_ansible_version: 2.1
+
+  platforms:
+  - name: Red Hat Enterprise Linux
+    versions:
+    - 7
