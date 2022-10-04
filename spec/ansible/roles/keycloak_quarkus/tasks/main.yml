@@ -1,0 +1,69 @@
+---
+# tasks file for keycloak
+- name: Check prerequisites
+  ansible.builtin.include_tasks: prereqs.yml
+  tags:
+    - prereqs
+
+- name: Include firewall config tasks
+  ansible.builtin.include_tasks: firewalld.yml
+  when: keycloak_quarkus_configure_firewalld
+  tags:
+    - firewall
+
+- name: Include install tasks
+  ansible.builtin.include_tasks: install.yml
+  tags:
+    - install
+
+- name: Include systemd tasks
+  ansible.builtin.include_tasks: systemd.yml
+  tags:
+    - systemd
+
+- name: "Configure config for keycloak service"
+  ansible.builtin.template:
+    src: keycloak.conf.j2
+    dest: "{{ keycloak.home }}/conf/keycloak.conf"
+    owner: "{{ keycloak.service_user }}"
+    group: "{{ keycloak.service_group }}"
+    mode: 0644
+  become: yes
+  notify:
+    - restart keycloak
+
+- name: "Configure quarkus config for keycloak service"
+  ansible.builtin.template:
+    src: quarkus.properties.j2
+    dest: "{{ keycloak.home }}/conf/quarkus.properties"
+    owner: "{{ keycloak.service_user }}"
+    group: "{{ keycloak.service_group }}"
+    mode: 0644
+  become: yes
+  notify:
+    - restart keycloak    
+
+- name: Ensure logdirectory exists
+  ansible.builtin.file:
+    state: directory
+    path:  "{{ keycloak.home }}/{{ keycloak.log.file | dirname }}"
+    owner: "{{ keycloak.service_user }}"
+    group: "{{ keycloak.service_group }}"
+    mode: 0775
+  become: yes
+
+- name: "Start and wait for keycloak service"
+  ansible.builtin.include_tasks: start.yml
+
+- name: Check service status
+  ansible.builtin.command: "systemctl status keycloak"
+  register: keycloak_service_status
+  changed_when: False
+
+- name: Link default logs directory
+  ansible.builtin.file:
+    state: link
+    src: "{{ keycloak.home }}/{{ keycloak.log.file | dirname }}"
+    dest: /var/log/keycloak
+    force: yes
+  become: yes

@@ -85,6 +85,15 @@ inputs:
     value:
       - "jboss-logging"
 
+  - name: roles
+    type: array
+    value:
+      - "offline_access"
+      - "uma_authorization"
+      - "default-roles-master"
+      - "create-realm"
+      - "admin"
+
   - name: enabled_event_types
     type: array
     value:

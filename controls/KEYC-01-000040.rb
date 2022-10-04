@@ -61,9 +61,6 @@ control "KEYC-01-000040" do
   describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
 	  its('hostname-strict-https') { should eq 'true' }
 	  its('https-client-auth') { should eq 'required' }
-  end
-
-  describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
 	  its('spi-truststore-file-file') { should eq input('spi_trust_store_file_path') }
 	  its('spi-truststore-file-password') { should_not be nil }
 	  its('spi-truststore-file-hostname-verification-policy') { should eq input('spi_trust_store_policy') }

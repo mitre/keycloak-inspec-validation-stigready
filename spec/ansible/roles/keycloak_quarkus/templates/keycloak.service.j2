@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Keycloak Server
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/keycloak
+PIDFile={{ keycloak_quarkus_service_pidfile }}
+ExecStart={{ keycloak.home }}/bin/kc.sh start --auto-build --log={{ keycloak_quarkus_log }}
+User={{ keycloak.service_user }}
+
+[Install]
+WantedBy=multi-user.target

@@ -64,6 +64,16 @@ control "KEYC-01-000053" do
   tag cci: ["CCI-002169"]
   tag nist: ["AC-3 (7)"]
   
-  # TODO: find which names should be in get-roles, create var for them, ensure == with no extra names
-  #
+  # TODO: needs testing
+  describe "Current Roles" do
+	  test_command = "#{input('executable_path')}kcadm.sh get-roles -r #{input('keycloak_realm')}"
+	
+	  it 'roles are expected to include only those listed in inspec.yml' do
+		  roles = json(content: command(test_command).stdout)
+		  actual_roles = roles.params.select { |key, value| key == 'name' }
+		  unexpected_actual_roles = actual_roles.values - input('roles')
+		  failure_message = "The following roles were found, but are not listed in inspec.yml: #{unexpected_actual_roles}"
+		  expect(unexpected_actual_roles).to be_empty, failure_message
+	  end
+  end
 end
