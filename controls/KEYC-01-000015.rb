@@ -12,36 +12,35 @@ control "KEYC-01-000015" do
     
     If Keycloak configuration audit records do not identify the outcome of the events, this is a finding.
     
-    To confirm this setting is configured using the Keycloak admin CLI, after logging in with a privileged account, which can be done by running:
+    The outcome of an auditable event can be seen by examining the Keycloak event log. Ensure that the event log is enabled, and configured to capture the appropriate events. To check if Keycloak is configured for event logging, log into the Keycloak admin CLI with a privileged account:
     
     kcadm.sh config credentials --server [server location] --realm master --user [username] --password [password]
     
     then run the following command:
     
-    kcadm.sh get events/config -r [YOUR REALM] 
+    kcadm.sh get events/config -r [realm]
     
-    If the results are not as follows, then it is a finding.
+    If the results do not include the following values, then this is a finding.
     
     \"eventsEnabled\" : true, 
     \"eventsListeners\" : [ \"jboss-logging\" ],
-    \"enabledEventTypes\" : [ APPROPRIATE EVENT TYPES ],
     \"adminEventsEnabled\" : true,
     \"adminEventsDetailsEnabled\" : true
     
     Then run the command: 
     
-    kcadm.sh get events -r [YOUR REALM]
+    kcadm.sh get events -r [realm]
     
-    If the individual event from the resulting event lists does not contain the following key-value pair, then it is a finding. 
+    If the individual events from the resulting event list do not contain the following key-value pairs, then this is a finding.
     
-    \"type\" : [Type/Outcome of the event]
+    \"type\" : [type]
   "
   desc  "fix", "
     Configure Keycloak configuration audit records to identify the outcome of the events.
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
+    kcadm.sh update events/config -r [realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"]' -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
   "
   impact 0.5
   tag severity: "medium"
@@ -51,4 +50,23 @@ control "KEYC-01-000015" do
   tag stig_id: "KEYC-01-000015"
   tag cci: ["CCI-000134"]
   tag nist: ["AU-3"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+
+  describe json(content: command(test_command).stdout) do
+	  its('eventsEnabled') { should eq true }
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+	  its('adminEventsEnabled') { should eq true }
+	  its('adminEventsDetailsEnabled') { should eq true }
+  end
+
+  # comment that more enabledEventTypes can be added, this is a minimum
+  describe 'JSON content' do
+	  it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
+		  actual_events_enabled = json(content: command(test_command).stdout)['enabledEventTypes']
+		  missing = actual_events_enabled - input('enabled_event_types')
+		  failure_message = "The generated JSON output does not include: #{missing}"
+		  expect(missing).to be_empty, failure_message
+	  end
+  end
 end

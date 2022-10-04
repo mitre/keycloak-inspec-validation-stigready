@@ -48,4 +48,20 @@ control "KEYC-01-000030" do
   tag stig_id: "KEYC-01-000030"
   tag cci: ["CCI-000200"]
   tag nist: ["IA-5 (1) (e)"]
+
+
+  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')} | grep 'passwordHistory'"
+
+  describe command(test_command) do
+	  its('stdout') { should_not be_empty }
+
+    it 'passwordHistory is expected to be greater than or equal to 5' do 
+      passwordHistoryGreaterThan5 =command(test_command).stdout.match('passwordHistory(.*)')[1].delete("^0-9")>='5'
+      failure_message = "passwordHistory is not greater than or equal to 5"
+      expect(passwordHistoryGreaterThan5).to be_truthy, failure_message
+    end
+  end
+
+
+
 end

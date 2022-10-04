@@ -42,4 +42,10 @@ control "KEYC-01-000031" do
   tag stig_id: "KEYC-01-000031"
   tag cci: ["CCI-000192"]
   tag nist: ["IA-5 (1) (a)"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')} | grep 'upperCase'"
+
+  describe command(test_command) do
+	  its('stdout') { should_not be_empty }
+  end
 end

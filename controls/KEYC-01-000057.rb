@@ -18,7 +18,7 @@ control "KEYC-01-000057" do
     
     then run the following command:
     
-    kcadm.sh get events/config -r [YOUR REALM] 
+    kcadm.sh get events/config -r [realm]
     
     If the results are not as follows, then it is a finding.
     
@@ -41,7 +41,7 @@ control "KEYC-01-000057" do
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
+    kcadm.sh update events/config -r [realm] -s eventsEnabled=true -s eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
     
     Then create or update Keycloak logging format with the following line in your keycloak configuration file, keycloak.conf:
     

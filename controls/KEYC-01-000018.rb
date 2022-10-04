@@ -11,34 +11,76 @@ control "KEYC-01-000018" do
   "
   desc  "rationale", ""
   desc  "check", "
-    Verify Keycloak are configured to generate audit records overwriting the oldest audit records in a first-in-first-out manner. When failures are caused by the lack of audit record storage capacity, Keycloak must continue generating audit records. 
+    Verify Keycloak is configured to generate audit records overwriting the oldest audit records in a first-in-first-out manner. When failures are caused by the lack of audit record storage capacity, Keycloak must continue generating audit records. 
     
-    If Keycloak are not configured to generate audit records overwriting the oldest audit records in a first-in-first-out manner, this is a finding.
+    If Keycloak is not configured to generate audit records overwriting the oldest audit records in a first-in-first-out manner, this is a finding.
     
-    Check keycloak configuration file, keycloak.conf. If the file does not contain the following key-value pairs, it is a finding. 
+    To confirm this setting is configured using the Keycloak admin CLI, after logging in with a privileged account, which can be done by running:
     
-    log=file,[OTHER LOGGING HANDLERS]
+    kcadm.sh config credentials --server [server location] --realm master --user [username] --password [password]
     
-    Locate file quarkus.properties. If such a file is not found, this is a finding. 
+    then run the following command:
     
-    Inspect file quarkus.properties. If the content does not contain the following, this is a finding. 
+    kcadm.sh get events/config -r [realm]
     
-    quarkus.log.file.rotation.max-file-size=[APPROPRIATE FILE SIZE]
-    quarkus.log.file.rotation.max-backup-index=[APPROPRIATE NUMBER OF BACKUPS]
-    quarkus.log.file.rotation.file-suffix=[APPROPRIATE SUFFIX]
+    If the results are not as follows, then it is a finding.
+    
+    \"eventsEnabled\" : true, 
+    \"eventsListeners\" : [ \"jboss-logging\" ],
+    \"enabledEventTypes\" : [ APPROPRIATE EVENT TYPES ],
+    
+    Then check keycloak configuration file, conf/keycloak.conf. If the file does not contain the following key-value pairs, it is a finding. 
+    
+    spi-events-listener-jboss-logging-success-level=info 
+    spi-events-listener-jboss-logging-error-level=error
+    
+    Then check quarkus configuration file, conf/quarkus.properties. If the file does not contain the following key-value pairs, it is a finding. 
+    
+    quarkus.log.syslog.enable=true
+    quarkus.log.syslog.endpoint=[APPROPRIATE ENDPOINT]
+    quarkus.log.syslog.protocol=[APPROPRIATE PROTOCOL]
+    
+    Then check that the log service is enabled on the system with the following command: 
+     
+    systemctl is-enabled rsyslog
+     
+    If the command above returns \"disabled\", this is a finding. 
+     
+    Check that the log service is properly running and active on the system with the following command: 
+     
+    systemctl is-active rsyslog  
+     
+    If the command above returns \"inactive\", this is a finding.
+    
+    Confirm with the centralized server's administrators that audit records are configured to be overwritten in a first-in-first-out manner. If audit records are not configured to be overwritten in a first-in-first-out manner, this is a finding. 
   "
   desc  "fix", "
     Configure Keycloak to generate audit records overwriting the oldest audit records in a first-in-first-out manner. Some specific implementations may further require automatically restarting the audit service to synchronize the local audit data with the collection server. The configuration must continue generating audit records, even when failures are caused by the lack of audit record storage capacity.
     
-    Create or update Keycloak logging handlers with the following lines in your Keycloak configuration file, keycloak.conf:
+    To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    log=file,[OTHER LOGGING HANDLERS]
+    kcadm.sh update events/config -r [realm] -s eventsEnabled=true -s eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
     
-    Creat or modify file quarkus.properties with addtion of following lines: 
+    Then create or update keycloak configuration file, conf/keycloak.conf:
     
-    quarkus.log.file.rotation.max-file-size=[APPROPRIATE FILE SIZE]
-    quarkus.log.file.rotation.max-backup-index=[APPROPRIATE NUMBER OF BACKUPS]
-    quarkus.log.file.rotation.file-suffix=[APPROPRIATE SUFFIX]
+    spi-events-listener-jboss-logging-success-level=info 
+    spi-events-listener-jboss-logging-error-level=error
+    
+    Then create or update quarkus configuration file, conf/quarkus.properties: 
+    
+    quarkus.log.syslog.enable=true
+    quarkus.log.syslog.endpoint=[APPROPRIATE ENDPOINT]
+    quarkus.log.syslog.protocol=[APPROPRIATE PROTOCOL]
+     
+    Then install the log service (if the log service is not already installed) on system with the following command: 
+     
+    sudo apt-get install rsyslog 
+     
+    Enable the log service with the following command: 
+     
+    sudo systemctl enable --now rsyslog
+    
+    Work with the centralized server's administrators to configure audit records to overwrite oldest records in a first-in-first-out manner.
   "
   impact 0.5
   tag severity: "medium"
@@ -48,4 +90,42 @@ control "KEYC-01-000018" do
   tag stig_id: "KEYC-01-000018"
   tag cci: ["CCI-000140"]
   tag nist: ["AU-5 b"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+
+  describe json(content: command(test_command).stdout) do
+	  its('eventsEnabled') { should eq true }
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+  end
+
+  # comment that more enabledEventTypes can be added, this is a minimum
+  describe 'JSON content' do
+	  it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
+		  actual_events_enabled = json(content: command(test_command).stdout)['enabledEventTypes']
+		  missing = actual_events_enabled - input('enabled_event_types')
+		  failure_message = "The generated JSON output does not include: #{missing}"
+		  expect(missing).to be_empty, failure_message
+	  end
+  end
+
+  describe file('/opt/keycloak/conf/keycloak.conf') do
+	  it { should exist }
+	  its('content') { should match(%r{^spi-events-listener-jboss-logging-success-level=info}) }
+	  its('content') { should match(%r{^spi-events-listener-jboss-logging-error-level=error}) }
+  end
+
+  describe file('/opt/keycloak/conf/quarkus.properties') do
+	  it { should exist }
+	  its('content') { should match(%r{^quarkus.log.syslog.enable=true}) }
+	  # its('content') { should match(%r{quarkus.log.syslog.endpoint=[APPROPRIATE ENDPOINT]}) }
+	  # its('content') { should match(%r{quarkus.log.syslog.protocol=[APPROPRIATE PROTOCOL]}) }
+  end
+
+  # systemctl command not available for: systemctl is-active rsyslog
+    if virtualization.system.eql?('docker')
+  	  describe "Manual review is required within a container" do
+  		  skip "Verifying the host's configuration to alert the SA and ISSO when any audit processing failure occurs cannot be done within the container and should be reviewed manually."
+  	  end
+  	  # TODO: else here?
+    end
 end

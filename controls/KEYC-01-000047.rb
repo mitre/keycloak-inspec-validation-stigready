@@ -8,11 +8,11 @@ control "KEYC-01-000047" do
   "
   desc  "rationale", ""
   desc  "check", "
-    If Keycloak rely on directory services for user account management, this is not applicable and the connected directory services must perform this function. 
+    If Keycloak relies on directory services for user account management, this is not applicable and the connected directory services must perform this function. 
     
-    Verify Keycloak are configured to notify the system administrators and ISSO when accounts are created.
+    Verify Keycloak is configured to notify the system administrators and ISSO when accounts are created.
     
-    If Keycloak are not configured to notify the system administrators and ISSO when accounts are created, this is a finding.
+    If Keycloak is not configured to notify the system administrators and ISSO when accounts are created, this is a finding.
     
     Keycloak does not inherently provide this functionality. To check that a custom policy is in place to provide this functionality, after logging in with a privileged account, which can be done by running:
     
@@ -27,11 +27,14 @@ control "KEYC-01-000047" do
     \"eventsEnabled\" : true,
     \"eventsListeners\" : [ CUSTOM EVENT LISTENERS ]
     
+    Note: Keycloak does not inherently provide the functionality of notifying administrators and ISSO on account events. There needs to be a custom policy to implement this functionality.
   "
   desc  "fix", "
     Configure Keycloak to notify the system administrators and ISSO when accounts are created.
     
-    Keycloak does not inherently provide this functionality. To create a custom plugin to extend this functionality: navigate to GitHub repo: https://github.com/mitre/keycloak-event-listener-email and follow instructions on README.
+    Keycloak does not inherently provide this functionality. To create a custom plugin to extend this functionality: navigate to GitHub repo: https://github.com/mitre/keycloak-custom-policies and follow instructions on README.
+    
+    Note: Keycloak does not inherently provide the functionality of notifying administrators and ISSO on account events. There needs to be a custom policy to implement this functionality.
   "
   impact 0.5
   tag severity: "medium"

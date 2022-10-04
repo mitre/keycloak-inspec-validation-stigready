@@ -51,4 +51,24 @@ control "KEYC-01-000038" do
   tag stig_id: "KEYC-01-000038"
   tag cci: ["CCI-000198"]
   tag nist: ["IA-5 (1) (d)"]
+
+
+  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')} | grep #{input('custom_password_policy')}"
+
+  describe file(input('custom_password_policy_jar_path')) do
+    it { should exist }
+  end
+
+  describe command(test_command) do
+	  its('stdout') { should_not be_empty }
+
+    it 'minimum life time is expected to be greater than or equal to 24 hours' do 
+      minimumLifeTimeGreaterThan24 =command(test_command).stdout.match(input('custom_password_policy')+"(.*)")[1].delete("^0-9")>='24'
+      failure_message = "minimum life time is not greater than or equal to 24 hours"
+      expect(minimumLifeTimeGreaterThan24).to be_truthy,failure_message
+    end
+  end
+
+
+
 end

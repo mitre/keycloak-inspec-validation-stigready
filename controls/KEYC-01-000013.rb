@@ -14,37 +14,42 @@ control "KEYC-01-000013" do
     
     If Keycloak configuration audit records do not identify where the events occurred, this is a finding.
     
-    To confirm this setting is configured using the Keycloak admin CLI, after logging in with a privileged account, which can be done by running:
+    Keycloak's event logging feature will record the IP address that generated each event. To check if Keycloak is configured for event logging, log in with a privileged account from the CLI:
     
     kcadm.sh config credentials --server [server location] --realm master --user [username] --password [password]
     
-    then run the following command:
+    Then, run the following command:
     
-    kcadm.sh get events/config -r [YOUR REALM] 
+    kcadm.sh get events/config -r [realm]
     
-    If the results are not as follows, then it is a finding.
+    If the results do not include the following values, then this is a finding.
     
     \"eventsEnabled\" : true, 
     \"eventsListeners\" : [ \"jboss-logging\" ],
-    \"enabledEventTypes\" : [ APPROPRIATE EVENT TYPES ]
+    \"adminEventsEnabled\" : true,
+    \"adminEventsDetailsEnabled\" : true
     
     Then run the command: 
     
     kcadm.sh get events 
     
-    If the individual event from the resulting event lists does not contain the following key-value pair, then it is a finding. 
+    If the individual events from the resulting event list do not contain the following key-value pairs, then this is a finding.
     
-    \"realmId\" : [ APPROPRIATE REALM ID]
-    \"userId\" : [ APPROPRIATE USER ID ]
-    \"sessionId\" : [ APPROPRIATE SESSION ID ]
-    \"ipAddress\" : [ APPROPRIATE IP ADDRESS ]
+    \"realmId\" : [ realm ]
+    \"userId\" : [ user ID ]
+    \"sessionId\" : [ session ID ]
+    \"ipAddress\" : [ IP address ]
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   desc  "fix", "
     Configure Keycloak audit records to identify where the events occurred.
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
+    kcadm.sh update events/config -r [realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"]' -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   impact 0.5
   tag severity: "medium"
@@ -54,4 +59,18 @@ control "KEYC-01-000013" do
   tag stig_id: "KEYC-01-000013"
   tag cci: ["CCI-000132"]
   tag nist: ["AU-3"]
+	
+  test_command = "#{input('executable_path')}kcadm.sh get events -r #{input('keycloak_realm')} | grep -E 'realmId|userId|sessionId|ipAddress'"
+
+  describe command(test_command) do
+	  # change these to check that they are not nil, or check that key exists
+	  its('stdout') { should match(%r{"realmId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
+	  its('stdout') { should match(%r{"userId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
+	  its('stdout') { should match(%r{"sessionId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"}) }
+	  # its('stdout') { should include '"realmId" : "0137bc9e-7a66-44bb-8a20-dd1f01070ad2"' }
+	  # its('stdout') { should include '"userId" : "d654175b-62b8-449e-9e8d-2b635db5d9e5"' }
+	  # its('stdout') { should include '"sessionId" : "4d140156-d601-4a21-a4b2-9c707aae421f"' }
+	  # TODO: What should this be?
+	  its('stdout') { should include '"ipAddress" : "127.0.0.1"' }
+  end
 end

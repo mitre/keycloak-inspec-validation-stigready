@@ -18,27 +18,31 @@ control "KEYC-01-000014" do
     
     If Keycloak configuration audit records do not identify the source of the events, this is a finding.
     
-    To check if Keycloak is configured to audit this setting, run the following commands from a privileged account on the Keycloak admin CLI:
+    Keycloak's event logging feature will record the source application that generated each event via the client ID. To check if Keycloak is configured for event logging, log into the Keycloak admin CLI with a privileged account:
     
-    kcadm.sh get events/config -r [your realm] | grep 'eventsEnabled'
+    kcadm.sh config credentials --server [server location] --realm master --user [username] --password [password]
     
-    kcadm.sh get events/config -r [your realm] | grep 'eventsListeners'
+    Then run the following commands:
     
-    kcadm.sh get events/config -r [your realm] | grep 'adminEvents'
+    kcadm.sh get events/config -r [realm]
     
-    If the results are not as follows, then it is a finding.
+    If the results do not include the following values, then this is a finding.
     
     \"eventsEnabled\" : true,
     \"eventsListeners\" : [ \"jboss-logging\" ],
     \"adminEventsEnabled\" : true,
     \"adminEventsDetailsEnabled\" : true
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   desc  "fix", "
     Configure Keycloak configuration audit records to identify the source of the events.
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    kcadm.sh update events/config -r [your realm] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"]'
+    kcadm.sh update events/config -r [realm] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"]'
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   impact 0.5
   tag severity: "medium"
@@ -48,4 +52,13 @@ control "KEYC-01-000014" do
   tag stig_id: "KEYC-01-000014"
   tag cci: ["CCI-000133"]
   tag nist: ["AU-3"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+
+  describe json(content: command(test_command).stdout) do
+	  its('eventsEnabled') { should eq true }
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+	  its('adminEventsEnabled') { should eq true }
+	  its('adminEventsDetailsEnabled') { should eq true }
+  end
 end

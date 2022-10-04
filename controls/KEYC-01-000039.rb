@@ -48,4 +48,10 @@ control "KEYC-01-000039" do
   tag stig_id: "KEYC-01-000039"
   tag cci: ["CCI-000199"]
   tag nist: ["IA-5 (1) (d)"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')} | grep 'forceExpiredPasswordChange(60)'"
+
+  describe command(test_command) do
+	  its('stdout') { should_not be_empty }
+  end
 end
