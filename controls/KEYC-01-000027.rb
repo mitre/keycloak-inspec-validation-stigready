@@ -75,5 +75,28 @@ control "KEYC-01-000027" do
   tag cci: ["CCI-000766"]
   tag nist: ["IA-2 (2)"]
 
-  # TODO: Not sure, [26, 27, 41, 43] are all similar. I think start with 41.
+  test_command = "#{input('executable_path')}kcadm.sh get authentication/flows/browser/executions -r #{input('keycloak_realm')}"
+
+  acceptable_provider_ids = ["conditional-user-attribute", "conditional-level-authentication",
+                             "conditional-user-configured", "conditional-user-attribute"]
+  browser_flow_arr = []
+  browser_flow_hashes = json(content: command(test_command).stdout)
+
+  browser_flow_hashes.params.each_with_index do |flow, index|
+	  browser_flow_arr.push(flow["providerId"])
+  end
+
+  describe "Browser Flows" do
+	  it 'should have at least one flow containing a providerId with a value of "auth-x509-client-username-form"' do
+		  failure_message = 'There are no executions with the key/value pair "providerId" : "auth-x509-client-username-form"'
+		  expect(browser_flow_arr).to include("auth-x509-client-username-form"), failure_message
+	  end
+  end
+  
+  describe "Browser Flows" do
+	  it 'should have at least one flow containing a second execution for x509 login' do
+		  failure_message = 'There are no executions with the key/value pair "providerId" : <"conditional-user-attribute", or "conditional-level-authentication", or "conditional-user-configured", or "conditional-user-attribute">'
+		  expect(browser_flow_arr & acceptable_provider_ids).to_not be_empty, failure_message
+	  end
+  end
 end

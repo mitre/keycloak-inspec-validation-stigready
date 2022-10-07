@@ -74,14 +74,20 @@ control "KEYC-01-000043" do
   tag cci: ["CCI-000187"]
   tag nist: ["IA-5 (2) (c)"]
 
-  unless input('directory_services_for_acct_mgmt')
-	
-	  # TODO: Not sure, [26, 27, 41, 43] are all similar. I think start with 41.
+  test_command = "#{input('executable_path')}kcadm.sh get authentication/flows/browser/executions -r #{input('keycloak_realm')}"
 
-  else
-	  impact 0.0
-	  describe 'Manual Check' do
-		  skip "Keycloak relies on directory services for user account management. This control is not applicable."
+  browser_flow_arr = []
+  browser_flow_hashes = json(content: command(test_command).stdout)
+
+  browser_flow_hashes.params.each_with_index do |flow, index|
+	  browser_flow_arr.push(flow["providerId"])
+  end
+
+  describe "Browser Flows" do
+	  it 'at least one execution is expected to have a providerId with a value of "auth-x509-client-username-form"' do
+		  failure_message = 'There are no executions with the key/value pair "providerId" : "auth-x509-client-username-form"'
+		  expect(browser_flow_arr).to include("auth-x509-client-username-form"), failure_message
 	  end
   end
+  # TODO: still need to check authenticationConfig attribute
 end
