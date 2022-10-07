@@ -1,0 +1,10 @@
+---
+language: python
+python:
+  - "2.7"
+
+script:
+  - echo "Pushing changes to Ansible Galaxy"
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications

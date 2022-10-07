@@ -56,4 +56,10 @@ control "KEYC-01-000036" do
   tag stig_id: "KEYC-01-000036"
   tag cci: ["CCI-000196"]
   tag nist: ["IA-5 (1) (c)"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')} | grep 'hashAlgorithm'"
+
+  describe command(test_command) do
+	  its('stdout') { should include '"passwordPolicy" : "hashAlgorithm(pbkdf2-sha256)"' }
+  end
 end

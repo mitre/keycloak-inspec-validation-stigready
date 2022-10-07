@@ -1,0 +1,341 @@
+{
+ "files": [
+  {
+   "name": ".",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "CONTRIBUTING.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e80efaab17108545f4afbda6f022e3df3f569ebe23a2dae3cc8539a79c5d07d4",
+   "format": 1
+  },
+  {
+   "name": ".github",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": ".github/ISSUE_TEMPLATE",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": ".github/ISSUE_TEMPLATE/bug_report.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "0b2512c8a61a1d1937a9bd600f687713aa7cdee653441b7a5276489346cdf0a7",
+   "format": 1
+  },
+  {
+   "name": ".github/ISSUE_TEMPLATE/feature_request.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "d6d2e204e0385cf5a81451dd1e3772502ecf2c3c0c5b85be667b5126ae2cfcbf",
+   "format": 1
+  },
+  {
+   "name": ".github/workflows",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": ".github/workflows/docs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c2a5ab5cec393e403c91934e907d4c1fbca587ca38d3923d8c7e63a601ba4bf6",
+   "format": 1
+  },
+  {
+   "name": ".github/workflows/release.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "08d29040cb877e7e0309f8a09f5749713e18150b45e1a26c19681a6523644ec0",
+   "format": 1
+  },
+  {
+   "name": ".github/workflows/ci.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "16037f7024145667c40f3656d72315c5eef90d824753a007c8e37c6610d25cc8",
+   "format": 1
+  },
+  {
+   "name": ".travis.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "882e675faac4c3ba435ef2c6cf4f7bf2ba536b2dacbd2dfbd2d7308256cbe73e",
+   "format": 1
+  },
+  {
+   "name": "vars",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "vars/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e97aa1f6de28e185c57c9df59c4d0125ee774d9d18f2f1abc4ad9849d566cf9c",
+   "format": 1
+  },
+  {
+   "name": ".yamllint",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "a9661f657ef87bab49acd5850cbe99f1332c0f8faf55af172f95b58809642f83",
+   "format": 1
+  },
+  {
+   "name": "meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "meta/runtime.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "b5d9b146aa07048432c93824a93c4dba79f95dcb91effa4b205bdaa8fdb8e2fb",
+   "format": 1
+  },
+  {
+   "name": "plugins",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "plugins/modules",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "plugins/modules/redhat_csp_download.py",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c3faf2332272f3a3b50d9138f1a2aeddb89f0b4afa678367a6ef750e230fd1e8",
+   "format": 1
+  },
+  {
+   "name": "tests",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "tests/test.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "da1da053afea7b7bd29519e5465c1ef3178a72e3ef361bf6ca884a2d7735844a",
+   "format": 1
+  },
+  {
+   "name": "tests/inventory",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "d906aecb61d076a967d9ffe8821c7b04b063f72df9d9e35b33ef36b1c0d98f16",
+   "format": 1
+  },
+  {
+   "name": "tests/library",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "tests/sanity",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "tests/sanity/ignore-2.12.txt",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "format": 1
+  },
+  {
+   "name": ".gitignore",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "4110d4cf692835d20eb17a065e72876be4da1e662581e481a0f26b4a0bd6f6e4",
+   "format": 1
+  },
+  {
+   "name": "docs",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "docs/developing.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e80efaab17108545f4afbda6f022e3df3f569ebe23a2dae3cc8539a79c5d07d4",
+   "format": 1
+  },
+  {
+   "name": "docs/_gh_include",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "docs/_gh_include/footer.inc",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "a223988bb58c2b3aa6889260679c023f0c5ac711ccea53f636020d5f2374c48a",
+   "format": 1
+  },
+  {
+   "name": "docs/_gh_include/header.inc",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "fe5649acd12cc7d5f05a7c0856cec4855a10985a56353e41a882f1a4db9079f6",
+   "format": 1
+  },
+  {
+   "name": "docs/roles.rst.template",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f48168b084d43150a0a95e2e97b906a650795a72dc6b35331d067d4e3fbd8ab7",
+   "format": 1
+  },
+  {
+   "name": "docs/index.rst",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "91568f43667f5912d1fbe41dab0b67a884de10fda5774ddcbed68ee29caf2548",
+   "format": 1
+  },
+  {
+   "name": "docs/conf.py",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "6712657aadd6309916f85ca34cc0f0947f010e09191c509a7e19d89472518b99",
+   "format": 1
+  },
+  {
+   "name": "docs/requirements.txt",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c2162d2e21e68b493d6080eea411b45e616745cb8bed9a531faa83f13ab89991",
+   "format": 1
+  },
+  {
+   "name": "docs/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9106dd005943630466be47fc660f7015b015c592d2c0160478ce34a3e90ab81a",
+   "format": 1
+  },
+  {
+   "name": "LICENSE",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851",
+   "format": 1
+  },
+  {
+   "name": ".ansible-lint",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "97adff003b48c93244af836f8be04fa4a3770ad8f4ee71fc185ed12e92654e85",
+   "format": 1
+  },
+  {
+   "name": "requirements.txt",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "625c230542ccae23b3414590f69db5b3b8a728202c978fcb78aac34b283985b3",
+   "format": 1
+  },
+  {
+   "name": "roles",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/redhat_csp_download",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/redhat_csp_download/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/redhat_csp_download/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "09b019f38a105689ff2480a540202ce8c3eee1b3596d605eb12e2a4226441f78",
+   "format": 1
+  },
+  {
+   "name": "roles/redhat_csp_download/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/redhat_csp_download/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "665acd1ea8545eb98b4643d76d083324c2a7e46ff34c4465aaf2948ab430ad6b",
+   "format": 1
+  },
+  {
+   "name": "roles/redhat_csp_download/tasks/fastpackage.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "a50999e1c85a246da788acbc08015639aa24683cc850132254bbebb22b58c219",
+   "format": 1
+  },
+  {
+   "name": "roles/redhat_csp_download/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "3ca013b5902cfef2c13f362c32f1a917660b83689b921b385cb5ca7076bf7105",
+   "format": 1
+  },
+  {
+   "name": "README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9106dd005943630466be47fc660f7015b015c592d2c0160478ce34a3e90ab81a",
+   "format": 1
+  }
+ ],
+ "format": 1
+}

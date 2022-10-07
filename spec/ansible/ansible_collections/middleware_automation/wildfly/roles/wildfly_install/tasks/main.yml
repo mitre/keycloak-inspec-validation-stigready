@@ -1,0 +1,40 @@
+---
+- name: "Ensures prerequirements are fullfilled."
+  ansible.builtin.include_tasks: prereqs.yml
+
+- name: "Ensures required local user exists."
+  ansible.builtin.include_tasks: user.yml
+
+- name: "Ensure workdir {{ wildfly_install.workdir }} exists."
+  ansible.builtin.file:
+    path: "{{ wildfly_install.workdir }}"
+    state: directory
+    owner: "{{ wildfly_install.user }}"
+    group: "{{ wildfly_install.group }}"
+    mode: 0750
+  become: yes
+
+- name: "Ensure archive_dir {{ wildfly_install.archive_dir }} exists."
+  ansible.builtin.file:
+    path: "{{ wildfly_install.archive_dir }}"
+    state: directory
+    owner: "{{ wildfly_install.user }}"
+    group: "{{ wildfly_install.group }}"
+    mode: 0750
+  become: yes
+
+- name: "Ensure server is installed"
+  ansible.builtin.include_tasks: install.yml
+
+- name: Check wildfly install directory state
+  ansible.builtin.stat:
+    path: "{{ wildfly_install.home }}"
+  register: is_wildfly_home
+  become: yes
+
+- name: Validate conditions
+  ansible.builtin.assert:
+    that:
+      - is_wildfly_home is defined and is_wildfly_home.stat is defined and is_wildfly_home.stat.exists is defined
+      - is_wildfly_home.stat.exists
+    quiet: true

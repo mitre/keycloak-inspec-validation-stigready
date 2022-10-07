@@ -1,0 +1,43 @@
+transport:
+  name: ssh
+  max_ssh_sessions: 2
+
+verifier:
+  name: inspec
+  sudo: true
+  reporter:
+    - cli
+    - json:spec/results/%{platform}_%{suite}.json
+  inspec_tests:
+    - name: Keycloak STIG-ready validation
+      path: .
+  load_plugins: true
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  require_pip3: true
+  ansible_binary_path: /usr/local/bin
+  ansible_verbose: true
+  roles_path: spec/ansible/roles
+  galaxy_ignore_certs: true
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+  requirements_path: spec/ansible/roles/requirements.yml
+  additional_copy_path: spec/ansible/ansible_collections
+  env_vars:
+    - ANSIBLE_LOCAL_TEMP=$HOME/.ansible/tmp
+    - ANSIBLE_REMOTE_TEMP=$HOME/.ansible/tmp
+
+platforms:
+  - name: rhel-7-keycloak
+
+suites:
+  - name: vanilla
+    provisioner:
+      playbook: spec/ansible/ansible-role-keycloak-vanilla.yml
+      
+  - name: hardened
+    provisioner:
+      playbook: spec/ansible/ansible-role-keycloak-hardened.yml

@@ -63,4 +63,32 @@ control "KEYC-01-000022" do
   tag stig_id: "KEYC-01-000022"
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b"]
+
+  if input('directory_services_for_acct_mgmt')
+	
+	  describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
+		  its('hostname-strict-https') { should eq 'true' }
+		  its('https-client-auth') { should eq 'required' }
+		  its('https-trust-store-file') { should eq input('https_truststore_file_path') }
+		  its('https-trust-store-password') { should_not be nil }
+	  end
+	  
+	  describe.one do
+		  describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
+			  its('https-key-store-file') { should eq input('https_keystore_file_path') }
+			  its('https-key-store-password') { should_not be nil }
+		  end
+		
+		  describe parse_config_file('/opt/keycloak/conf/keycloak.conf') do
+			  its('https-certificate-file') { should eq input('https_certificate_file_path') }
+			  its('https-certificate-key-file') { should eq input('https_certificate_key_path') }
+		  end
+	  end
+		
+  else
+	  impact 0.0
+	  describe 'Manual Check' do
+		  skip "Keycloak does not rely on directory services for user account management. This control is not applicable."
+	  end
+  end
 end

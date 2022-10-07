@@ -71,4 +71,14 @@ control "KEYC-01-000021" do
   tag stig_id: "KEYC-01-000021"
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a"]
+
+  describe 'Contents of profile.properties' do
+    it 'enabled features are expected to include only those listed in inspec.yml' do
+	    features = parse_config_file('/opt/keycloak/conf/profile.properties')
+	    enabled_features = features.params.select { |key, value| value == 'enabled' }
+	    unexpected_features_enabled = enabled_features.keys - input('profile_properties_features')
+	    failure_message = "The following features in profile.properties are enabled, but not listed in inspec.yml: #{unexpected_features_enabled}"
+	    expect(unexpected_features_enabled).to be_empty, failure_message
+    end
+  end
 end

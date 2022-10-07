@@ -73,4 +73,21 @@ control "KEYC-01-000041" do
   tag stig_id: "KEYC-01-000041"
   tag cci: ["CCI-000185"]
   tag nist: ["IA-5 (2) (a)"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get authentication/flows/browser/executions -r #{input('keycloak_realm')}"
+
+  browser_flow_arr = []
+  browser_flow_hashes = json(content: command(test_command).stdout)
+  
+  browser_flow_hashes.params.each_with_index do |flow, index|
+	  browser_flow_arr.push(flow["providerId"])
+  end
+  
+  describe "Browser Flows" do
+    it 'at least one execution is expected to have a providerId with a value of "auth-x509-client-username-form"' do
+	    failure_message = 'There are no executions with the key/value pair "providerId" : "auth-x509-client-username-form"'
+	    expect(browser_flow_arr).to include("auth-x509-client-username-form"), failure_message
+    end
+  end
+  # TODO: still need to check authenticationConfig attribute
 end

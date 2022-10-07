@@ -49,4 +49,16 @@ control "KEYC-01-000025" do
   tag stig_id: "KEYC-01-000025"
   tag cci: ["CCI-000764"]
   tag nist: ["IA-2"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get-roles -r #{input('keycloak_realm')}"
+
+  # TODO: is this correct? also, output isn't very useful
+  describe json(content: command(test_command).stdout).each do |index|
+	  its(index,'id') { should_not eq nil }
+	  its(index,'name') { should_not eq nil }
+	  its(index,'description') { should_not eq nil }
+	  its(index,'composite') { should_not eq nil }
+	  its(index,'clientRole') { should_not eq nil }
+	  its(index,'containerId') { should_not eq nil }
+  end
 end

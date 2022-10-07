@@ -1,0 +1,8 @@
+download_url: https://galaxy.ansible.com/download/middleware_automation-keycloak-1.0.7.tar.gz
+format_version: 1.0.0
+name: keycloak
+namespace: middleware_automation
+server: https://galaxy.ansible.com/api/
+signatures: []
+version: 1.0.7
+version_url: https://galaxy.ansible.com/api/v2/collections/middleware_automation/keycloak/versions/1.0.7/

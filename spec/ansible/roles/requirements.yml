@@ -1,0 +1,9 @@
+---
+# collections:
+#   - name: middleware_automation.keycloak
+
+roles:
+  - src: https://github.com/ansible-middleware/keycloak
+    name: keycloak_deploy
+#   - src: https://github.com/mitre/keycloak-srg-baseline
+#     name: keycloak-srg-baseline

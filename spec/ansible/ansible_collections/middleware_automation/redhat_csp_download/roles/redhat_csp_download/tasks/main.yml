@@ -1,0 +1,54 @@
+---
+- name: Check configuration
+  ansible.builtin.assert:
+    that:
+      - redhat_csp_download is defined
+      - redhat_csp_download.dependencies is defined
+      - ansible_python is defined
+      - ansible_python.version is defined
+      - ansible_python.version.major is defined
+      - ansible_distribution is defined
+      - ansible_distribution == 'RedHat'
+    quiet: true
+
+- block:
+    - name: Setup python facts
+      ansible.builtin.set_fact:
+        python_deps: "{{ redhat_csp_download.dependencies.python2 }}"
+      when:
+        - ansible_python.version.major == 2
+
+    - name: Setup python facts
+      ansible.builtin.set_fact:
+        python_deps: "{{ redhat_csp_download.dependencies.python3 }}"
+      when:
+        - ansible_python.version.major == 3
+  when:
+    - ansible_python is defined
+    - ansible_python.version is defined
+    - ansible_python.version.major is defined
+
+- block:
+    - name: Setup python facts
+      ansible.builtin.set_fact:
+        distro_packages: "{{ python_deps.rhel8 }}"
+      when:
+        - ansible_distribution_major_version == "8"
+
+    - name: Setup python facts
+      ansible.builtin.set_fact:
+        distro_packages: "{{ python_deps.rhel7 }}"
+      when:
+        - ansible_distribution_major_version == "7"
+  when:
+    - ansible_distribution_major_version is defined
+
+- name: "Install required dependencies"
+  ansible.builtin.include_tasks: fastpackage.yml
+  vars:
+    package_name: "{{ item }}"
+  loop:
+    - "{{ distro_packages | flatten }}"
+  when:
+    - distro_packages is defined
+    - distro_packages | length > 0

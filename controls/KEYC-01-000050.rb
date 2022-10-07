@@ -40,4 +40,20 @@ control "KEYC-01-000050" do
   tag stig_id: "KEYC-01-000050"
   tag cci: ["CCI-001686"]
   tag nist: ["AC-2 (4)"]
+
+  unless input('directory_services_for_acct_mgmt')
+	
+	  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+	
+	  describe json(content: command(test_command).stdout) do
+		  its('eventsEnabled') { should eq true }
+		  its('eventsListeners') { should eq ["jboss-logging"] }
+	  end
+
+  else
+	  impact 0.0
+	  describe 'Manual Check' do
+		  skip "Keycloak relies on directory services for user account management. This control is not applicable."
+	  end
+  end
 end

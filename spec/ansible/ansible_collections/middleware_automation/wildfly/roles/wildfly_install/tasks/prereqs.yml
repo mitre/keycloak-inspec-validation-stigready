@@ -1,0 +1,39 @@
+---
+- name: "Check if both apply_cp and systemd are enabled."
+  ansible.builtin.assert:
+    that:
+      - (eap_apply_cp and wildfly_systemd_enable) or not eap_apply_cp
+    quiet: true
+    fail_msg: "wildfly_systemd_enable must be true when setting eap_apply_cp"
+    success_msg: "Will configure systemd and apply the latest cumulative patch"
+  when: eap_enable is defined and eap_enable
+
+- name: "Check that required packages list has been provided."
+  ansible.builtin.assert:
+    that:
+      - wildfly_prereqs_packages is defined
+    quiet: true
+    fail_msg: "Required packages list was not defined"
+
+- name: "Prepare packages list"
+  ansible.builtin.set_fact:
+    wildfly_packages_list: "{{ wildfly_prereqs_packages }}"
+  when:
+    - not wildfly_install is defined
+    - not wildfly_install.java.package_name is defined
+
+- name: "Add JDK package {{ wildfly_install.java.package_name }} to packages list"
+  ansible.builtin.set_fact:
+    wildfly_packages_list: "{{ wildfly_prereqs_packages + [ wildfly_install.java.package_name ] }}"
+  when:
+    - wildfly_install.java is defined
+    - wildfly_install.java.package_name is defined
+
+- name: "Install required packages ({{ wildfly_packages_list | length }})"
+  ansible.builtin.package:
+    name: "{{ wildfly_packages_list }}"
+    state: present
+  become: yes
+  when:
+    - wildfly_packages_list | length > 0
+    - not wildfly_install_skip_prereqs is defined

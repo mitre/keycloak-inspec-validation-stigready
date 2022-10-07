@@ -1,0 +1,20 @@
+---
+wildfly_version: '26.0.0.Final'
+wildfly_archive_filename: "wildfly-{{ wildfly_version }}.zip"
+wildfly_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'
+wildfly_install_workdir: '/opt/wildfly/'
+wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
+wildfly_install_download_url: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
+wildfly_archive_dir: "{{ wildfly_install_workdir }}"
+wildfly_config_base: 'standalone.xml'
+wildfly_user: 'wildfly'
+wildfly_group: "{{ wildfly_user }}"
+wildfly_java_package_name: 'java-1.8.0-openjdk-headless'
+wildfly_systemd_enable: False
+
+# whether to install from local archive
+wildfly_offline_install: False
+wildfly_prereqs_packages:
+  - unzip
+  - tar
+  - sudo

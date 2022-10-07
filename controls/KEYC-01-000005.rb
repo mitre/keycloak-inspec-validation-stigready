@@ -4,28 +4,44 @@ control "KEYC-01-000005" do
   desc  "Once an attacker establishes access to a system, the attacker often attempts to create a persistent method of reestablishing access. One way to accomplish this is for the attacker to simply create a new account. Auditing of account creation is one method for mitigating this risk. A comprehensive account management process will ensure an audit trail documents the creation of user accounts and, as required, notifies administrators and/or managers. Such a process greatly reduces the risk that accounts will be surreptitiously created and provides logging that can be used for forensic purposes."
   desc  "rationale", ""
   desc  "check", "
-    If Keycloak relies on directory services for user account management, this is not applicable and the connected directory services must perform this function. 
+    If Keycloak relies on directory services for user account management, this is not applicable and the connected directory services must perform this function.
     
     Verify Keycloak is configured to automatically audit account creation.
     
     If Keycloak is not configured to automatically audit account creation, this is a finding.
     
-    To check if Keycloak is configured to audit account creation, you can run the following commands from a privileged account on the Keycloak admin CLI:
+    To check if Keycloak is configured to audit account creation, log into the Keycloak admin CLI with a privileged account:
     
-    kcadm.sh get events/config -r [your realm] | grep adminEvents
+    kcadm.sh config credentials --server [server location] --realm master --user [username] --password [password]
+    
+    Then run the following command:
+    
+    kcadm.sh get events/config -r [realm]
     
     If the results are not as follows, then it is a finding.
     
+    \"eventsEnabled\" : true,
+    \"eventsListeners\" : [ \"jboss-logging\" ],
+    \"enabledEventTypes\" : [ list with REGISTER concatenated ]
     \"adminEventsEnabled\" : true,
     \"adminEventsDetailsEnabled\" : true
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   desc  "fix", "
     Configure Keycloak to automatically audit account creation.
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
-    Update the configuration:
     
-    kcadm.sh update events/config -r [your realm] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
+    First, find the current enabled event types:
+    
+    kcadm.sh get events/config -r [realm] | grep enabledEventTypes
+    
+    Then update the configuration:
+    
+    kcadm.sh update events/config -r [realm] -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"] -s enabledEventTypes=\"[full list with REGISTER concatenated]\"
+    
+    Note: Enabling 'events', 'adminEvents' and 'adminEventsDetails', along with configuring 'eventsListeners' and 'enabledEventTypes',  configures Keycloak to audit login events, account creations, account updates, account deletions, and admin actions.
   "
   impact 0.5
   tag severity: "medium"
@@ -35,4 +51,34 @@ control "KEYC-01-000005" do
   tag stig_id: "KEYC-01-000005"
   tag cci: ["CCI-000018"]
   tag nist: ["AC-2 (4)"]
+
+  unless input('directory_services_for_acct_mgmt')
+		
+	  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+	  
+	  describe json(content: command(test_command).stdout) do
+		  its('eventsEnabled') { should eq true }
+		  # TODO: give option for alternative logging?
+		  its('eventsListeners') { should include "jboss-logging" }
+		  # TODO: should this also include CLIENT_REGISTER?
+		  its('enabledEventTypes') { should include "REGISTER" }
+		  its('adminEventsEnabled') { should eq true }
+		  its('adminEventsDetailsEnabled') { should eq true }
+	  end
+	
+	  # describe 'JSON content' do
+	  #   it 'eventsListeners is expected to include events_listeners listed in inspec.yml' do
+	  # 	  actual_events_listeners = json(content: command(test_command).stdout)['eventsListeners']
+	  # 	  missing = actual_events_listeners - input('events_listeners')
+	  # 	  failure_message = "The generated JSON output does not include: #{missing}"
+	  # 	  expect(missing).to be_empty, failure_message
+	  #   end
+	  # end
+	  
+  else
+	  impact 0.0
+	  describe 'Manual Check' do
+	    skip "Keycloak relies on directory services for user account management. This control is not applicable."
+	  end
+  end
 end

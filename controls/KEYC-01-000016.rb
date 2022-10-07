@@ -14,9 +14,9 @@ control "KEYC-01-000016" do
     
     To check if Keycloak is configured to audit this setting, run the following commands from a privileged account on the Keycloak admin CLI:
     
-    kcadm.sh get events/config -r [your realm] | grep 'eventsEnabled'
+    kcadm.sh get events/config -r [realm] | grep 'eventsEnabled'
     
-    kcadm.sh get events/config -r [your realm] | grep 'eventsListeners'
+    kcadm.sh get events/config -r [realm] | grep 'eventsListeners'
     
     If the results are not as follows, then it is a finding.
     
@@ -33,7 +33,7 @@ control "KEYC-01-000016" do
     
     To configure this setting using the Keycloak admin CLI, do the following from a privileged account:
     
-    kcadm.sh update events/config -r [your realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"]'
+    kcadm.sh update events/config -r [realm] -s eventsEnabled=true -s 'eventsListeners=[\"jboss-logging\"]'
   "
   impact 0.5
   tag severity: "medium"
@@ -43,4 +43,21 @@ control "KEYC-01-000016" do
   tag stig_id: "KEYC-01-000016"
   tag cci: ["CCI-001487"]
   tag nist: ["AU-3"]
+
+  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+
+  describe json(content: command(test_command).stdout) do
+	  its('eventsEnabled') { should eq true }
+	  # TODO: Should this be tested as below in case of other possible eventsListeners?
+	  its('eventsListeners') { should eq ["jboss-logging"] }
+  end
+
+  # describe 'JSON content' do
+  #   it 'eventsListeners is expected to include events_listeners listed in inspec.yml' do
+  # 	  actual_events_listeners = json(content: command(test_command).stdout)['eventsListeners']
+  # 	  missing = actual_events_listeners - input('events_listeners')
+  # 	  failure_message = "The generated JSON output does not include: #{missing}"
+  # 	  expect(missing).to be_empty, failure_message
+  #   end
+  # end
 end
