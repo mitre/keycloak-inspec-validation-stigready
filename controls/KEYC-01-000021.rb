@@ -1,23 +1,22 @@
-# -*- encoding : utf-8 -*-
-control "KEYC-01-000021" do
-  title "Keycloak must be configured to disable non-essential modules."
+control 'KEYC-01-000021' do
+  title 'Keycloak must be configured to disable non-essential modules.'
   desc  "
     It is detrimental for applications to provide, or install by default, functionality exceeding requirements or mission objectives. These unnecessary capabilities or services are often overlooked and therefore may remain unsecured. They increase the risk to the platform by providing additional attack vectors.
-    
-    Applications are capable of providing a wide variety of functions and services. Some of the functions and services, provided by default, may not be necessary to support essential organizational operations (e.g., key missions, functions). 
-    
+
+    Applications are capable of providing a wide variety of functions and services. Some of the functions and services, provided by default, may not be necessary to support essential organizational operations (e.g., key missions, functions).
+
     Examples of non-essential capabilities include, but are not limited to, advertising software or browser plug-ins not related to requirements or providing a wide array of functionality not required for every mission, but cannot be disabled.
   "
-  desc  "rationale", ""
-  desc  "check", "
+  desc  'rationale', ''
+  desc  'check', "
     Determine if Keyclaok are configured to disable non-essential modules.
-    
+
     If Keyclaok are not configured to disable non-essential modules, this is a finding.
-    
-    Locate file profile.properties. If such a file is not found, this is a finding. 
-    
-    Inspect contents in file profile.properties. Unless specified, all features should be disabled as shown below. 
-    
+
+    Locate file profile.properties. If such a file is not found, this is a finding.
+
+    Inspect contents in file profile.properties. Unless specified, all features should be disabled as shown below.
+
     feature.account2=disabled
     feature.account_api=disabled
     feature.admin_fine_grained_authz=disabled
@@ -36,14 +35,14 @@ control "KEYC-01-000021" do
     feature.upload_scripts=disabled
     feature.web_authn=disabled
     feature.update_email=disabled
-    
-    If a feature is enabled without appropriately specifying so, this is a finding. 
+
+    If a feature is enabled without appropriately specifying so, this is a finding.
   "
-  desc  "fix", "
+  desc 'fix', "
     Configure Keycloak to disable non-essential modules.
-    
-    Create or modify file profile.properties. Unless specifically required, disable all features with following lines: 
-    
+
+    Create or modify file profile.properties. Unless specifically required, disable all features with following lines:
+
     feature.account2=disabled
     feature.account_api=disabled
     feature.admin_fine_grained_authz=disabled
@@ -64,21 +63,21 @@ control "KEYC-01-000021" do
     feature.update_email=disabled
   "
   impact 0.5
-  tag severity: "medium"
-  tag gtitle: "SRG-APP-000141-AAA-000670"
+  tag severity: 'medium'
+  tag gtitle: 'SRG-APP-000141-AAA-000670'
   tag gid: nil
   tag rid: nil
-  tag stig_id: "KEYC-01-000021"
-  tag cci: ["CCI-000381"]
-  tag nist: ["CM-7 a"]
+  tag stig_id: 'KEYC-01-000021'
+  tag cci: ['CCI-000381']
+  tag nist: ['CM-7 a']
 
   describe 'Contents of profile.properties' do
     it 'enabled features are expected to include only those listed in inspec.yml' do
-	    features = parse_config_file('/opt/keycloak/conf/profile.properties')
-	    enabled_features = features.params.select { |key, value| value == 'enabled' }
-	    unexpected_features_enabled = enabled_features.keys - input('profile_properties_features')
-	    failure_message = "The following features in profile.properties are enabled, but not listed in inspec.yml: #{unexpected_features_enabled}"
-	    expect(unexpected_features_enabled).to be_empty, failure_message
+      features = parse_config_file('/opt/keycloak/conf/profile.properties')
+      enabled_features = features.params.select { |_key, value| value == 'enabled' }
+      unexpected_features_enabled = enabled_features.keys - input('profile_properties_features')
+      failure_message = "The following features in profile.properties are enabled, but not listed in inspec.yml: #{unexpected_features_enabled}"
+      expect(unexpected_features_enabled).to be_empty, failure_message
     end
   end
 end
