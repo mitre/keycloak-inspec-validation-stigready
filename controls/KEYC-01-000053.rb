@@ -63,7 +63,7 @@ control 'KEYC-01-000053' do
   tag cci: ['CCI-002169']
   tag nist: ['AC-3 (7)']
 
-  # TODO: needs testing
+  #TODO: needs testing
   describe 'Current Roles' do
     test_command = "#{input('executable_path')}kcadm.sh get-roles -r #{input('keycloak_realm')}"
 

@@ -53,7 +53,7 @@ control 'KEYC-01-000007' do
     test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
 
     describe json(content: command(test_command).stdout) do
-      # TODO: Should this be tested as below in case of other possible eventsListeners?
+      #TODO: Should this be tested as below in case of other possible eventsListeners?
       its('eventsListeners') { should eq ['jboss-logging'] }
       its('adminEventsEnabled') { should eq true }
       its('adminEventsDetailsEnabled') { should eq true }

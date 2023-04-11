@@ -51,7 +51,7 @@ control 'KEYC-01-000025' do
 
   test_command = "#{input('executable_path')}kcadm.sh get-roles -r #{input('keycloak_realm')}"
 
-  # TODO: is this correct? also, output isn't very useful
+  #TODO: is this correct? also, output isn't very useful
   describe json(content: command(test_command).stdout).each do |index|
     its(index, 'id') { should_not eq nil }
     its(index, 'name') { should_not eq nil }

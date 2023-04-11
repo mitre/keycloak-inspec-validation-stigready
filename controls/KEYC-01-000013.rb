@@ -74,7 +74,7 @@ control 'KEYC-01-000013' do
       its('stdout') { should match(/"realmId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"/) }
       its('stdout') { should match(/"userId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"/) }
       its('stdout') { should match(/"sessionId" : "[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"/) }
-      # TODO: What should this be?
+      #TODO: What should this be?
       its('stdout') { should include '"ipAddress" : "127.0.0.1"' }
     end
   end

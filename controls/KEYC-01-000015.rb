@@ -54,7 +54,7 @@ control 'KEYC-01-000015' do
 
   describe json(content: command(test_command).stdout) do
     its('eventsEnabled') { should eq true }
-    # TODO: Should this be tested as below in case of other possible eventsListeners?
+    #TODO: Should this be tested as below in case of other possible eventsListeners?
     its('eventsListeners') { should eq ['jboss-logging'] }
     its('adminEventsEnabled') { should eq true }
     its('adminEventsDetailsEnabled') { should eq true }

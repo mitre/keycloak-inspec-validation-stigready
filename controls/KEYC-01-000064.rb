@@ -28,7 +28,7 @@ control 'KEYC-01-000064' do
     end
   else
 
-    # TODO: Is this applicable in a container?
+    #TODO: Is this applicable in a container?
 
   end
 end

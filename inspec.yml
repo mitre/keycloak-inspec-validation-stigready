@@ -116,10 +116,6 @@ inputs:
 #  - name: certificate_key_path
 #    type: string
 #    value:
-
-#  - name: events_enabled
-#    type: boolean
-#    value: true
 #
 #  - name: events_listeners
 #    type: array

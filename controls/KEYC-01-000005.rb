@@ -62,9 +62,9 @@ control 'KEYC-01-000005' do
 
     describe json(content: command(test_command).stdout) do
       its('eventsEnabled') { should eq true }
-      # TODO: give option for alternative logging?
+      #TODO: give option for alternative logging?
       its('eventsListeners') { should include 'jboss-logging' }
-      # TODO: should this also include CLIENT_REGISTER?
+      #TODO: should this also include CLIENT_REGISTER?
       its('enabledEventTypes') { should include 'REGISTER' }
       its('adminEventsEnabled') { should eq true }
       its('adminEventsDetailsEnabled') { should eq true }

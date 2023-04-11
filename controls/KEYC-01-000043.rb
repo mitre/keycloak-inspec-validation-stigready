@@ -88,5 +88,5 @@ control 'KEYC-01-000043' do
       expect(browser_flow_arr).to include('auth-x509-client-username-form'), failure_message
     end
   end
-  # TODO: still need to check authenticationConfig attribute
+  #TODO: still need to check authenticationConfig attribute
 end

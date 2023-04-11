@@ -87,7 +87,7 @@ control 'KEYC-01-000055' do
 
   describe json(content: command(test_command).stdout) do
     its('eventsEnabled') { should eq true }
-    # TODO: Should this be tested as below in case of other possible eventsListeners?
+    #TODO: Should this be tested as below in case of other possible eventsListeners?
     its('eventsListeners') { should eq ['jboss-logging'] }
   end
 
@@ -112,5 +112,5 @@ control 'KEYC-01-000055' do
     its(['quarkus.log.syslog.protocol']) { should eq input('quarkus_protocol') }
   end
 
-  # TODO: "systemctl is-enabled rsyslog" and "systemctl is-active rsyslog" are a no-go. Solutions?
+  #TODO: "systemctl is-enabled rsyslog" and "systemctl is-active rsyslog" are a no-go. Solutions?
 end

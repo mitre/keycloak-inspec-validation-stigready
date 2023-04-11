@@ -60,13 +60,13 @@ control 'KEYC-01-000011' do
 
   describe json(content: command(test_command).stdout) do
     its('eventsEnabled') { should eq true }
-    # TODO: Should this be tested as below in case of other possible eventsListeners?
+    #TODO: Should this be tested as below in case of other possible eventsListeners?
     its('eventsListeners') { should eq ['jboss-logging'] }
     its('adminEventsEnabled') { should eq true }
     its('adminEventsDetailsEnabled') { should eq true }
   end
 
-  # TODO: ensure user is aware that more enabledEventTypes can be added, this is a minimum
+  #TODO: ensure user is aware that more enabledEventTypes can be added, this is a minimum
   describe 'JSON content' do
     it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
       actual_events_enabled = json(content: command(test_command).stdout)['enabledEventTypes']
