@@ -1,0 +1,796 @@
+{
+ "files": [
+  {
+   "name": ".",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "CHANGELOG.rst",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1bcd53c8ec96a9214bd86123c37c8818a2671fb440587b6a0a697dbe24142a12",
+   "format": 1
+  },
+  {
+   "name": "playbooks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "playbooks/keycloak_quarkus.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "896072b0d99bff5bbe4982198fbecc5346a404efbd8bc7a5e5cd608314ef5eca",
+   "format": 1
+  },
+  {
+   "name": "playbooks/rhsso.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "737b284badb208fec1b9c59000911a00451919255e689e602732e84f08cf371f",
+   "format": 1
+  },
+  {
+   "name": "playbooks/keycloak.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "13d9b23f7b3571f91cdf6c106468fc6d031163341177e242491da97c5e972e17",
+   "format": 1
+  },
+  {
+   "name": "playbooks/roles",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "playbooks/keycloak_realm.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "446bfba858d546594892641a0bb72ef588c75c216d5275fc236b593b6999cf3e",
+   "format": 1
+  },
+  {
+   "name": ".gitignore",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9bdb0090b3ee7f1dbc950abe57f062f5dc1cd412313deaf857b3bd0a3957bd6a",
+   "format": 1
+  },
+  {
+   "name": "changelogs",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "changelogs/changelog.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f0139b5a20a8b05e1d3539f395d8f1f77414d331d3043285f8e19f83b610aa47",
+   "format": 1
+  },
+  {
+   "name": "changelogs/config.yaml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "304a62ad27992606908baca3af049c349a234e945a1a7ac6e09070e407edecf7",
+   "format": 1
+  },
+  {
+   "name": "changelogs/fragments",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "CONTRIBUTING.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "7256e9be642f8d01a8ead295a450d95d5e379b7b7230b13e548b3e2a71ab59b2",
+   "format": 1
+  },
+  {
+   "name": "LICENSE",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851",
+   "format": 1
+  },
+  {
+   "name": ".ansible-lint",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "3b7352281090e1c31004ea128093710d85ab52c3cf5ab64c5df392f19093216c",
+   "format": 1
+  },
+  {
+   "name": "bindep.txt",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "7e395214ad6556563cd791432c85c2c050b6d68cb68e7556ac51f100eb39091d",
+   "format": 1
+  },
+  {
+   "name": ".yamllint",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "a9661f657ef87bab49acd5850cbe99f1332c0f8faf55af172f95b58809642f83",
+   "format": 1
+  },
+  {
+   "name": "meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "meta/runtime.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c90b94495193365ec3d5d846f6e7f5759905580178e28a8778509f9c3228359b",
+   "format": 1
+  },
+  {
+   "name": "meta/execution-environment.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f3285a029987341b8d8c11e189dc50f8ef5321329702a71f0ab54b0ce56cf032",
+   "format": 1
+  },
+  {
+   "name": "docs",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "docs/CHANGELOG.rst",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1bcd53c8ec96a9214bd86123c37c8818a2671fb440587b6a0a697dbe24142a12",
+   "format": 1
+  },
+  {
+   "name": "docs/releasing.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "3e7253741227bc9b2be9e08fd77db000a125ce0d282ce5b2eb7be68c1106bae0",
+   "format": 1
+  },
+  {
+   "name": "docs/_gh_include",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "docs/_gh_include/header.inc",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "961fff6830b04329eb47be338dacb04a44a060b828cef603d2894ee03aea6324",
+   "format": 1
+  },
+  {
+   "name": "docs/_gh_include/footer.inc",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "0376e8fc39ce9dbeba3dda3dfd9e3df6aa3c71b571b1e2ddfb2e7f27b102c081",
+   "format": 1
+  },
+  {
+   "name": "docs/developing.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "7256e9be642f8d01a8ead295a450d95d5e379b7b7230b13e548b3e2a71ab59b2",
+   "format": 1
+  },
+  {
+   "name": "docs/index.rst",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "27e7a215040745d8d621f4821de0e4c5d72f8e0f73b314fb2aaa2a7c072629a1",
+   "format": 1
+  },
+  {
+   "name": "docs/conf.py",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "45b375a59269da37ac1c9567d1dd517e9c092a2e34f545618f3e0cc3076bea18",
+   "format": 1
+  },
+  {
+   "name": "docs/testing.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "928f34af955a105988cf1ada808bbbcb2284d8c8a6f8dc2648c1c666b5448637",
+   "format": 1
+  },
+  {
+   "name": "docs/requirements.txt",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c2162d2e21e68b493d6080eea411b45e616745cb8bed9a531faa83f13ab89991",
+   "format": 1
+  },
+  {
+   "name": "docs/roles.rst.template",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "abf21c45b810189d242ad83248851172166a2f54390c7e41bb25fe7d30fb6f5c",
+   "format": 1
+  },
+  {
+   "name": "docs/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "510fbc2419f05bab4c3e5b7d9454b6de0d7c9c574668e9bb81b6f9380f137449",
+   "format": 1
+  },
+  {
+   "name": "requirements.txt",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "b78612a0fed3dcffb24b1db28c8b063a0266592295dcd254bf0cb9f66cc7bafe",
+   "format": 1
+  },
+  {
+   "name": "README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "510fbc2419f05bab4c3e5b7d9454b6de0d7c9c574668e9bb81b6f9380f137449",
+   "format": 1
+  },
+  {
+   "name": "requirements.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "772a4bd66015a72226773d1974769cd49529d37fdbd255af461eb4e8d3aa3828",
+   "format": 1
+  },
+  {
+   "name": "roles",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "ada51cd9b857a1985f7e3a1970c4f1b5c5553e4994fd06b81167bd3c97026514",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/tasks/firewalld.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "36771395f868a927d71f5297aa39c506e834b50ab0cdf534de0bb745cb0796c7",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/tasks/systemd.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "5b1bf979d636e91246859c68affd078b6744362dff0c61d2dbebb5ad2147fa95",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/tasks/fastpackages.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e2548816575bf102abc84ae1d5108f1c1901b3523f4588be456a970f8a0c4a5e",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/tasks/start.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "41011927c5d04af18996518e3dede51e5dabb9cbeb21b87cd3c1f91a48de9e90",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/tasks/restart.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "2a76912b9f1fd80d0ad70cb39872c15a5f7bd65f4381eb86c20bafd6671eaf08",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/tasks/install.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "5aa0860a262db9f2c3649acaf7b0eb5656007b57e79ca6a0adec1fb1d7a54406",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/tasks/prereqs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "b4926f8be2738abda828d551314514958af0842d688b4b961b071fc5e87f0f54",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/templates",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/templates/keycloak.conf.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "077dee108c16e2905c4cc8a2b0e7a424805de0cecae02474030426aa923cc457",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/templates/keycloak.service.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f88a867e19b57e6082c189811c9de6c0231d2f0b5e59afa2842f587f43ef296a",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/templates/quarkus.properties.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c0b9c6dc48e95b01163b0cd84dfd51ba31f6438a221c51bc56a459ac93bec5be",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/templates/keycloak-sysconfig.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "cf381598cab59d9c765e0f357049ab12925dd1b5e8c8adf1ca63e8774434c373",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/handlers",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/handlers/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1a64b0dc1d5804e7a015b120ff40adbb5f9c3fa20981d93205793f6abb0579fe",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/vars",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/vars/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "ed1e731f252b326f492ccf5a11f7725ccca2906b34631e73b42be4806eb3525e",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "b4aca9529ffbfaced4e947828b19ee550da375133aefd91b5318a4bcd0e811ed",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "73c6fb4cca996add6d5056b78b07a6c1b73193f63453009248a8b5e20737b41b",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9778e0f810c7ed1de82b326fc8e10582a937c953010346ebeae6cce6a3e931a6",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_quarkus/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "883d4650ac9bdc0d49e8988f3d9039b59e1f30ab06e0f7e5e6a16de54ea2ad29",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "01a1d6970e1aa6d49ea7d6f154de0ccd6295dfb016ecbac6aa98e070cacba125",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/start_keycloak.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "41011927c5d04af18996518e3dede51e5dabb9cbeb21b87cd3c1f91a48de9e90",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/firewalld.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "a8fa1b0a52a4f3eed146660229cd93c41dd598cc70d6758da8c0b7604a999099",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/restart_keycloak.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "2a76912b9f1fd80d0ad70cb39872c15a5f7bd65f4381eb86c20bafd6671eaf08",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/systemd.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "2f4ab1d9e7c29f7f9c64b392770a14492adde8ebc8d734dd295e34ed297e7f35",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/rhsso_cli.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "9c62b3c459cf198faed0bbfbd5c55062c9431dbc477d203f5a0484dac2999505",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/rhsso_patch.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1e511ed569af95990e1d2a27ae55a212975704cd3b839af8e1da243e6d04fc1c",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/stop_keycloak.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "bcfa7ca7c445631f30930773a579d944f604747ecdc1954383669b433c090495",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/fastpackages.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f780bcefc2ae709184378df2d5f0aff3aa0f40bd4193e3fd58f389622a21135a",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/install.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "8b8d61d6fdee1af6bf1b3a099e9c202ae2fe47b2c95b932f9887516ae0447e2b",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/tasks/prereqs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1bb55bead05b078fcb781fbcd8b05dacd952d95d57af5976de93fcf8ea96db4d",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/templates",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/templates/standalone.xml.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f9c4e341f7fd98895b7469a696eece44a4fd711c60a16cef0cbdc396f656b728",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/templates/keycloak.service.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1375c444dbba4cd6dee0ae234a5f7c4d1f2bdf21216888ae60004cf690ad6739",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/templates/standalone-infinispan.xml.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "7645c6e6fab0e0f73d68b42f26af20191da06b2edbadb5f02fa1393406880890",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/templates/keycloak-sysconfig.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "8b15b4273fa94cfdcb9e868b821b2e4b3929699625844d3572d56d1a78719c9a",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/templates/keycloak-service.sh.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "2fe2c76a8c68da56067b59ef78df57df5b764d5b59eb033e64c27c5ec0701d64",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/templates/9.0.2",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/templates/9.0.2/standalone.xml.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "4f7f4ce5ddbb0227b56ce8cbe4311fccac7b85b10f61938b67d6b73dfc185265",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/templates/9.0.2/standalone-infinispan.xml.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "6b116526b2ed80794c7ddc8168d2a4cb392802430724b38f90e7bec718f81c57",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/handlers",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/handlers/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "242f064638ab37d360678ec7361a9239edbfe118e6d13c9cf0b3bd29c0c556d1",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/vars",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/vars/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f008f4cee90287d2677072691366fb896a3fc88511f2628db577aca7ce418ec6",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "85336fd034fbe961d7811c4eda08640c653e01ecaa446833b153781f4d431331",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "90d9eee9a9bbdaedc2628611b2f89fbc00f2ae4c71221afe3346fcb232e503c7",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "985851890bc1efab6045b732fdbb18f58de3b8abb5100fe3c80d7ac4c087748f",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "897284e1006fb66775a174b7f146a3360f60256984cabe3d363dc5267ab7c498",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/tasks",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/tasks/manage_user.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "3765ebda3b6579deb562eee48f7e4c9272c5af4269baa5121c88b0a63d866eb6",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/tasks/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "42a31965c3fff86aeb8c2d5ddf753546298ef55960954398fcb5be8f126e81e9",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/tasks/manage_user_client_roles.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "020a1dd59be76da3293d345548949518b7d2ab51361c61b504812ee62f60a3fa",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/tasks/manage_user_roles.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "2676fa6c7d4f4f6baff1371aeaf7a2666c2ed25601919ad58ee5b1d5d069588a",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/tasks/manage_client_roles.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "7fa660154eda2c5c97d089e454c08d24e129cf7cbc7c601b357a661e42cb4b65",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/tasks/manage_client_users.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "1031495f933eb85ea641a16f49178a4e90f2946733b15d90d82b6d4c1a5a2b72",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/templates",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/templates/realm.json.j2",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "404c274699f66aec9209b8f19d0cde2cc28a351c91d7a2ccae57614be6dd8a94",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/vars",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/vars/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "03110bc9f280083191ec8ea55b265521540ac2aebb760b089015ef216a85fd71",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/meta",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/meta/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "f4a023721fa0cb0a3210ea3a2e8643a8028916c40831b39d79e4c86d20e48257",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/meta/argument_specs.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "90afde9091683a62f024dc2920a0635d3dd7ea1a21cfe612309fac71b244410e",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/defaults",
+   "ftype": "dir",
+   "chksum_type": null,
+   "chksum_sha256": null,
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/defaults/main.yml",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "c71ad7176fbe2e2c9db16eca33eadf7fbaf097225ca5c9a7f0e9649a599a74c2",
+   "format": 1
+  },
+  {
+   "name": "roles/keycloak_realm/README.md",
+   "ftype": "file",
+   "chksum_type": "sha256",
+   "chksum_sha256": "e40358c94a16afd603cb742940d2a2730422305e87436531c83f99e6639f3780",
+   "format": 1
+  }
+ ],
+ "format": 1
+}

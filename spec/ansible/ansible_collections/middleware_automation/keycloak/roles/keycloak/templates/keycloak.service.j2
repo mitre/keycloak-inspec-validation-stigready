@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+[Unit]
+Description={{ keycloak.service_name }} Server
+After=network.target
+
+[Service]
+Type=forking
+EnvironmentFile=-/etc/sysconfig/keycloak
+PIDFile={{ keycloak_service_pidfile }}
+ExecStart={{ keycloak_dest }}/keycloak-service.sh start
+ExecStop={{ keycloak_dest }}/keycloak-service.sh stop
+TimeoutStartSec=30
+TimeoutStopSec=30
+LimitNOFILE=102642
+
+[Install]
+WantedBy=multi-user.target

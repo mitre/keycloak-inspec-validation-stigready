@@ -1,0 +1,28 @@
+---
+wildfly_user: 'wildfly'
+wildfly_group: "{{ wildfly_user }}"
+wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final/'
+wildfly_config_base: 'standalone.xml'
+wildfly_port_range_offset: 100
+
+wildfly_java_package_name: java-1.8.0-openjdk-headless
+wildfly_java_opts: '-Xmx1024M -Xms512M'
+
+wildfly_systemd_enabled: yes
+wildfly_systemd_service_config_location: '/usr/lib/systemd/system'
+wildfly_systemd_service_config_file_suffix: '.service'
+wildfly_systemd_conf_file_suffix: '.conf'
+wildfly_systemd_service_config_file_template: 'templates/wfly.service.j2'
+
+wildfly_service_config_file_template: 'templates/wfly.conf.j2'
+wildfly_service_config_file_location: '/etc/'
+
+wildfly_enable_yml_config: no
+wildfly_yml_configs: []
+
+wildfly_bind_addr: 0.0.0.0
+wildfly_bind_addr_private: 127.0.0.1
+wildfly_bind_addr_management: 127.0.0.1
+wildfly_multicast_addr: 230.0.0.4
+
+wildfly_statistics_enabled: False
