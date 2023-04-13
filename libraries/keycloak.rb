@@ -1,3 +1,5 @@
+require "inspec/resources/command"
+require "pry"
 # Uncomment the below lines to add gems and files required by the resource
 # require ""
 # require_relative ""
@@ -32,19 +34,18 @@ module Inspec::Resources
     # describe keycloak(YOUR_PARAMETERS_HERE) do
     #   its("shoe_size") { should cmp 10 }
     # end
-    def initialize
-      skip_resource "The `keycloak` resource is not yet available on your OS." unless inspec.os.os?
+    def initialize()
       # Initialize required path/params/configs
 
       keycloak_home = inspec.os_env("KEYCLOAK_HOME").content
       keycloak_admin = inspec.os_env("KEYCLOAK_ADMIN").content
       keycloak_admin_password = inspec.os_env("KEYCLOAK_ADMIN_PASSWORD").content
-
-      when keycloak_admin.nil? || keycloak_admin.empty?
+      # binding.pry
+      if keycloak_admin.nil? || keycloak_admin.empty?
         raise Inspec::Exceptions::ResourceFailed, 'Failing because $KEYCLOAK_ADMIN env value not set or empty in the system'
       end
 
-      when keycloak_admin_password.nil? || keycloak_admin_password.empty?
+      if keycloak_admin_password.nil? || keycloak_admin_password.empty?
         raise Inspec::Exceptions::ResourceFailed, 'Failing because $KEYCLOAK_ADMIN_PASSWORD env value not set or empty in the system'
       end
 
@@ -53,17 +54,17 @@ module Inspec::Resources
         keycloak_home = '/opt/keycloak' if inspec.directory.('/opt/keycloak').exists?
         nil
       else
-        kcadm_path = "#{keycloak_home}/bin/kcadm.sh"
-        if !inspec.file(kcadm_path).exist?
+        @kcadm_path = "#{keycloak_home}/bin/kcadm.sh"
+        if !inspec.file(@kcadm_path).exist?
           warn "No keycloak admin script found in $KEYCLOAK_HOME/bin/kcadm.sh"
           nil
         else
-          @kcadm_path = kcadm_path
+          @kcadm_path = @kcadm_path
         end
       end
-
-      test_command = "#{kcadm_path} config credentials --server #{keycloak_server} -r #{keycloak_realm} --password #{keycloak_admin_password}"
-      kcadm.sh config credentials --server [server location] --realm master --user [username] --password [password]
+      # binding.pry
+      # test_command = "#{@kcadm_path} config credentials --server #{keycloak_server} -r #{keycloak_realm} --password #{keycloak_admin_password}"
+      skip_resource "The `keycloak` resource is not yet available on your OS." unless inspec.os.os?
     end
 
     # Define a resource ID. This is used in reporting engines to uniquely identify the individual resource.
@@ -112,6 +113,13 @@ module Inspec::Resources
     def shoe_size
       # Implementation of a property specific to this resource
       42
+    end
+
+    def event_config
+      # command = "/opt/keycloak/bin/kcadm.sh get events/config --no-config --server http://localhost:8080 --realm master --user admin --password admin"
+      command = "#{@kcadm_path} get events/config --no-config --server http://localhost:8080 --realm master --user admin --password admin"
+      # binding.pry
+      inspec.json(content: inspec.command(command).stdout)
     end
 
     private
