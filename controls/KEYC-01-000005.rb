@@ -1,3 +1,5 @@
+require 'pry'
+
 control 'KEYC-01-000005' do
   title 'Keycloak must be configured to automatically audit account creation.'
   desc  'Once an attacker establishes access to a system, the attacker often attempts to create a persistent method of reestablishing access. One way to accomplish this is for the attacker to simply create a new account. Auditing of account creation is one method for mitigating this risk. A comprehensive account management process will ensure an audit trail documents the creation of user accounts and, as required, notifies administrators and/or managers. Such a process greatly reduces the risk that accounts will be surreptitiously created and provides logging that can be used for forensic purposes.'
@@ -58,15 +60,29 @@ control 'KEYC-01-000005' do
     end
   else
 
-  describe keycloak().event_config do
-    its('eventsEnabled') { should eq true }
-    #TODO: give option for alternative logging?
-    its('eventsListeners') { should include 'jboss-logging' }
-    #TODO: should this also include CLIENT_REGISTER?
-    its('enabledEventTypes') { should include 'REGISTER' }
-    its('adminEventsEnabled') { should eq true }
-    its('adminEventsDetailsEnabled') { should eq true }
+  keycloak_realms.entries.each do |kc_realm|
+    # binding.pry
+    describe "Check #{kc_realm.displayName} realm configuration for events" do
+      subject { keycloak_realm(kc_realm.realm).event_config }
+      its('eventsEnabled') { should eq true }
+      #TODO: give option for alternative logging?
+      its('eventsListeners') { should include 'jboss-logging' }
+      #TODO: should this also include CLIENT_REGISTER?
+      its('enabledEventTypes') { should include 'REGISTER' }
+      its('adminEventsEnabled') { should eq true }
+      its('adminEventsDetailsEnabled') { should eq true }
+    end
   end
+
+  # describe keycloak().event_config do
+  #   its('eventsEnabled') { should eq true }
+  #   #TODO: give option for alternative logging?
+  #   its('eventsListeners') { should include 'jboss-logging' }
+  #   #TODO: should this also include CLIENT_REGISTER?
+  #   its('enabledEventTypes') { should include 'REGISTER' }
+  #   its('adminEventsEnabled') { should eq true }
+  #   its('adminEventsDetailsEnabled') { should eq true }
+  # end
 
     # test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')} --no-config --server http://localhost:8080 --realm master --user admin --password admin"
 
