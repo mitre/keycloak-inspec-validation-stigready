@@ -128,11 +128,5 @@ module Inspec::Resources
       inspec.json(content: inspec.command(command).stdout)
     end
 
-    private
-
-    # Methods to help the resource's public methods
-    def helper_method
-      # Add anything you need here
-    end
   end
 end
