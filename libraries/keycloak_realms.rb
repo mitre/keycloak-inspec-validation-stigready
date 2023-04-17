@@ -15,7 +15,7 @@
 # require "inspec/utils/filter"
 # require_relative ""
 
-require "keycloak_backend"
+require "keycloak"
 require "pry"
 
 # Include FilterTable support
@@ -29,17 +29,17 @@ module Inspec::Resources
     # Every resource requires an internal name.
     name "keycloak_realms"
 
-    # Restrict to only run on the below platforms (if none were given,
-    # all OS's and cloud API's supported)
-    # supports platform: "linux"
+    # # Restrict to only run on the below platforms (if none were given,
+    # # all OS's and cloud API's supported)
+    # # supports platform: "linux"
 
-    desc "Keycloak Realms"
+    # desc "Keycloak Realms"
 
-    example <<~EXAMPLE
-      describe keycloak_realms.where{ shoe_size > 10 } do
-        its("count") { should cmp 0 }
-      end
-    EXAMPLE
+    # example <<~EXAMPLE
+    #   describe keycloak_realms.where{ shoe_size > 10 } do
+    #     its("count") { should cmp 0 }
+    #   end
+    # EXAMPLE
 
     # Resource initialization. Add any arguments you want to pass to the contructor here.
     # Anything you pass here will be passed to the "describe" call:
@@ -47,35 +47,35 @@ module Inspec::Resources
     #   its("shoe_size") { should cmp 10 }
     # end
     def initialize
-      # Initialize required path/params/configs
-      # binding.pry
-      # Initialize required path/params/configs
-      keycloak_home = inspec.os_env("KEYCLOAK_HOME").content
-      @keycloak_admin = inspec.os_env("KEYCLOAK_ADMIN").content
-      @keycloak_admin_password = inspec.os_env("KEYCLOAK_ADMIN_PASSWORD").content
-      # binding.pry
-      if @keycloak_admin.nil? || @keycloak_admin.empty?
-        raise Inspec::Exceptions::ResourceFailed, 'Failing because $KEYCLOAK_ADMIN env value not set or empty in the system'
-      end
+      # # Initialize required path/params/configs
+      # # binding.pry
+      # # Initialize required path/params/configs
+      # keycloak_home = inspec.os_env("KEYCLOAK_HOME").content
+      # @keycloak_admin = inspec.os_env("KEYCLOAK_ADMIN").content
+      # @keycloak_admin_password = inspec.os_env("KEYCLOAK_ADMIN_PASSWORD").content
+      # # binding.pry
+      # if @keycloak_admin.nil? || @keycloak_admin.empty?
+      #   raise Inspec::Exceptions::ResourceFailed, 'Failing because $KEYCLOAK_ADMIN env value not set or empty in the system'
+      # end
 
-      if @keycloak_admin_password.nil? || @keycloak_admin_password.empty?
-        raise Inspec::Exceptions::ResourceFailed, 'Failing because $KEYCLOAK_ADMIN_PASSWORD env value not set or empty in the system'
-      end
+      # if @keycloak_admin_password.nil? || @keycloak_admin_password.empty?
+      #   raise Inspec::Exceptions::ResourceFailed, 'Failing because $KEYCLOAK_ADMIN_PASSWORD env value not set or empty in the system'
+      # end
 
-      if keycloak_home.nil? || keycloak_home.empty?
-        warn "$KEYCLOAK_HOME env value not set in the system"
-        keycloak_home = '/opt/keycloak' if inspec.directory.('/opt/keycloak').exists?
-        nil
-      else
-        @kcadm_path = "#{keycloak_home}/bin/kcadm.sh"
-        if !inspec.file(@kcadm_path).exist?
-          warn "No keycloak admin script found in $KEYCLOAK_HOME/bin/kcadm.sh"
-          nil
-        else
-          @kcadm_path = @kcadm_path
-        end
-      end
-      # binding.pry
+      # if keycloak_home.nil? || keycloak_home.empty?
+      #   warn "$KEYCLOAK_HOME env value not set in the system"
+      #   keycloak_home = '/opt/keycloak' if inspec.directory.('/opt/keycloak').exists?
+      #   nil
+      # else
+      #   @kcadm_path = "#{keycloak_home}/bin/kcadm.sh"
+      #   if !inspec.file(@kcadm_path).exist?
+      #     warn "No keycloak admin script found in $KEYCLOAK_HOME/bin/kcadm.sh"
+      #     nil
+      #   else
+      #     @kcadm_path = @kcadm_path
+      #   end
+      # end
+      # # binding.pry
     end
 
     # Define the FilterTable. This will define many extra methods on your resource, including
@@ -97,8 +97,8 @@ module Inspec::Resources
     def fetch_data
       # binding.pry
       realm_rows = []
-      @keycloak_realms = get_realms
-      # @keycloak_realms = @keycloak.get_realms
+      # @keycloak_realms = get_realms
+      @keycloak_realms = inspec.keycloak.get_realms
       # binding.pry
       @keycloak_realms.each do |keycloak_realm_info|
         realm_rows+=[{ realm: keycloak_realm_info["realm"], displayName: keycloak_realm_info["displayName"]}]
@@ -106,9 +106,9 @@ module Inspec::Resources
       @table = realm_rows
     end
 
-    def get_realms
-      command = "#{@kcadm_path} get realms --no-config --server http://localhost:8080 --realm master --user #{@keycloak_admin} --password #{@keycloak_admin_password}"
-      JSON.parse(inspec.command(command).stdout)
-    end
+    # def get_realms
+    #   command = "#{@kcadm_path} get realms --no-config --server http://localhost:8080 --realm master --user #{@keycloak_admin} --password #{@keycloak_admin_password}"
+    #   inspec.json(command: command)
+    # end
   end
 end

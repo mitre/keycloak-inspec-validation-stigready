@@ -41,9 +41,9 @@ class KeycloakConnection
   end
 end
 
-class Keycloak < Inspec.resource(1)
+class KeycloakBackend < Inspec.resource(1)
   # Every resource requires an internal name.
-  name "keycloak"
+  name "keycloak_backend"
 
   # Restrict to only run on the below platforms (if none were given,
   # all OS's and cloud API's supported)

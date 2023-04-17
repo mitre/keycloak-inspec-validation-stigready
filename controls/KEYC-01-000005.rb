@@ -63,7 +63,7 @@ control 'KEYC-01-000005' do
   keycloak_realms.entries.each do |kc_realm|
     # binding.pry
     describe "Check #{kc_realm.displayName} realm configuration for events" do
-      subject { keycloak_realm(kc_realm.realm).event_config }
+      subject { keycloak_realm.event_config(kc_realm.realm) }
       its('eventsEnabled') { should eq true }
       #TODO: give option for alternative logging?
       its('eventsListeners') { should include 'jboss-logging' }
