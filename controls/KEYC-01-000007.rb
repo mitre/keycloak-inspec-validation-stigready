@@ -49,15 +49,14 @@ control 'KEYC-01-000007' do
       skip 'Keycloak relies on directory services for user account management. This control is not applicable.'
     end
   else
-
-    test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
-
-    describe json(content: command(test_command).stdout) do
-      #TODO: Should this be tested as below in case of other possible eventsListeners?
-      its('eventsListeners') { should eq ['jboss-logging'] }
-      its('adminEventsEnabled') { should eq true }
-      its('adminEventsDetailsEnabled') { should eq true }
+    keycloak_realms.entries.each do |kc_realm|
+      describe "Check #{kc_realm.displayName} realm configuration for" do
+        subject { keycloak_realm.event_config(kc_realm.realm) }
+        #TODO: Should this be tested as below in case of other possible eventsListeners?
+        its('eventsListeners') { should eq ['jboss-logging'] }
+        its('adminEventsEnabled') { should eq true }
+        its('adminEventsDetailsEnabled') { should eq true }
+      end
     end
-
   end
 end
