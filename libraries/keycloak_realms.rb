@@ -15,9 +15,6 @@
 # require "inspec/utils/filter"
 # require_relative ""
 
-require "keycloak"
-require "pry"
-
 # Include FilterTable support
 require "inspec/utils/filter"
 

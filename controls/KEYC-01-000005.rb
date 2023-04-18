@@ -59,42 +59,17 @@ control 'KEYC-01-000005' do
       skip 'Keycloak relies on directory services for user account management. This control is not applicable.'
     end
   else
-
-  keycloak_realms.entries.each do |kc_realm|
-    # binding.pry
-    describe "Check #{kc_realm.displayName} realm configuration for events" do
-      subject { keycloak_realm.event_config(kc_realm.realm) }
-      its('eventsEnabled') { should eq true }
-      #TODO: give option for alternative logging?
-      its('eventsListeners') { should include 'jboss-logging' }
-      #TODO: should this also include CLIENT_REGISTER?
-      its('enabledEventTypes') { should include 'REGISTER' }
-      its('adminEventsEnabled') { should eq true }
-      its('adminEventsDetailsEnabled') { should eq true }
+    keycloak_realms.entries.each do |kc_realm|
+      describe "Check #{kc_realm.displayName} realm configuration for events" do
+        subject { keycloak_realm.event_config(kc_realm.realm) }
+        its('eventsEnabled') { should eq true }
+        #TODO: give option for alternative logging?
+        its('eventsListeners') { should include 'jboss-logging' }
+        #TODO: should this also include CLIENT_REGISTER?
+        its('enabledEventTypes') { should include 'REGISTER' }
+        its('adminEventsEnabled') { should eq true }
+        its('adminEventsDetailsEnabled') { should eq true }
+      end
     end
-  end
-
-  # describe keycloak().event_config do
-  #   its('eventsEnabled') { should eq true }
-  #   #TODO: give option for alternative logging?
-  #   its('eventsListeners') { should include 'jboss-logging' }
-  #   #TODO: should this also include CLIENT_REGISTER?
-  #   its('enabledEventTypes') { should include 'REGISTER' }
-  #   its('adminEventsEnabled') { should eq true }
-  #   its('adminEventsDetailsEnabled') { should eq true }
-  # end
-
-    # test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')} --no-config --server http://localhost:8080 --realm master --user admin --password admin"
-
-    # describe json(content: command(test_command).stdout) do
-    #   its('eventsEnabled') { should eq true }
-    #   #TODO: give option for alternative logging?
-    #   its('eventsListeners') { should include 'jboss-logging' }
-    #   #TODO: should this also include CLIENT_REGISTER?
-    #   its('enabledEventTypes') { should include 'REGISTER' }
-    #   its('adminEventsEnabled') { should eq true }
-    #   its('adminEventsDetailsEnabled') { should eq true }
-    # end
-
   end
 end

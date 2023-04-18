@@ -58,9 +58,7 @@ control 'KEYC-01-000006' do
       skip 'Keycloak relies on directory services for user account management. This control is not applicable.'
     end
   else
-
     keycloak_realms.entries.each do |kc_realm|
-      # binding.pry
       describe "Check #{kc_realm.displayName} realm configuration for events" do
         subject { keycloak_realm.event_config(kc_realm.realm) }
         its('eventsEnabled') { should eq true }
@@ -73,19 +71,5 @@ control 'KEYC-01-000006' do
         its('adminEventsDetailsEnabled') { should eq true }
       end
     end
-
-    # test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
-
-    # describe json(content: command(test_command).stdout) do
-    #   its('eventsEnabled') { should eq true }
-    #   #TODO: Should this be tested as below in case of other possible eventsListeners?
-    #   its('eventsListeners') { should eq ['jboss-logging'] }
-    #   its('enabledEventTypes') { should include 'UPDATE_PROFILE' }
-    #   its('enabledEventTypes') { should include 'UPDATE_EMAIL' }
-    #   its('enabledEventTypes') { should include 'UPDATE_PASSWORD' }
-    #   its('adminEventsEnabled') { should eq true }
-    #   its('adminEventsDetailsEnabled') { should eq true }
-    # end
-
   end
 end

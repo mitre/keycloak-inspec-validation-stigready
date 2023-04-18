@@ -1,5 +1,5 @@
 # Uncomment the below lines to add gems and files required by the resource
-require "keycloak"
+# require ""
 # require_relative ""
 
 # Change module if required
