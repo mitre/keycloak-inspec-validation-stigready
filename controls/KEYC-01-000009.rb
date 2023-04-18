@@ -57,14 +57,13 @@ control 'KEYC-01-000009' do
       skip 'Keycloak relies on directory services for user account management. This control is not applicable.'
     end
   else
-
-    test_command = "#{input('executable_path')}kcadm.sh get realms/#{input('keycloak_realm')}"
-
-    describe json(content: command(test_command).stdout) do
-      its('bruteForceProtected') { should eq true }
-      its('failureFactor') { should eq input('failure_factor') }
-      its('maxDeltaTimeSeconds') { should eq input('max_delta_time_seconds') }
+    keycloak_realms.entries.each do |kc_realm|
+      describe "Check #{kc_realm.displayName} realm configuration for" do
+        subject { keycloak_realm.get_realm_info(kc_realm.realm) }
+        its('bruteForceProtected') { should eq true }
+        its('failureFactor') { should eq input('failure_factor') }
+        its('maxDeltaTimeSeconds') { should eq input('max_delta_time_seconds') }
+      end
     end
-
   end
 end

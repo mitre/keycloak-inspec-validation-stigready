@@ -59,15 +59,16 @@ control 'KEYC-01-000010' do
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
 
-  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
-
-  describe json(content: command(test_command).stdout) do
-    its('eventsEnabled') { should eq true }
-    #TODO: Should this be tested as below in case of other possible eventsListeners?
-    its('eventsListeners') { should eq ['jboss-logging'] }
-    #TODO: need to determine appropriate event types here (access, modify, delete)
-    # its('enabledEventTypes') { should include "" }
-    its('adminEventsEnabled') { should eq true }
-    its('adminEventsDetailsEnabled') { should eq true }
+  keycloak_realms.entries.each do |kc_realm|
+    describe "Check #{kc_realm.displayName} realm event configuration for" do
+      subject { keycloak_realm.event_config(kc_realm.realm) }
+      its('eventsEnabled') { should eq true }
+      #TODO: Should this be tested as below in case of other possible eventsListeners?
+      its('eventsListeners') { should eq ['jboss-logging'] }
+      #TODO: need to determine appropriate event types here (access, modify, delete)
+      # its('enabledEventTypes') { should include "" }
+      its('adminEventsEnabled') { should eq true }
+      its('adminEventsDetailsEnabled') { should eq true }      
+    end
   end
 end

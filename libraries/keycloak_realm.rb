@@ -41,13 +41,11 @@ module Inspec::Resources
     end
 
     def event_config(realm)
-
       inspec.keycloak.event_config(realm)
+    end
 
-      # # command = "/opt/keycloak/bin/kcadm.sh get events/config --no-config --server http://localhost:8080 --realm master --user admin --password admin"
-      # command = "#{@kcadm_path} get events/config -r #{@realm} --no-config --server http://localhost:8080 --realm master --user #{@keycloak_admin} --password #{@keycloak_admin_password}"
-      # # binding.pry
-      # inspec.json(content: inspec.command(command).stdout)
+    def get_realm_info(realm)
+      inspec.keycloak.get_realm_info(realm)
     end
   end
 end
