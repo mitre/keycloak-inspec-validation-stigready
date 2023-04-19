@@ -43,7 +43,8 @@ module Inspec::Resources
     # describe keycloak_realms(YOUR_PARAMETERS_HERE) do
     #   its("shoe_size") { should cmp 10 }
     # end
-    def initialize
+    def initialize(skip_list)
+      @skip_list = skip_list
       # # Initialize required path/params/configs
       # # binding.pry
       # # Initialize required path/params/configs
@@ -98,11 +99,11 @@ module Inspec::Resources
       @keycloak_realms = inspec.keycloak.get_realms
       # binding.pry
       @keycloak_realms.each do |keycloak_realm_info|
+        next if @skip_list.include? keycloak_realm_info["realm"]
         realm_rows+=[{ realm: keycloak_realm_info["realm"], displayName: keycloak_realm_info["displayName"]}]
       end
       @table = realm_rows
     end
-
     # def get_realms
     #   command = "#{@kcadm_path} get realms --no-config --server http://localhost:8080 --realm master --user #{@keycloak_admin} --password #{@keycloak_admin_password}"
     #   inspec.json(command: command)
