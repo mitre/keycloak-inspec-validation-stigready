@@ -18,6 +18,7 @@
 # Include FilterTable support
 require "inspec/utils/filter"
 
+
 module Inspec::Resources
   # Most custom InSpec resource inherit from a dynamic class, InSpec.resource(1).
   # If you wish to inherit from a core resource, you need to follow special instructions -
@@ -43,37 +44,12 @@ module Inspec::Resources
     # describe keycloak_realms(YOUR_PARAMETERS_HERE) do
     #   its("shoe_size") { should cmp 10 }
     # end
-    def initialize(skip_list)
-      @skip_list = skip_list
-      # # Initialize required path/params/configs
-      # # binding.pry
-      # # Initialize required path/params/configs
-      # keycloak_home = inspec.os_env("KEYCLOAK_HOME").content
-      # @keycloak_admin = inspec.os_env("KEYCLOAK_ADMIN").content
-      # @keycloak_admin_password = inspec.os_env("KEYCLOAK_ADMIN_PASSWORD").content
-      # # binding.pry
-      # if @keycloak_admin.nil? || @keycloak_admin.empty?
-      #   raise Inspec::Exceptions::ResourceFailed, 'Failing because $KEYCLOAK_ADMIN env value not set or empty in the system'
-      # end
+    def initialize(opts)
+      @opts = opts
+      if opts.is_a?(Hash)
+        @exception_realm_list = opts[:exception_realm_list] if opts[:exception_realm_list]
+      end
 
-      # if @keycloak_admin_password.nil? || @keycloak_admin_password.empty?
-      #   raise Inspec::Exceptions::ResourceFailed, 'Failing because $KEYCLOAK_ADMIN_PASSWORD env value not set or empty in the system'
-      # end
-
-      # if keycloak_home.nil? || keycloak_home.empty?
-      #   warn "$KEYCLOAK_HOME env value not set in the system"
-      #   keycloak_home = '/opt/keycloak' if inspec.directory.('/opt/keycloak').exists?
-      #   nil
-      # else
-      #   @kcadm_path = "#{keycloak_home}/bin/kcadm.sh"
-      #   if !inspec.file(@kcadm_path).exist?
-      #     warn "No keycloak admin script found in $KEYCLOAK_HOME/bin/kcadm.sh"
-      #     nil
-      #   else
-      #     @kcadm_path = @kcadm_path
-      #   end
-      # end
-      # # binding.pry
     end
 
     # Define the FilterTable. This will define many extra methods on your resource, including
@@ -99,7 +75,7 @@ module Inspec::Resources
       @keycloak_realms = inspec.keycloak.get_realms
       # binding.pry
       @keycloak_realms.each do |keycloak_realm_info|
-        next if @skip_list.include? keycloak_realm_info["realm"]
+        next if @exception_realm_list.include? keycloak_realm_info["realm"]
         realm_rows+=[{ realm: keycloak_realm_info["realm"], displayName: keycloak_realm_info["displayName"]}]
       end
       @table = realm_rows

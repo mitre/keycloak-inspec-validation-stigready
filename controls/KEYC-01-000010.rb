@@ -59,9 +59,10 @@ control 'KEYC-01-000010' do
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
 
-  keycloak_realms.entries.each do |kc_realm|
-    describe "Check #{kc_realm.displayName} realm event configuration for" do
-      subject { keycloak_realm.event_config(kc_realm.realm) }
+  opts = { exception_realm_list: input('skip_realm_list') }
+  keycloak_realms(opts).realms.each do |realm|
+    describe "Check #{realm} realm event configuration for" do
+      subject { keycloak_realm.event_config(realm) }
       its('eventsEnabled') { should eq true }
       #TODO: Should this be tested as below in case of other possible eventsListeners?
       its('eventsListeners') { should eq ['jboss-logging'] }

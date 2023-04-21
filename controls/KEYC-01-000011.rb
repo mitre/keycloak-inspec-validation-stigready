@@ -56,9 +56,10 @@ control 'KEYC-01-000011' do
   tag cci: ['CCI-000130']
   tag nist: ['AU-3']
 
-  keycloak_realms.entries.each do |kc_realm|
-    realm_event_config = keycloak_realm.event_config(kc_realm.realm)
-    describe "Check #{kc_realm.displayName} realm event configuration for" do
+  opts = { exception_realm_list: input('skip_realm_list') }
+  keycloak_realm(opts).realms.each do |realm|
+    realm_event_config = keycloak_realm.event_config(realm)
+    describe "Check #{realm} realm event configuration for" do
       subject { realm_event_config }
       its('eventsEnabled') { should eq true }
       #TODO: Should this be tested as below in case of other possible eventsListeners?
@@ -68,7 +69,7 @@ control 'KEYC-01-000011' do
     end
 
     #TODO: ensure user is aware that more enabledEventTypes can be added, this is a minimum
-    describe "Check #{kc_realm.displayName} realm event type contains defined event types" do
+    describe "Check #{realm} realm event type contains defined event types" do
       it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
         actual_events_enabled = realm_event_config['enabledEventTypes']
         missing = actual_events_enabled - input('enabled_event_types')

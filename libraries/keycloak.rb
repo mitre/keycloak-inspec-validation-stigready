@@ -67,7 +67,7 @@ module Inspec::Resources
 
     def get_realm_info(realm)
       command = "#{@kcadm_path} get realms/#{realm} #{@no_config_settings}"
-      inspec.json(command: command)\
+      inspec.json(command: command)
     end
   end
 end

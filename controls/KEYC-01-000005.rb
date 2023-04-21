@@ -59,8 +59,8 @@ control 'KEYC-01-000005' do
       skip 'Keycloak relies on directory services for user account management. This control is not applicable.'
     end
   else
-    skip_list = input('skip_realm_list')
-    keycloak_realms(skip_list).realms.each do |realm|
+    opts = { exception_realm_list: input('skip_realm_list') }
+    keycloak_realms(opts).realms.each do |realm|
       describe "Check #{realm} realm configuration for events" do
         subject { keycloak_realm.event_config(realm) }
         its('eventsEnabled') { should eq true }
