@@ -56,11 +56,11 @@ control 'KEYC-01-000011' do
   tag cci: ['CCI-000130']
   tag nist: ['AU-3']
 
-  opts = { exception_realm_list: input('skip_realm_list') }
-  keycloak_realm(opts).realms.each do |realm|
-    realm_event_config = keycloak_realm.event_config(realm)
+  opts = { excluded_realm_list: input('excluded_realm_list') }
+  keycloak_realms(opts).realms.each do |realm|
+    realm_events_config = keycloak.events_config(realm)
     describe "Check #{realm} realm event configuration for" do
-      subject { realm_event_config }
+      subject { realm_events_config }
       its('eventsEnabled') { should eq true }
       #TODO: Should this be tested as below in case of other possible eventsListeners?
       its('eventsListeners') { should eq ['jboss-logging'] }
@@ -71,7 +71,7 @@ control 'KEYC-01-000011' do
     #TODO: ensure user is aware that more enabledEventTypes can be added, this is a minimum
     describe "Check #{realm} realm event type contains defined event types" do
       it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
-        actual_events_enabled = realm_event_config['enabledEventTypes']
+        actual_events_enabled = realm_events_config['enabledEventTypes']
         missing = actual_events_enabled - input('enabled_event_types')
         failure_message = "The generated output does not include: #{missing}"
         expect(missing).to be_empty, failure_message

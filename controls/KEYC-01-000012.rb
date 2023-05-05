@@ -64,24 +64,26 @@ control 'KEYC-01-000012' do
   tag cci: ['CCI-000131']
   tag nist: ['AU-3']
 
-  test_command = "#{input('executable_path')}kcadm.sh get events/config -r #{input('keycloak_realm')}"
+  opts = { excluded_realm_list: input('excluded_realm_list') }
+  keycloak_realms(opts).realms.each do |realm|
+    realm_events_config = keycloak.events_config(realm)
+    describe "Check #{realm} realm event configuration for" do
+      subject { realm_events_config }
+      its('eventsEnabled') { should eq true }
+      #TODO: Should this be tested as below in case of other possible eventsListeners?
+      its('eventsListeners') { should eq ['jboss-logging'] }
+      its('adminEventsEnabled') { should eq true }
+      its('adminEventsDetailsEnabled') { should eq true }
+    end
 
-  describe json(content: command(test_command).stdout) do
-    its('eventsEnabled') { should eq true }
-    #TODO: Should this be tested as below in case of other possible eventsListeners?
-    its('eventsListeners') { should eq ['jboss-logging'] }
-    its('adminEventsEnabled') { should eq true }
-    its('adminEventsDetailsEnabled') { should eq true }
-    # test that enabledEventTypes in not empty
-  end
-
-  # comment that more enabledEventTypes can be added, this is a minimum
-  describe 'JSON content' do
-    it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
-      actual_events_enabled = json(content: command(test_command).stdout)['enabledEventTypes']
-      missing = actual_events_enabled - input('enabled_event_types')
-      failure_message = "The generated JSON output does not include: #{missing}"
-      expect(missing).to be_empty, failure_message
+    # comment that more enabledEventTypes can be added, this is a minimum
+    describe "Check #{realm} realm event type contains defined event types" do
+      it 'enabledEventTypes is expected to include enabled_event_types listed in inspec.yml' do
+        actual_events_enabled = realm_events_config['enabledEventTypes']
+        missing = actual_events_enabled - input('enabled_event_types')
+        failure_message = "The generated JSON output does not include: #{missing}"
+        expect(missing).to be_empty, failure_message
+      end
     end
   end
 

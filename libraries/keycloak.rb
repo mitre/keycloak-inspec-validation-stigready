@@ -18,6 +18,8 @@ module Inspec::Resources
       end
     EXAMPLE
 
+    attr_reader :kcadm_path, :no_config_settings, :realm
+
     # Resource initialization. Add any arguments you want to pass to the contructor here.
     # Anything you pass here will be passed to the "describe" call:
     # describe keycloak(YOUR_PARAMETERS_HERE) do
@@ -55,7 +57,7 @@ module Inspec::Resources
 
     # TODO may need to figure out how to pass --server and --realm variables instead of hardcoded
 
-    def event_config(realm)
+    def events_config(realm)
       command = "#{@kcadm_path} get events/config -r #{realm} #{@no_config_settings}"
       inspec.json(command: command)
     end
@@ -68,6 +70,11 @@ module Inspec::Resources
     def get_realm_info(realm)
       command = "#{@kcadm_path} get realms/#{realm} #{@no_config_settings}"
       inspec.json(command: command)
+    end
+    
+    def events(realm)
+      command = "#{@kcadm_path} get events -r #{realm} #{no_config_settings}"
+      inspec.command(command).stdout
     end
   end
 end

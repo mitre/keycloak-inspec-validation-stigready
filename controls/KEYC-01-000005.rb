@@ -59,10 +59,10 @@ control 'KEYC-01-000005' do
       skip 'Keycloak relies on directory services for user account management. This control is not applicable.'
     end
   else
-    opts = { exception_realm_list: input('skip_realm_list') }
+    opts = { excluded_realm_list: input('excluded_realm_list') }
     keycloak_realms(opts).realms.each do |realm|
       describe "Check #{realm} realm configuration for events" do
-        subject { keycloak_realm.event_config(realm) }
+        subject { keycloak.events_config(realm) }
         its('eventsEnabled') { should eq true }
         #TODO: give option for alternative logging?
         its('eventsListeners') { should include 'jboss-logging' }

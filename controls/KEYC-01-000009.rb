@@ -57,10 +57,10 @@ control 'KEYC-01-000009' do
       skip 'Keycloak relies on directory services for user account management. This control is not applicable.'
     end
   else
-    opts = { exception_realm_list: input('skip_realm_list') }
+    opts = { excluded_realm_list: input('excluded_realm_list') }
     keycloak_realms(opts).realms.each do |realm|
       describe "Check #{realm} realm configuration for" do
-        subject { keycloak_realm.get_realm_info(realm) }
+        subject { keycloak.get_realm_info(realm) }
         its('bruteForceProtected') { should eq true }
         its('failureFactor') { should eq input('failure_factor') }
         its('maxDeltaTimeSeconds') { should eq input('max_delta_time_seconds') }

@@ -6,7 +6,7 @@
   https://www.keycloak.org/docs/latest/server_admin/index.html#mitigating-security-threats'
 
 inputs:
-  - name: skip_realm_list
+  - name: excluded_realm_list
     type: array
     value:
       - "test"

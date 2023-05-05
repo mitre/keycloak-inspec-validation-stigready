@@ -59,6 +59,12 @@ control 'KEYC-01-000013' do
   tag cci: ['CCI-000132']
   tag nist: ['AU-3']
 
+  opts = { excluded_realm_list: input('excluded_realm_list') }
+  keycloak_realms(opts).realms.each do |realm|
+    describe "Check configuration audit records for '#{realm}' realm" do
+      subject { keycloak_events(realm).entries }
+
+
   test_command = "#{input('executable_path')}kcadm.sh get events -r #{input('keycloak_realm')} | grep -E 'realmId|userId|sessionId|ipAddress'"
   # test_command = "#{input('executable_path')}kcadm.sh get events -r #{input('keycloak_realm')} | grep 'realmId'"
 

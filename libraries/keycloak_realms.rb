@@ -44,10 +44,10 @@ module Inspec::Resources
     # describe keycloak_realms(YOUR_PARAMETERS_HERE) do
     #   its("shoe_size") { should cmp 10 }
     # end
-    def initialize(opts)
+    def initialize(opts = {})
       @opts = opts
       if opts.is_a?(Hash)
-        @exception_realm_list = opts[:exception_realm_list] if opts[:exception_realm_list]
+        @excluded_realm_list = opts[:excluded_realm_list] ? opts[:excluded_realm_list] : []
       end
 
     end
@@ -75,7 +75,7 @@ module Inspec::Resources
       @keycloak_realms = inspec.keycloak.get_realms
       # binding.pry
       @keycloak_realms.each do |keycloak_realm_info|
-        next if @exception_realm_list.include? keycloak_realm_info["realm"]
+        next if @excluded_realm_list.include? keycloak_realm_info["realm"]
         realm_rows+=[{ realm: keycloak_realm_info["realm"], displayName: keycloak_realm_info["displayName"]}]
       end
       @table = realm_rows
